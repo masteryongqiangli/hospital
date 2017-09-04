@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+.typebtn{
+	width:120px;
+	height:64px;
+	padding-left:64px;
+	box-shadow: none;
+	border: 0;
+	border-radius: 3px;
+	line-height: 64px;
+	color: #000;
+	cursor: pointer;
+	margin:30px
+}
+.typebtn:hover{
+	color: #1296db;
+}
+.kuangshui{
+	background:url("../../images/evaluation/kuangshui0.png")  ;
+	background-repeat: no-repeat;
+}
+.kuangshui:hover{
+	background:url("../../images/evaluation/kuangshui1.png") ;
+	background-repeat: no-repeat;
+}
+
+.chanpin{
+	background:url("../../images/evaluation/chanpin0.png");
+	background-repeat: no-repeat;
+}
+.chanpin:hover{
+	background:url("../../images/evaluation/chanpin1.png");
+	background-repeat: no-repeat;
+}
+
+.fengxianfuwu{
+	background:url("../../images/evaluation/fengxianfuwu0.png");
+	background-repeat: no-repeat;
+}
+.fengxianfuwu:hover{
+	background:url("../../images/evaluation/fengxianfuwu1.png");
+	background-repeat: no-repeat;
+}

@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+ 
+.submit-table {
+	width: 100%;
+	margin: 5px;
+	border-right: 1px solid #afddf3;
+	border-bottom: 1px solid #afddf3
+}
+
+.submit-table tr th {
+	text-align: right;
+	padding: 3px;
+	border-left: 1px solid #afddf3;
+	border-top: 1px solid #afddf3
+}
+
+.submit-table tr td {
+	text-align: left;
+	padding: 3px;
+	border-left: 1px solid #afddf3;
+	border-top: 1px solid #afddf3
+}
+
+.submit-table tr td input {
+	height: 28px;
+	outline: none;
+}
+
+.submit-table tr td input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+.submit-table tr td .detail {
+	font-size:16px;
+	    padding: 10px;
+}
+.drag{
+	margin:10px;
+	padding:10px;
+	border: 1px solid #afddf3;
+}
+.drag span{
+	 margin:5px;
+	 font-size:16px;
+}
+
+

@@ -1,0 +1,30 @@
+/**
+ * 
+ */
+.easyuiLoading {
+	width: 100% !important;
+	height: 100% !important;
+	text-align: center !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2147483647 ;
+	background-color: #f6fdfc;
+}
+
+.easyuiLoading div {
+	position: absolute !important;
+	top: 40% !important;
+	left: 45% !important;
+}
+
+.easyuiLoading div .loading {
+	width: 98px !important;
+	height: 10px !important;
+	background: url("easyuiloading.gif") repeat-x !important;
+}
+
+.easyuiLoading div .text {
+	font-size: 14px !important;
+	text-align: center !important;
+}

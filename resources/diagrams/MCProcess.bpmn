@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="myProcess" name="My process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <userTask id="MCAKHSQ" name="考核申请" activiti:assignee="${submitter}">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=true"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow3" sourceRef="startevent1" targetRef="MCAKHSQ"></sequenceFlow>
+    <userTask id="MCBSHQR" name="审核确认" activiti:candidateGroups="MCOperators">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCAZKLR" name="自考结果录入" activiti:assignee="${submitter}">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=true"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCBZKQR" name="自考结果确认" activiti:assignee="${MCOperator0}">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCBZJZJ" name="组建专家组" activiti:candidateGroups="MCFZR">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="组建专家组" type="string" default="applyInfoController.do?goExpertGroup&amp;edit=true"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page4" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCCZDFA" name="制定抽考方案" activiti:candidateUsers="${group}">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="制定抽考方案" type="string" default="applyInfoController.do?goExamSolution&amp;edit=true"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="专家组" type="string" default="applyInfoController.do?goExpertGroup&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page4" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page5" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCBSHFA" name="审核抽考方案" activiti:candidateGroups="MCFZR">
+      <extensionElements>
+        <activiti:formProperty id="page1" name="抽考方案" type="string" default="applyInfoController.do?goExamSolution&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="专家组" type="string" default="applyInfoController.do?goExpertGroup&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page4" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page5" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCCJGPD" name="结果评定" activiti:candidateUsers="${group}">
+     <extensionElements>
+      <activiti:formProperty id="page1" name="结果评定" type="string" default="applyInfoController.do?goResult&amp;edit=true"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="抽考方案" type="string" default="applyInfoController.do?goExamSolution&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="专家组" type="string" default="applyInfoController.do?goExpertGroup&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page4" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page5" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page6" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCBSHBG" name="审核报告" activiti:assignee="MCCSHBG" activiti:candidateGroups="MCFZR">
+    <extensionElements>
+      <activiti:formProperty id="page1" name="结果评定" type="string" default="applyInfoController.do?goResult&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="抽考方案" type="string" default="applyInfoController.do?goExamSolution&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="专家组" type="string" default="applyInfoController.do?goExpertGroup&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page4" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page5" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page6" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="MCBSPBG" name="审批报告" activiti:candidateGroups="MCZR">
+    <extensionElements>
+     <activiti:formProperty id="page1" name="结果评定" type="string" default="applyInfoController.do?goResult&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page2" name="抽考方案" type="string" default="applyInfoController.do?goExamSolution&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page3" name="专家组" type="string" default="applyInfoController.do?goExpertGroup&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page4" name="自考结果" type="string" default="applyInfoController.do?goSelfExam&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page5" name="单位信息" type="string" default="applyInfoController.do?goUnitInfo&amp;edit=false"></activiti:formProperty>
+        <activiti:formProperty id="page6" name="申报信息" type="string" default="applyInfoController.do?goApplyInfo&amp;edit=false"></activiti:formProperty>
+      </extensionElements></userTask>
+    <userTask id="MCACKJG" name="查看考核结果" activiti:assignee="${submitter}">
+    <extensionElements>
+     <activiti:formProperty id="page1" name="结果评定" type="string" default="applyInfoController.do?goResult&amp;edit=false"></activiti:formProperty>
+      </extensionElements></userTask>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <endEvent id="endevent3" name="End"></endEvent>
+    <userTask id="MCBNUGD" name="归档" activiti:assignee="${MCOperator0}">
+     <extensionElements>
+     <activiti:formProperty id="page1" name="结果评定" type="string" default="applyInfoController.do?goResult&amp;edit=false"></activiti:formProperty>
+      </extensionElements></userTask> 
+    <sequenceFlow id="flow4" sourceRef="MCAKHSQ" targetRef="MCBSHQR"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="MCBSHQR" targetRef="MCAZKLR"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="MCBSHQR" targetRef="MCAKHSQ"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="MCAZKLR" targetRef="MCBZKQR"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="MCBZKQR" targetRef="MCBZJZJ"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="MCBZKQR" targetRef="MCAZKLR"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="MCBZJZJ" targetRef="MCCZDFA"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="MCCZDFA" targetRef="MCBSHFA"></sequenceFlow>
+    <sequenceFlow id="flow15" sourceRef="MCCJGPD" targetRef="MCBSHBG"></sequenceFlow>
+    <sequenceFlow id="flow16" sourceRef="MCBSHBG" targetRef="MCBSPBG"></sequenceFlow>
+    <sequenceFlow id="flow17" sourceRef="MCBSHFA" targetRef="MCCZDFA"></sequenceFlow>
+    <sequenceFlow id="flow18" sourceRef="MCBSPBG" targetRef="MCBNUGD"></sequenceFlow>
+    <sequenceFlow id="flow19" sourceRef="MCBSHBG" targetRef="MCCJGPD"></sequenceFlow>
+    <sequenceFlow id="flow20" sourceRef="MCBSPBG" targetRef="MCBSHBG"></sequenceFlow>
+    <sequenceFlow id="flow21" sourceRef="MCBNUGD" targetRef="endevent3"></sequenceFlow>
+    <sequenceFlow id="flow22" sourceRef="MCBNUGD" targetRef="MCACKJG"></sequenceFlow>
+    <sequenceFlow id="flow23" sourceRef="MCACKJG" targetRef="endevent2"></sequenceFlow>
+    <sequenceFlow id="flow24" sourceRef="MCBSHFA" targetRef="MCCJGPD"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
+    <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="10.0" y="51.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCAKHSQ" id="BPMNShape_MCAKHSQ">
+        <omgdc:Bounds height="55.0" width="105.0" x="90.0" y="41.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBSHQR" id="BPMNShape_MCBSHQR">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="41.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCAZKLR" id="BPMNShape_MCAZKLR">
+        <omgdc:Bounds height="55.0" width="105.0" x="90.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBZKQR" id="BPMNShape_MCBZKQR">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBZJZJ" id="BPMNShape_MCBZJZJ">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCCZDFA" id="BPMNShape_MCCZDFA">
+        <omgdc:Bounds height="55.0" width="105.0" x="470.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBSHFA" id="BPMNShape_MCBSHFA">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="420.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCCJGPD" id="BPMNShape_MCCJGPD">
+        <omgdc:Bounds height="55.0" width="105.0" x="470.0" y="510.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBSHBG" id="BPMNShape_MCBSHBG">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="600.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBSPBG" id="BPMNShape_MCBSPBG">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="704.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCACKJG" id="BPMNShape_MCACKJG">
+        <omgdc:Bounds height="55.0" width="105.0" x="105.0" y="806.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="140.0" y="900.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent3" id="BPMNShape_endevent3">
+        <omgdc:Bounds height="35.0" width="35.0" x="335.0" y="900.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MCBNUGD" id="BPMNShape_MCBNUGD">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="806.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="45.0" y="68.0"></omgdi:waypoint>
+        <omgdi:waypoint x="90.0" y="68.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="195.0" y="68.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="68.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="352.0" y="96.0"></omgdi:waypoint>
+        <omgdi:waypoint x="351.0" y="116.0"></omgdi:waypoint>
+        <omgdi:waypoint x="143.0" y="116.0"></omgdi:waypoint>
+        <omgdi:waypoint x="142.0" y="140.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="352.0" y="41.0"></omgdi:waypoint>
+        <omgdi:waypoint x="351.0" y="20.0"></omgdi:waypoint>
+        <omgdi:waypoint x="143.0" y="20.0"></omgdi:waypoint>
+        <omgdi:waypoint x="142.0" y="41.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="195.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="167.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="352.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="300.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="195.0" y="167.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="405.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="340.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="470.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="420.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="522.0" y="565.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="627.0"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="627.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="352.0" y="655.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="704.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="352.0" y="420.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="367.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="367.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
+        <omgdi:waypoint x="352.0" y="759.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="806.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+        <omgdi:waypoint x="405.0" y="627.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="627.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="565.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="352.0" y="704.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="655.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="352.0" y="861.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="900.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
+        <omgdi:waypoint x="300.0" y="833.0"></omgdi:waypoint>
+        <omgdi:waypoint x="210.0" y="833.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
+        <omgdi:waypoint x="157.0" y="861.0"></omgdi:waypoint>
+        <omgdi:waypoint x="157.0" y="900.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="405.0" y="447.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="447.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="510.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

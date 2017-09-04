@@ -1,0 +1,123 @@
+@CHARSET "UTF-8";
+
+@media all and (orientation : landscape) {
+	h1 {
+		color: red;
+	} /*横屏时字体红色*/
+}
+
+html body {
+	height: 100%;
+	background: #f7fafc;
+}
+
+.content {
+	text-align: center;
+	white-space: nowrap;
+	height: 100%;
+}
+.content .content_body {
+		margin-top: 120px;
+		padding: 0;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: left;
+		white-space: normal;
+	}
+@media only screen and (orientation : portrait)and (max-height:600px) { /*竖屏*/
+	.content .content_body {
+		margin-top: 85px;
+		padding: 0;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: left;
+		white-space: normal;
+	}
+}
+
+@media only screen and (orientation : landscape)and (max-height:600px) { /*横屏*/
+	.content .content_body {
+		margin-top: 2px;
+		padding: 0;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: left;
+		white-space: normal;
+	}
+}
+
+.content .content_body .top {
+	text-align: center;
+}
+.content .content_body .top h1 {
+	margin: 0 auto;
+	height: 74px;
+	color: #0f88eb;
+	background-size: contain;
+	font-size: 36px;
+	font-family: cursive;
+}
+.content .content_body .middle {
+	text-align: center;
+}
+.content .content_body .middle .input-contians {
+	text-align: center;
+	border: 1px solid #d5d5d5;
+	border-radius: 3px;
+}
+.content .content_body .middle .input-contians .input-wrapper {
+	height: 46.4px;
+	line-height: 46.4px;
+	vertical-align: middle;
+	position: relative;
+}
+.content .content_body .middle .input-contians .input-wrapper lable {
+	position: absolute;
+	top: 0;
+	right: 8px;
+	padding: 0 8px;
+	line-height: 39px;
+	color: #c33;
+	cursor: text;
+	display: none;
+}
+
+.content .content_body .middle .input-contians .input-username {
+	border-bottom-color: #d5d5d5;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+.content .content_body .middle .input-wrapper input {
+	border: none;
+	line-height: 18px;
+	width: 96%;
+	padding: 10px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	outline: none;
+}
+
+.content .content_body .middle .input-wrapper input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.content .content_body .middle .submit-wrapper {
+	margin-top: 18px;
+}
+
+.content .content_body .middle .submit-wrapper input[type="button"] {
+	width: 100%;
+	background: #0f88eb;
+	box-shadow: none;
+	border: 0;
+	border-radius: 3px;
+	line-height: 41px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.content .content_body .middle .submit-wrapper input[type="button"]:hover
+	{
+	background: #55abed;
+}
