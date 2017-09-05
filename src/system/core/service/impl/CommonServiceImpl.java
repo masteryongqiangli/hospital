@@ -9,7 +9,7 @@ import system.core.dao.BaseDaoI;
 import system.core.service.CommonServiceI;
 @Service("commonService")
 public class CommonServiceImpl implements CommonServiceI {
-	 @Autowired
+	@Autowired
 	public BaseDaoI baseDaoImpl;
 	  
 	@Override
