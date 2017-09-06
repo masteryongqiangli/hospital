@@ -48,38 +48,12 @@
 					name="realName" value="${user.realName }"
 					data-options="required:true,tipPosition:'right'" /></td>
 			</tr>
-			<!-- <tr>
-				<th><label>所属区县：</label></th>
+			<tr id="districtTr">
+				<th><label>所属区划：</label></th>
 				<td><input id="district_id" class="easyui-combobox easyui-validatebox"
 					name="dataDicId"
-					data-options="required:true,
-					 data:bj,
-					method:'get',
-					valueField:'dataDicId',
-					textField:'text',
-					panelHeight:'auto',
-					editable:false,
-					panelMaxHeight:140"/></td>
-			</tr> -->
-			<tr id="townTr">
-				<th><label>所属乡镇：</label></th>
-				<td><input id="town_id" class="easyui-combobox easyui-validatebox"
-					name="dataDicId"
-					data-options="required:true,
-					data:bj,
-					method:'get',
-					valueField:'dataDicId',
-					textField:'text',
-					panelHeight:'auto',
-					editable:false,
-					panelMaxHeight:140"/></td>
-			</tr>
-			<tr id="villageTr">
-				<th><label>所属村庄：</label></th>
-				<td><input id="village_id" class="easyui-combobox easyui-validatebox"
-					name="dataDicId"
-					data-options="required:true,
-					data:bj,
+					data-options="
+					data:town,
 					method:'get',
 					valueField:'dataDicId',
 					textField:'text',
@@ -95,20 +69,19 @@
 		</table>
 	</form>
 	<script>
-		$(document).ready(function(){
-			if('${flag}'==1){
-				$("#villageTr").hide();
-			}else{
-				$("#townTr").hide();
+	var town='${selects.town}';
+    var village='${selects.village}';
+		$(function(){
+			if('${flag}'==0){
+				$("#districtTr").hide();
 			}
 		})
 		$(function() {
 			if('${user.userId }'!=''){
 				$('.password').remove();
 			}
-			$('#village_id').combobox('select','${user.village.text}');
+			$('#district_id').combobox('select','${user.village.text}');
 		});
-       var bj=${selects.village};
 		function idcardready() {
 			$.post('baseUserController.do?getIdCardInfo', {
 				idCardNumber : $('#idCardNumber').val(),

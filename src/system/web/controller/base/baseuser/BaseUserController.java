@@ -4,7 +4,9 @@ import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tomcat.util.security.MD5Encoder;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -12,16 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.FloatArraySerializer;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import system.core.annotation.Log;
-import system.core.aspect.SystemLogAspect;
 import system.core.controller.BaseController;
 import system.core.enums.DataStateTypeEnum;
-import system.core.enums.ValidTypeEnum;
 import system.core.util.DateUtils;
 import system.core.util.IdcardUtils;
 import system.core.util.Md5Util;
@@ -29,8 +24,8 @@ import system.core.util.QueryParmFormat;
 import system.core.util.ResourceUtil;
 import system.core.util.StringUtil;
 import system.web.entity.base.Sys_Base_DataDictionary;
-import system.web.entity.base.Sys_Base_Role;
 import system.web.entity.base.Sys_Base_User;
+import system.web.entity.base.Sys_User;
 import system.web.service.base.baseuser.BaseUserServiceI;
 
 @Scope("prototype")
@@ -43,6 +38,7 @@ public class BaseUserController extends BaseController {
 
 	/**
 	 * 列表页跳转
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -54,6 +50,7 @@ public class BaseUserController extends BaseController {
 
 	/**
 	 * 获取datagrid数据
+	 * 
 	 * @param request
 	 * @param msg
 	 * @return
@@ -67,6 +64,7 @@ public class BaseUserController extends BaseController {
 
 	/**
 	 * 用户角色管理
+	 * 
 	 * @param request
 	 * @param sys_Base_DataDictionary
 	 * @return
@@ -106,7 +104,6 @@ public class BaseUserController extends BaseController {
 		} catch (Exception e) {
 			msg = DataStateTypeEnum.SAVE_ERROR.getMessage();
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 		jsonObject.put("msg", msg);
 		return jsonObject;
@@ -115,18 +112,17 @@ public class BaseUserController extends BaseController {
 	@RequestMapping(params = "goUserinfo")
 	@Log(operationName = "查看个人信息", operationType = 0)
 	public ModelAndView goUserinfo(HttpServletRequest request) {
-
 		request.setAttribute("user", ResourceUtil.getSys_User());
 		request.setAttribute(
 				"version",
 				baseUserService.get(Sys_Base_User.class,
 						ResourceUtil.getSys_User().getUserId()).getVersion());
 		return new ModelAndView("system/base/baseuser/user-info");
-
 	}
 
 	/**
 	 * 用户
+	 * 
 	 * @param request
 	 * @param jsonObject
 	 * @return
@@ -144,7 +140,13 @@ public class BaseUserController extends BaseController {
 			Sys_Base_User sys_Base_User, Sys_Base_DataDictionary dataDictionary) {
 		JSONObject jsonObject = new JSONObject();
 		String idCardNumber = sys_Base_User.getIdCardNumber();
-		sys_Base_User.setVillage(dataDictionary);
+		Sys_User nowUser = ResourceUtil.getSys_User();
+		String userRole = nowUser.getRoleCodeList();
+		if ("admin".equals(userRole)) {
+			sys_Base_User.setTown(dataDictionary);
+		}else if ("yy".equals(userRole)) {
+			sys_Base_User.setVillage(dataDictionary);
+		}
 		if (IdcardUtils.validateCard(idCardNumber)) {
 			sys_Base_User.setGener(IdcardUtils.getGenderByIdCard(idCardNumber));
 			try {
@@ -152,7 +154,6 @@ public class BaseUserController extends BaseController {
 						IdcardUtils.getBirthByIdCard(idCardNumber),
 						"yyyy-MM-dd"));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -173,7 +174,6 @@ public class BaseUserController extends BaseController {
 			} catch (Exception e) {
 				jsonObject
 						.put("msg", DataStateTypeEnum.SAVE_ERROR.getMessage());
-				// TODO: handle exception
 			}
 		} else {
 			try {
@@ -184,12 +184,8 @@ public class BaseUserController extends BaseController {
 						DataStateTypeEnum.ADD_SUCCESS.getMessage());
 			} catch (Exception e) {
 				jsonObject.put("msg", DataStateTypeEnum.ADD_ERROR.getMessage());
-				// TODO: handle exception
 			}
 		}
-
-		// request.setAttribute("user", ResourceUtil.getSys_Base_User());
-
 		return jsonObject;
 
 	}
@@ -218,13 +214,13 @@ public class BaseUserController extends BaseController {
 					.put("msg", DataStateTypeEnum.DELETE_SUCCESS.getMessage());
 		} catch (Exception e) {
 			jsonObject.put("msg", DataStateTypeEnum.DELETE_ERROR.getMessage());
-			// TODO: handle exception
 		}
 		return jsonObject;
 	}
 
 	/**
 	 * 新增或更新页面跳转
+	 * 
 	 * @param request
 	 * @param sys_Base_DataDictionary
 	 * @return
@@ -238,14 +234,17 @@ public class BaseUserController extends BaseController {
 		}
 		request.setAttribute("user", sys_Base_User);
 		JSONObject selectObject = new JSONObject();
-		/*管理员增加乡镇卫生院的用户 1代表管理员，2代表镇医院*/
+		/* 管理员增加乡镇卫生院的用户 1代表管理员，2代表镇医院 */
 		if ("admin".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
 			selectObject = baseUserService.getSelects("1");
 			request.setAttribute("flag", 1);
-		}else if ("yy".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
+		} else if ("yy".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
 			String town = ResourceUtil.getSys_User().getTown();
-			selectObject = baseUserService.getSelects(town.substring(town.indexOf("_")));
+			selectObject = baseUserService.getSelects(town.substring(town
+					.indexOf("_")));
 			request.setAttribute("flag", 2);
+		}else{
+			request.setAttribute("flag", 0);
 		}
 		request.setAttribute("selects", selectObject);
 		return new ModelAndView("system/base/baseuser/user-addorupdate");
@@ -274,11 +273,8 @@ public class BaseUserController extends BaseController {
 						.getAgeByIdCard(sys_Base_User.getIdCardNumber()));
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
-
 		request.setAttribute("user", sys_Base_User);
-
 		return new ModelAndView("system/base/baseuser/user-detail");
 	}
 
@@ -307,7 +303,6 @@ public class BaseUserController extends BaseController {
 				} else {
 					flag = true;
 				}
-
 				break;
 			case 1:// 验证身份证号
 				value = request.getParameter("idCardNumber");
@@ -318,7 +313,6 @@ public class BaseUserController extends BaseController {
 				break;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return flag;
 	}
@@ -340,7 +334,6 @@ public class BaseUserController extends BaseController {
 				jsonObject.put("age", IdcardUtils.getAgeByIdCard(idCardNumber));
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		jsonObject.put("state", state);
 		return jsonObject;
