@@ -11,7 +11,7 @@
 <link rel="bookmark" href="Res/favicon.ico" />
 <link rel="stylesheet" href="Res/styles/login/login.css">
 <script src="Res/js/jquery.js"></script>
-<title>北京市村镇卫生站血液检验系统</title>
+<title>检验共享系统</title>
 <script>
 	function checkuser() {
 		if($('#userName').val()==''){
@@ -72,7 +72,7 @@
 				<h1>
 					<img src=" Res/images/login/hospital.png">
 				</h1>
-				<h1>北京市村镇卫生站血液检验系统</h1>
+				<h1>检验共享系统</h1>
 				 
 			</div>
 			<div class="middle">

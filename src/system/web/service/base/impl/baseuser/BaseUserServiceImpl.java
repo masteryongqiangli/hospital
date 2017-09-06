@@ -42,8 +42,9 @@ import system.web.service.base.baseuser.BaseUserServiceI;
  */
 @Service("baseUserService")
 @Transactional
-public class BaseUserServiceImpl extends CommonServiceImpl implements BaseUserServiceI {
-	
+public class BaseUserServiceImpl extends CommonServiceImpl implements
+		BaseUserServiceI {
+
 	@Autowired
 	private DataDictionaryDaoI dataDictionaryDao;
 	@Autowired
@@ -57,8 +58,8 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements BaseUserSe
 
 	@Override
 	public Sys_Base_User login(Sys_Base_User sys_Base_User) {
-		List<Sys_Base_User> sys_Base_Users = baseUserDao.findByProperty(Sys_Base_User.class, "userName",
-				sys_Base_User.getUserName());
+		List<Sys_Base_User> sys_Base_Users = baseUserDao.findByProperty(
+				Sys_Base_User.class, "userName", sys_Base_User.getUserName());
 		if (sys_Base_Users.size() > 0 && sys_Base_Users.get(0).getState() == 1) {
 			return sys_Base_Users.get(0);
 		} else {
@@ -96,7 +97,8 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements BaseUserSe
 	}
 
 	public JSONObject getuserRoles(Sys_Base_User sys_Base_User) {
-		List<Sys_Base_Role_User> userRoles = baseUserDao.getuserRoles(sys_Base_User);
+		List<Sys_Base_Role_User> userRoles = baseUserDao
+				.getuserRoles(sys_Base_User);
 		Map<String, String> map = new HashMap<>();
 		List<Sys_Base_Role> listtotal = baseUserDao.getAll(Sys_Base_Role.class);
 		List<Sys_Base_Role> listin = new ArrayList<>();
@@ -132,7 +134,8 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements BaseUserSe
 		List<Sys_Base_Role_User> sys_Base_Role_Users = new ArrayList<>();
 		for (String roleid : in) {
 			for (Sys_Base_Role sys_Base_Role : listtotal) {
-				if (roleid.equals(sys_Base_Role.getRoleId()) && !listin.contains(sys_Base_Role)) {
+				if (roleid.equals(sys_Base_Role.getRoleId())
+						&& !listin.contains(sys_Base_Role)) {
 					listin.add(sys_Base_Role);
 					Sys_Base_Role_User sys_Base_Role_User = new Sys_Base_Role_User();
 					sys_Base_Role_User.setBaseuser(sys_Base_User);
@@ -164,70 +167,65 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements BaseUserSe
 
 	@Override
 	public JSONObject getHomeData() throws ParseException {
-		/*List<Map<String, Object>> list = baseUserDao.getHomeData();
-		JSONArray type1 = new JSONArray();
-		JSONArray type2 = new JSONArray();
-		JSONArray type3 = new JSONArray();
-		JSONArray dates=new JSONArray();
-		if (list.size() > 0) {
-			String maxDate = list.get(0).get("maxDate").toString();
-			String minDate = list.get(0).get("minDate").toString();
-			int days = (int) list.get(0).get("days");
-			for (int i = 0; i <days; i++) {
-				Calendar calendars = DateUtils.parseCalendar(minDate, "yyyy-MM-dd");
-				calendars.add(Calendar.DAY_OF_MONTH, i);
-				String date = DateUtils.formatDate(calendars);
-				
-				Object flag1=null;
-				boolean tag1=true;
-				Object flag2=null;
-				boolean tag2=true;
-				Object flag3=null;
-				boolean tag3=true;
-				for (int j = 0; j < list.size(); j++) {
-					if (tag1&&(int)list.get(j).get("evalType")==1&&date.equals(list.get(j).get("date").toString())) {
-						flag1 = Integer.parseInt(list.get(j).get("count").toString());
-						tag1=false;
-					}
-					if (tag2&&(int)list.get(j).get("evalType")==2&&date.equals(list.get(j).get("date").toString())) {
-						flag2 =  Integer.parseInt(list.get(j).get("count").toString());
-						tag2=false;
-					}
-					if (tag3&&(int)list.get(j).get("evalType")==3&&date.equals(list.get(j).get("date").toString())) {
-						flag3 =  Integer.parseInt(list.get(j).get("count").toString());
-						tag3=false;
-					} 
-					 
-					 }
-				
-				 if (flag1!=null||flag2!=null||flag3!=null) {
-					 type1.add(flag1);
-					type2.add(flag2);
-					type3.add(flag3); 
-					dates.add(date);
-					 
-				} 
-				 
-				
-			}
-		}
-		JSONObject object=new JSONObject();
-		object.put("type1", type1);
-		object.put("type2", type2);
-		object.put("type3",type3);
-		object.put("dates",dates);
-		return object;*/
+		/*
+		 * List<Map<String, Object>> list = baseUserDao.getHomeData(); JSONArray
+		 * type1 = new JSONArray(); JSONArray type2 = new JSONArray(); JSONArray
+		 * type3 = new JSONArray(); JSONArray dates=new JSONArray(); if
+		 * (list.size() > 0) { String maxDate =
+		 * list.get(0).get("maxDate").toString(); String minDate =
+		 * list.get(0).get("minDate").toString(); int days = (int)
+		 * list.get(0).get("days"); for (int i = 0; i <days; i++) { Calendar
+		 * calendars = DateUtils.parseCalendar(minDate, "yyyy-MM-dd");
+		 * calendars.add(Calendar.DAY_OF_MONTH, i); String date =
+		 * DateUtils.formatDate(calendars);
+		 * 
+		 * Object flag1=null; boolean tag1=true; Object flag2=null; boolean
+		 * tag2=true; Object flag3=null; boolean tag3=true; for (int j = 0; j <
+		 * list.size(); j++) { if
+		 * (tag1&&(int)list.get(j).get("evalType")==1&&date
+		 * .equals(list.get(j).get("date").toString())) { flag1 =
+		 * Integer.parseInt(list.get(j).get("count").toString()); tag1=false; }
+		 * if
+		 * (tag2&&(int)list.get(j).get("evalType")==2&&date.equals(list.get(j)
+		 * .get("date").toString())) { flag2 =
+		 * Integer.parseInt(list.get(j).get("count").toString()); tag2=false; }
+		 * if
+		 * (tag3&&(int)list.get(j).get("evalType")==3&&date.equals(list.get(j)
+		 * .get("date").toString())) { flag3 =
+		 * Integer.parseInt(list.get(j).get("count").toString()); tag3=false; }
+		 * 
+		 * }
+		 * 
+		 * if (flag1!=null||flag2!=null||flag3!=null) { type1.add(flag1);
+		 * type2.add(flag2); type3.add(flag3); dates.add(date);
+		 * 
+		 * }
+		 * 
+		 * 
+		 * } } JSONObject object=new JSONObject(); object.put("type1", type1);
+		 * object.put("type2", type2); object.put("type3",type3);
+		 * object.put("dates",dates); return object;
+		 */
 		return null;
 	}
 
 	@Override
-	public JSONObject getSelects() {
-		JSONObject jsonObject=new JSONObject();
-		String [] codes={"village"};
-		Map<String,List<Sys_Base_DataDictionary>> selects= dataDictionaryDao.getSelects(codes);
-	    for (int i = 0; i < codes.length; i++) {
-			jsonObject.put(codes[i], JSONHelper.parseListtToJSONArray(selects.get(codes[i])));
+	public JSONObject getSelects(String flag) {
+		JSONObject jsonObject = new JSONObject();
+		String[] codes = {};
+		String town = "";
+		if ("1".equals(flag)) {
+			codes[0] = "village";
+		}else{
+			codes[0] = "town";
+			town = flag;
 		}
-		  return jsonObject;
+		Map<String, List<Sys_Base_DataDictionary>> selects = dataDictionaryDao
+				.getSelects(codes,town);
+		for (int i = 0; i < codes.length; i++) {
+			jsonObject.put(codes[i],
+					JSONHelper.parseListtToJSONArray(selects.get(codes[i])));
+		}
+		return jsonObject;
 	}
 }

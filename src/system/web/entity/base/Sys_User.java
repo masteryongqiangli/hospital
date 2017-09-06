@@ -1,9 +1,5 @@
 package system.web.entity.base;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 @Entity
@@ -17,13 +13,8 @@ public class Sys_User {
 	private String age;
 	private String realName;
 	private String email;
-	public String getVillage() {
-		return village;
-	}
-	public void setVillage(String village) {
-		this.village = village;
-	}
 	private String village;
+	private String town;
 	private String phone;
 	private String roleIdList;
 	private String roleCodeList;
@@ -34,6 +25,18 @@ public class Sys_User {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
 	}
 	public String getUserName() {
 		return userName;

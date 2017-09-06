@@ -130,7 +130,7 @@ public class MenuController extends BaseController{
 		 JSONObject jsonObject=new  JSONObject();
 		 request.getParameter("menuId");
 		 sys_Base_Menu=menuService.get(Sys_Base_Menu.class, sys_Base_Menu.getMenuId());
-	
+		 /*删除根目录*/
 		 if (sys_Base_Menu.getParent_menu()==null) {
 			 try { 
 				 menuService.batchDelete(sys_Base_Menu);

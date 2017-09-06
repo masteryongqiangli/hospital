@@ -60,8 +60,8 @@
 					panelHeight:'auto',
 					editable:false,
 					panelMaxHeight:140"/></td>
-			</tr>
-			<tr>
+			</tr> -->
+			<tr id="townTr">
 				<th><label>所属乡镇：</label></th>
 				<td><input id="town_id" class="easyui-combobox easyui-validatebox"
 					name="dataDicId"
@@ -73,8 +73,8 @@
 					panelHeight:'auto',
 					editable:false,
 					panelMaxHeight:140"/></td>
-			</tr> -->
-			<tr>
+			</tr>
+			<tr id="villageTr">
 				<th><label>所属村庄：</label></th>
 				<td><input id="village_id" class="easyui-combobox easyui-validatebox"
 					name="dataDicId"
@@ -87,35 +87,21 @@
 					editable:false,
 					panelMaxHeight:140"/></td>
 			</tr>
-			<!--<tr>
-				<th><label>出生日期：</label></th>
-				<td><div id="birthDate">${birthDate }</div></td>
-			</tr>
-			<tr>
-				<th><label>性别：</label></th>
-				<td><div id="gener">${user.gener }</div></td>
-			</tr>
-			<tr>
-				<th><label>年龄：</label></th>
-				<td><div id="age">${age}</div></td>
-			</tr>
-			<tr>
-				<th><label>email：</label></th>
-				<td><input class="easyui-validatebox" type="text" name="email"
-					value="${user.email }" data-options="" validType="email"  /></td>
-			</tr>-->
 			<tr> 
 				<th><label>手机：</label></th>
 				<td><input class="easyui-validatebox" type="text" name="phone"  validType="phone"
 					value="${user.phone }" data-options="required:true" /></td>
 			</tr>
-
-
-
-
 		</table>
 	</form>
 	<script>
+		$(document).ready(function(){
+			if('${flag}'==1){
+				$("#villageTr").hide();
+			}else{
+				$("#townTr").hide();
+			}
+		})
 		$(function() {
 			if('${user.userId }'!=''){
 				$('.password').remove();

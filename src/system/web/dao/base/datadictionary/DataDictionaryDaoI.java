@@ -10,5 +10,5 @@ public interface DataDictionaryDaoI extends BaseDaoI {
 	 public  <T> List<Sys_Base_DataDictionary> getParentDataDicList();
 	 public  <T> List<Sys_Base_DataDictionary> getAllDataDicList(Map<String, String> parms);
 	public int batchDelete(Sys_Base_DataDictionary sys_Base_DataDictionary);
-	 public Map<String,List<Sys_Base_DataDictionary>> getSelects(String [] codes);
+	 public Map<String,List<Sys_Base_DataDictionary>> getSelects(String [] codes,String town);
 }

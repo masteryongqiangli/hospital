@@ -12,7 +12,7 @@
 
 <script src="Res/js/main/main.js"></script>
 
-<title>北京市村镇卫生站血液检验系统</title>
+<title>检验共享系统</title>
 </head>
 <body style="overflow-y:hidden;">
 	<!-- 头部 -->
@@ -20,7 +20,7 @@
 		<div>
 			<img style="float:left;margin-top: 18px;border: 2px solid #83c2f2;border-radius: 50%;"  src="Res/images/main/test/head.jpg" />
 			<h1 style="font-size: 30px;line-height: 80px;">
-			北京市村镇卫生站血液检验系统
+			        检验共享系统
 			<!-- <a><img src="Res/images/main/bg/toplogo.png"></a>  -->
 			</h1>
 		</div>
@@ -69,7 +69,7 @@
 
 	<!-- 尾部 -->
 	<div class="m-foot" style="width: 100%;text-align: center;">
-		<span> <a target="blank" class="c-cblue">版权所有 ©信管13班 地址：北京市昌平区府学路18号
+		<span> <a target="blank" class="c-cblue">版权所有 ©北京市房山区**** 地址：北京市房山区*****
 		</a>
 		</span>
 	</div>

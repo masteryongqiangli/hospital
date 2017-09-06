@@ -55,7 +55,7 @@ public class MenuDaoImpl extends BaseDaoImpl implements MenuDaoI {
 	}
 	public int  batchDelete(Sys_Base_Menu sys_Base_Menu){
 		String hql=" update Sys_Base_Menu s set s.state=0 where s.parent_menu =:parent_menu or s.menuId =:menuId ";
-		 Session session=getSession() ;
+		Session session=getSession() ;
 		Query  query=session.createQuery(hql);
 		query.setParameter("parent_menu",sys_Base_Menu.getParent_menu());
 		query.setParameter("menuId",sys_Base_Menu.getMenuId());
