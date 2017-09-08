@@ -14,14 +14,16 @@
 
 <title>检验共享系统</title>
 </head>
-<body style="overflow-y:hidden;">
+<body style="overflow-y: hidden;">
 	<!-- 头部 -->
 	<div id="header" class="m-header">
 		<div>
-			<img style="float:left;margin-top: 18px;border: 2px solid #83c2f2;border-radius: 50%;"  src="Res/images/main/test/head.jpg" />
-			<h1 style="font-size: 30px;line-height: 80px;">
-			        检验共享系统
-			<!-- <a><img src="Res/images/main/bg/toplogo.png"></a>  -->
+			<img
+				style="float: left; margin-top: 18px; border: 2px solid #83c2f2; border-radius: 50%;"
+				src="Res/images/main/test/head.jpg" />
+			<h1 style="font-size: 30px; line-height: 80px;">
+				检验共享系统
+				<!-- <a><img src="Res/images/main/bg/toplogo.png"></a>  -->
 			</h1>
 		</div>
 		<ul class="m-nav">
@@ -37,7 +39,7 @@
 		<div id="my" class="head-user">
 			<div class="g-left user-info">
 				<h3 class="g-textohide">${baseUser.realName}</h3>
-			<%-- 	<p class="g-textohide">${baseUser.roleNameList}</p> --%>
+				<%-- 	<p class="g-textohide">${baseUser.roleNameList}</p> --%>
 			</div>
 			<img src="Res/images/main/test/head.jpg" class="g-left" />
 			<dl>
@@ -51,7 +53,7 @@
 		<div id="lefttext" class="left-time g-left">加载中......</div>
 		<div class="m-tabnav g-left">
 			<ul id="tabs">
-				
+
 			</ul>
 		</div>
 	</div>
@@ -60,7 +62,7 @@
 		<!-- 左边导航 -->
 		<div class="m-leftnav">
 			<dl id="menulist">
-				
+
 			</dl>
 		</div>
 		<!-- 右边内容 -->
@@ -68,9 +70,9 @@
 	</div>
 
 	<!-- 尾部 -->
-	<div class="m-foot" style="width: 100%;text-align: center;">
-		<span> <a target="blank" class="c-cblue">版权所有 ©北京市房山区**** 地址：北京市房山区*****
-		</a>
+	<div class="m-foot" style="width: 100%; text-align: center;">
+		<span> <a target="blank" class="c-cblue">版权所有 ©北京市房山区****
+				地址：北京市房山区***** </a>
 		</span>
 	</div>
 	<!-- 消息弹出 -->
@@ -81,7 +83,7 @@
 		,{ text:'关闭',handler:function(){$('#userinfo').dialog('close');} }]">
 
 	</div>
- 
+
 	<script>
 		//控制高度
 		function resetHeight() {
@@ -151,23 +153,23 @@
 		}
 
 		function closetab(obj, id) {
-			if($('.nava.on').next().attr('onclick')==$(obj).attr('onclick')){
+			if ($('.nava.on').next().attr('onclick') == $(obj).attr('onclick')) {
 				$(obj).parents("li").prev().find('.nava').addClass('on');
 				$(obj).parents("li").remove();
 				$('#content' + id).prev().show();
 				$('#content' + id).remove();
-			}else{
+			} else {
 				$(obj).parents("li").remove();
 				$('#content' + id).remove();
 			}
-			
+
 		}
-		function selecttab(obj, id){
+		function selecttab(obj, id) {
 			$('.nava.on').removeClass('on');
 			$('.m-right').children().hide();
 			$(obj).parents("li").find('.nava').addClass('on');
 			$('#content' + id).show();
-			
+
 		}
 		//头部筛选旁边两个按钮的点击效果
 		$(".js-btnbox .js-btn").click(function() {
@@ -198,8 +200,10 @@
 				if (!closeable) {
 					str1 += 'style="padding-right:15px" ';
 				}
-				str1 += 'onclick="selecttab(this,\''+id+'\' ) " oncontextmenu="rightmenu(this)" href="javascript:void(0)" class="nava on">' + title
-						+ '</a>';
+				str1 += 'onclick="selecttab(this,\''
+						+ id
+						+ '\' ) " oncontextmenu="rightmenu(this)" href="javascript:void(0)" class="nava on">'
+						+ title + '</a>';
 				str1 + ' <a  href="javascript:void(0)" >';
 				if (closeable) {
 					str1 += '<i  onclick="closetab(this,\'' + id
@@ -227,56 +231,70 @@
 				makemenu(data)
 			}, 'json');
 		}
-		function startTime()
-		{
-		var today=new Date()
-		var h=today.getHours()
-		var m=today.getMinutes()
-		var s=today.getSeconds()
-		// add a zero in front of numbers<10
-		m=checkTime(m)
-		s=checkTime(s)
-		$('#lefttext').html(today.getFullYear()+'-'+checkTime(today.getMonth()+1) +'-'+checkTime(today.getDate())+'  '+h+":"+m+":"+s);
-		t=setTimeout('startTime()',1000)
+		function startTime() {
+			var today = new Date()
+			var h = today.getHours()
+			var m = today.getMinutes()
+			var s = today.getSeconds()
+			// add a zero in front of numbers<10
+			m = checkTime(m)
+			s = checkTime(s)
+			$('#lefttext').html(
+					today.getFullYear() + '-' + checkTime(today.getMonth() + 1)
+							+ '-' + checkTime(today.getDate()) + '  ' + h + ":"
+							+ m + ":" + s);
+			t = setTimeout('startTime()', 1000)
 		}
 
-		function checkTime(i)
-		{
-		if (i<10) 
-		  {i="0" + i}
-		  return i
+		function checkTime(i) {
+			if (i < 10) {
+				i = "0" + i
+			}
+			return i
 		}
 		function makemenu(data) {
 			var html = '';
 			for (var i = 0; i < data.length; i++) {
-				html += '<dt><a href="javascript:void(0)" ><i class="iconfont"></i>'
-						+ data[i].menuName + '</a></dt>';
-				html += '<dd><div class="nav-chirld"><h2><i class="iconfont"></i>'
-						+ data[i].menuName + '<ul>';
-				for (var j = 0; j < data[i].children.length; j++) {
-					html += '<li><a href="javascript:void(0)" onclick="addTab(\''
-							+ data[i].children[j].menuId
+				debugger
+				if (data[i].children.length == 0) {
+					html += '<dt><a href="javascript:void(0)" onclick="addTab(\''
+							+ data[i].menuId
 							+ '\',\''
-							+ data[i].children[j].menuName
+							+ data[i].menuName
 							+ '\',\''
-							+ data[i].children[j].menuUrl
-							+ '\',true)"><i class="iconfont"></i>'
-							+ data[i].children[j].menuName + '</a></li>';
+							+ data[i].menuUrl
+							+ '\',true)"><i class="iconfont"></i>'
+							+ data[i].menuName + '</a></dt>';
+				} else {
+					html += '<dt><a href="javascript:void(0)" ><i class="iconfont"></i>'
+							+ data[i].menuName + '</a></dt>';
+					html += '<dd><div class="nav-chirld"><h2><i class="iconfont"></i>'
+							+ data[i].menuName + '<ul>';
+					for (var j = 0; j < data[i].children.length; j++) {
+						html += '<li><a href="javascript:void(0)" onclick="addTab(\''
+								+ data[i].children[j].menuId
+								+ '\',\''
+								+ data[i].children[j].menuName
+								+ '\',\''
+								+ data[i].children[j].menuUrl
+								+ '\',true)"><i class="iconfont"></i>'
+								+ data[i].children[j].menuName + '</a></li>';
+					}
+					html += '</ul></div></dd>';
 				}
-				html += '</ul></div></dd>';
 			}
 			$('#menulist').html(html);
 			refreshmenu();
 		}
- 
-		$(window).resize(function() {
-			  $('.content').css({"padding":"0px","background": "#fafafa","width":
-						parseInt($('.m-right').width()) , "height":
-						parseInt($('.m-right').height())
-						});
-			});
 
-		 
+		$(window).resize(function() {
+			$('.content').css({
+				"padding" : "0px",
+				"background" : "#fafafa",
+				"width" : parseInt($('.m-right').width()),
+				"height" : parseInt($('.m-right').height())
+			});
+		});
 	</script>
 </body>
 </html>
