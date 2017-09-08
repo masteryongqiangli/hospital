@@ -29,7 +29,6 @@
 								formobj.id + '-list', dialog_id);
 					}
 				});
-		alert(formobj.id)
 		$('#' + formobj.id).submit();
 
 	}

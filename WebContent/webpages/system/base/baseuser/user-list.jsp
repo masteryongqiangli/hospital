@@ -62,7 +62,7 @@
 				halign : 'center'
 			}, {
 				field : 'village',
-				title : '村庄',
+				title : '行政区划',
 				width : 60,
 				align : 'center',
 				halign : 'center'

@@ -46,7 +46,6 @@ public class RoleDaoImpl extends BaseDaoImpl implements RoleDaoI {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Sys_Base_Role_Menu> getRoleMenus(Sys_Base_Role sys_Base_Role) {
-
 		return super.createCriteria(Sys_Base_Role_Menu.class).add(Restrictions.eq("role", sys_Base_Role)).list();
 	}
 

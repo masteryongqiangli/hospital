@@ -25,28 +25,29 @@
 
 				var str = '<div id="'+In[i].menu.menuId+'"parent_id="'+parent_id +'" class="drag" ><div><span>'
 						+ In[i].menu.menuName;
-				str += '</span></div><div><span>' + In[i].menu.menuUrl + '</span></div>';
-				if(parent_id!='null'){
+				str += '</span></div><div><span>' + In[i].menu.menuUrl
+						+ '</span></div>';
+				if (parent_id != 'null') {
 					str += '<div><span>增&nbsp;<input type="checkbox" name="addAuth" '
-					if(In[i].addAuth){
-						str+='checked="checked"';
+					if (In[i].addAuth) {
+						str += 'checked="checked"';
 					}
-					str +=	' />';
+					str += ' />';
 					str += '删&nbsp;<input type="checkbox"  name="delAuth"  ';
-					if(In[i].delAuth){
-						str+='checked="checked"';
+					if (In[i].delAuth) {
+						str += 'checked="checked"';
 					}
-					str +=	' />';
+					str += ' />';
 					str += '改&nbsp;<input type="checkbox"  name="updateAuth"  ';
-					if(In[i].updateAuth){
-						str+='checked="checked"';
+					if (In[i].updateAuth) {
+						str += 'checked="checked"';
 					}
-					str +=	' />';
+					str += ' />';
 					str += '查&nbsp;<input type="checkbox"  name="lookAuth"  ';
-					if(In[i].lookAuth){
-						str+='checked="checked"';
+					if (In[i].lookAuth) {
+						str += 'checked="checked"';
 					}
-					str +=	' /></span></div>';
+					str += ' /></span></div>';
 				}
 				str += '</div>'
 				$('#In').append(str)
@@ -57,14 +58,15 @@
 						: NotIn[i].parent_menu.menuId
 				var str = '<div id="'+NotIn[i].menuId+'"parent_id="'+parent_id +'" class="drag" ><div><span>'
 						+ NotIn[i].menuName;
-				str += '</span></div><div><span>' + NotIn[i].menuUrl + '</span></div>';
-				if(parent_id!='null'){
+				str += '</span></div><div><span>' + NotIn[i].menuUrl
+						+ '</span></div>';
+				if (parent_id != 'null') {
 					str += '<div><span>增<input type="checkbox" name="addAuth" />';
 					str += '删<input type="checkbox" name="delAuth"/>';
 					str += '改<input type="checkbox" name="updateAuth"/>';
 					str += '查<input type="checkbox" name="lookAuth" /></span></div>';
 				}
-				
+
 				str += '</div>'
 				$('#NotIn').append(str)
 			}
@@ -118,40 +120,34 @@
 			});
 		}
 
-		 function saveorupdate(objobj, dialog_id) {
+		function saveorupdate(objobj, dialog_id) {
 			var list = $('#In').children('.drag');
 			var array = [];
 			var parentarray = [];
 			for (var i = 0; i < list.length; i++) {
-				if($(list[i]).attr('parent_id')!='null'){
-					var obj={id:$(list[i]).attr('id'),
-							addAuth:$(list[i]).find("[name='addAuth']")[0].checked,
-							delAuth:$(list[i]).find("[name='delAuth']")[0].checked,
-							updateAuth:$(list[i]).find("[name='updateAuth']")[0].checked,
-							lookAuth:$(list[i]).find("[name='lookAuth']")[0].checked}
-					array.push(obj);
-					if(parentarray.indexOf($(list[i]).attr('parent_id'))<0 ){
-						var obj1={id:$(list[i]).attr('parent_id')}
-						array.push(obj1);
-						parentarray.push($(list[i]).attr('parent_id'));
+				if ($(list[i]).attr('parent_id') != 'null') {
+					var obj = {
+						id : $(list[i]).attr('id'),
+						addAuth : $(list[i]).find("[name='addAuth']")[0].checked,
+						delAuth : $(list[i]).find("[name='delAuth']")[0].checked,
+						updateAuth : $(list[i]).find("[name='updateAuth']")[0].checked,
+						lookAuth : $(list[i]).find("[name='lookAuth']")[0].checked
 					}
+					array.push(obj);
+				} else {
+					var obj = {
+						id : $(list[i]).attr('id')
+					}
+					array.push(obj);
 				}
 			}
- 
-			    $.post('roleController.do?saveRoleMenus', {
-				roleId : '${role.roleId}',
-				array :JSON.stringify(array)
-			}, function(data) {
-				/* $.messager.show({
-					title : '提示消息',
-					msg : data.msg,
-					timeout : 5000,
-					showType : 'slide'
-				}); */
-				  top.$('#' + objobj.id)[0].contentWindow.reload(data,'role-list',
-						dialog_id);  
-			}, 'json');   
-		} 
+			$.post('roleController.do?saveRoleMenus&array='+JSON.stringify(array), {
+					roleId : '${role.roleId}'
+				}, function(data) {
+					top.$('#' + objobj.id)[0].contentWindow.reload(data,
+							'role-list', dialog_id);
+				}, 'json');
+		}
 	</script>
 </body>
 </html>

@@ -98,11 +98,7 @@ public class RoleServiceImpl extends CommonServiceImpl implements RoleServiceI {
 				}
 				}
 		}
-			 
-			
 		roleDaoImpl.batchsave(sys_Base_Role_Menus);
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
