@@ -78,8 +78,10 @@
 		$(function() {
 			if('${user.userId }'!=''){
 				$('.password').remove();
+				if('${flag}' != "0"){
+					$('#district_id').combobox('select','${user.selectData.text}');
+				}
 			}
-			/* $('#district_id').combobox('select','${user.selectData.text}'); */
 		});
 		function idcardready() {
 			$.post('baseUserController.do?getIdCardInfo', {

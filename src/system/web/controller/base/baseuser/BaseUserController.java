@@ -232,13 +232,18 @@ public class BaseUserController extends BaseController {
 			sys_Base_User = baseUserService.get(Sys_Base_User.class,
 					sys_Base_User.getUserId());
 		}
-		JSONObject jsonObject2 = JSONObject.fromObject(sys_Base_User);
-		if (jsonObject2.get("town")!=null) {
-			jsonObject2.put("selectData", jsonObject2.get("town"));
-		}else if(jsonObject2.get("village")!=null){
-			jsonObject2.put("selectData", jsonObject2.get("village"));
+		JSONObject jsonObject2 = new JSONObject();
+		if (sys_Base_User.getUserId()!=null) {
+			jsonObject2 = JSONObject.fromObject(sys_Base_User);
+			if (jsonObject2.get("town")!=null) {
+				jsonObject2.put("selectData", jsonObject2.get("town"));
+			}else if(jsonObject2.get("village")!=null){
+				jsonObject2.put("selectData", jsonObject2.get("village"));
+			}
+			request.setAttribute("user", jsonObject2);
+		}else{
+			request.setAttribute("user", sys_Base_User);
 		}
-		request.setAttribute("user", jsonObject2);
 		JSONObject selectObject = new JSONObject();
 		JSONObject jsonObject = new JSONObject();
 		/* 管理员增加乡镇卫生院的用户 1代表管理员，2代表镇医院 */
@@ -248,8 +253,7 @@ public class BaseUserController extends BaseController {
 			jsonObject.put("selectData", selectObject.get("town"));
 		} else if ("yy".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
 			String town = ResourceUtil.getSys_User().getTown();
-			selectObject = baseUserService.getSelects(town.substring(town
-					.indexOf("_")));
+			selectObject = baseUserService.getSelects(town.substring(town.indexOf("_")));
 			jsonObject.put("selectData", selectObject.get("village"));
 			request.setAttribute("flag", 2);
 		}else{
