@@ -60,8 +60,9 @@ public class MenuServiceImpl extends CommonServiceImpl implements MenuServiceI {
 				//jo1.put("iconPath",list.get(i).getIcon().getUploadFile().getPath());
 				jo1.put("children", children);
 				jsonArray.add(jo1);
+			}else{
+				
 			}
-			
 		}
 		return jsonArray;
 	}

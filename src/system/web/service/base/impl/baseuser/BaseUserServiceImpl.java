@@ -53,7 +53,19 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 	private RoleDaoI roleDao;
 
 	public JSONObject getDataGridJson(Map<String, String> parms) {
-		return baseUserDao.getSysUsers(parms);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject = baseUserDao.getSysUsers(parms);
+		JSONArray array = JSONArray.fromObject(jsonObject.get("rows"));
+		for(int i=0;i<array.size();i++){
+			JSONObject jsonObject2 = array.getJSONObject(i);
+			if (!jsonObject2.get("town").equals("")) {
+				jsonObject2.put("selectData", jsonObject2.get("town"));
+			}else if(!jsonObject2.get("village").equals("")){
+				jsonObject2.put("selectData", jsonObject2.get("village"));
+			}
+		}
+		jsonObject.put("rows", array);
+		return jsonObject;
 	}
 
 	@Override
@@ -212,13 +224,13 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 	@Override
 	public JSONObject getSelects(String flag) {
 		JSONObject jsonObject = new JSONObject();
-		String[] codes = {};
+		String[] codes = {""};
 		String town = "";
-		if ("1".equals(flag)) {
+		if ("2".equals(flag)) {
 			codes[0] = "village";
-		}else{
-			codes[0] = "town";
 			town = flag;
+		}else if("1".equals(flag)){
+			codes[0] = "town";
 		}
 		Map<String, List<Sys_Base_DataDictionary>> selects = dataDictionaryDao
 				.getSelects(codes,town);

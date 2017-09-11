@@ -142,7 +142,7 @@ public class BaseUserController extends BaseController {
 		String idCardNumber = sys_Base_User.getIdCardNumber();
 		Sys_User nowUser = ResourceUtil.getSys_User();
 		String userRole = nowUser.getRoleCodeList();
-		if ("admin".equals(userRole)) {
+		if ("manager".equals(userRole)) {
 			sys_Base_User.setTown(dataDictionary);
 		}else if ("yy".equals(userRole)) {
 			sys_Base_User.setVillage(dataDictionary);
@@ -232,21 +232,30 @@ public class BaseUserController extends BaseController {
 			sys_Base_User = baseUserService.get(Sys_Base_User.class,
 					sys_Base_User.getUserId());
 		}
-		request.setAttribute("user", sys_Base_User);
+		JSONObject jsonObject2 = JSONObject.fromObject(sys_Base_User);
+		if (jsonObject2.get("town")!=null) {
+			jsonObject2.put("selectData", jsonObject2.get("town"));
+		}else if(jsonObject2.get("village")!=null){
+			jsonObject2.put("selectData", jsonObject2.get("village"));
+		}
+		request.setAttribute("user", jsonObject2);
 		JSONObject selectObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 		/* 管理员增加乡镇卫生院的用户 1代表管理员，2代表镇医院 */
-		if ("admin".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
+		if ("manager".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
 			selectObject = baseUserService.getSelects("1");
 			request.setAttribute("flag", 1);
+			jsonObject.put("selectData", selectObject.get("town"));
 		} else if ("yy".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
 			String town = ResourceUtil.getSys_User().getTown();
 			selectObject = baseUserService.getSelects(town.substring(town
 					.indexOf("_")));
+			jsonObject.put("selectData", selectObject.get("village"));
 			request.setAttribute("flag", 2);
 		}else{
 			request.setAttribute("flag", 0);
 		}
-		request.setAttribute("selects", selectObject);
+		request.setAttribute("selects", jsonObject);
 		return new ModelAndView("system/base/baseuser/user-addorupdate");
 	}
 

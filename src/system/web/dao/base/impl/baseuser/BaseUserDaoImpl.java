@@ -77,6 +77,7 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		query.addEntity(Sys_User.class);
 		return query.list();
 	}
+	@SuppressWarnings("unchecked")
 	public List<Sys_Base_Role_User> getuserRoles(Sys_Base_User sys_Base_User) {
 		 
 		return super.createCriteria(Sys_Base_Role_User.class).add(Restrictions.eq("baseuser", sys_Base_User)).list();

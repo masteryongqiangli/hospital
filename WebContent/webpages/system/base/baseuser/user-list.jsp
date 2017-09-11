@@ -61,7 +61,7 @@
 				align : 'center',
 				halign : 'center'
 			}, {
-				field : 'village',
+				field : 'selectData',
 				title : '行政区划',
 				width : 60,
 				align : 'center',

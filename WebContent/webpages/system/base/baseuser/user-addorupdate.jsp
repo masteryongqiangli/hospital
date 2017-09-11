@@ -53,7 +53,7 @@
 				<td><input id="district_id" class="easyui-combobox easyui-validatebox"
 					name="dataDicId"
 					data-options="
-					data:town,
+					data:data,
 					method:'get',
 					valueField:'dataDicId',
 					textField:'text',
@@ -69,8 +69,7 @@
 		</table>
 	</form>
 	<script>
-	var town='${selects.town}';
-    var village='${selects.village}';
+	var data = JSON.parse('${selects.selectData}');
 		$(function(){
 			if('${flag}'==0){
 				$("#districtTr").hide();
@@ -80,7 +79,7 @@
 			if('${user.userId }'!=''){
 				$('.password').remove();
 			}
-			$('#district_id').combobox('select','${user.village.text}');
+			/* $('#district_id').combobox('select','${user.selectData.text}'); */
 		});
 		function idcardready() {
 			$.post('baseUserController.do?getIdCardInfo', {
