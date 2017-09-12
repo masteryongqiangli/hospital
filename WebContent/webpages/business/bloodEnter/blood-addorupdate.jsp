@@ -72,10 +72,13 @@
 		$("#bloodNumber").val('${villageNum}'+today.getFullYear()+today.getMonth()+today.getDay()+today.getHours()+today.getMinutes()+today.getSeconds());
 	});
 	$("#blooderIdCard").blur(function(){
-		alert($(this).val().substr(6,4))
 		var nowDate = new Date();
 		var age = nowDate.getFullYear()- parseInt($(this).val().substr(6,4));
-		$("#blooderAge").val(age);
+		if($(this).val()==""){
+			$("#blooderAge").val("");
+		}else{
+			$("#blooderAge").val(age);
+		}
 	});
 	var districtData=JSON.parse('${districtData}').data;
 		$.extend($.fn.validatebox.defaults.rules, {    

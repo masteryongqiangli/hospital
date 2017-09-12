@@ -140,4 +140,14 @@ public class bloodResultController extends BaseController{
 		jsonObject.put("msg", bloodResultService.getResultId(request.getParameter("bloodId")));
 		return jsonObject;
 	}
+	/**
+	 * 跳转导入数据页面
+	 * @return
+	 */
+	@RequestMapping(params="goImportResult")
+	@ResponseBody
+	@Log(operationName="跳转导入数据页面",operationType=0)
+	public ModelAndView goImportResult(){
+		return new ModelAndView("business/bloodResult/importResult");
+	}
 }

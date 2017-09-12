@@ -30,14 +30,7 @@
 					<li><a id="find" href="#" class="easyui-linkbutton"
 						data-options="iconCls:'icon-search'"
 						onclick="find('bloodResult-list')">查询</a></li>
-					<li><div style="width: 100px; display: inline;">
-							<form id="bloodResultFile" style="display: inline;"
-								action="bloodResultController.do?bloodResultFile" method="post" enctype="multipart/form-data">
-								<input type="file" id="resultFile" name="resultFile"
-									class="resultFile" onchange="UploadFile()" />
-							</form>
-							<a href="#" class="easyui-linkbutton" data-options="width:'70px'">导入数据</a>
-						</div></li>
+					<li><a href="#" class="easyui-linkbutton" data-options="width:'70px'" onclick="openImportDialog()">导入数据</a></li>
 				</ul>
 			</div>
 		</div>
@@ -233,6 +226,9 @@
 		function updateItem(Id,index) {
 			//var data = $('#bloodResult-list').datagrid('getData').rows[index];
 			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.85);
+		}
+		function openImportDialog(){
+			openDialog('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.85);
 		}
 	</script>
 </body>
