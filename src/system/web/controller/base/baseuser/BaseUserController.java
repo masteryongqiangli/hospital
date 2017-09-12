@@ -142,7 +142,9 @@ public class BaseUserController extends BaseController {
 		String idCardNumber = sys_Base_User.getIdCardNumber();
 		Sys_User nowUser = ResourceUtil.getSys_User();
 		String userRole = nowUser.getRoleCodeList();
-		if ("manager".equals(userRole)) {
+		if ("sa".equals(userRole)) {
+			sys_Base_User.setDistrict(dataDictionary);
+		}else if ("manager".equals(userRole)) {
 			sys_Base_User.setTown(dataDictionary);
 		}else if ("yy".equals(userRole)) {
 			sys_Base_User.setVillage(dataDictionary);

@@ -75,7 +75,7 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 		sql.append(" SELECT  b.*,a.code as parentCode  FROM Sys_Base_DataDictionary a ");
 		sql.append("LEFT join  Sys_Base_DataDictionary b ON b.parent_DataDictionary=a.dataDicId");
 		sql.append(" where a.state=1 AND b.dataDicId IS  not NULL  ");
-		if (codes.length > 0) {
+		if (codes.length > 0&&codes[0].equals("bj")) {
 			sql.append("AND  (      ");
 			for (int i = 0; i < codes.length; i++) {
 				if (i == 0) {
@@ -87,7 +87,7 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 			sql.append(") ");
 		}
 		if (!flag.equals("")) {
-			sql.append(" and b.code like '%%"+flag+"%%'");
+			sql.append(" and a.text like '%%"+flag+"%%'");
 		}
 		sql.append("order by b.orderNum,a.orderNum");
 		SQLQuery query = this.getSession().createSQLQuery(sql.toString());
@@ -96,22 +96,14 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 		for (String code : codes) {
 			List<Sys_Base_DataDictionary> dataDictionaries = new ArrayList<>();
 			for (Map<String, Object> select : datas) {
-				if (code.equals((String) select.get("parentCode"))) {
-					Sys_Base_DataDictionary sys_Base_DataDictionary = new Sys_Base_DataDictionary();
-					sys_Base_DataDictionary.setDataDicId((String) select
-							.get("dataDicId"));
-					sys_Base_DataDictionary
-							.setCode((String) select.get("code"));
-					sys_Base_DataDictionary
-							.setText((String) select.get("text"));
-					;
-					sys_Base_DataDictionary.setOrderNum((int) select
-							.get("orderNum"));
-					sys_Base_DataDictionary.setState((int) select.get("state"));
-					sys_Base_DataDictionary.setVersion((int) select
-							.get("version"));
-					dataDictionaries.add(sys_Base_DataDictionary);
-				}
+				Sys_Base_DataDictionary sys_Base_DataDictionary = new Sys_Base_DataDictionary();
+				sys_Base_DataDictionary.setDataDicId((String) select.get("dataDicId"));
+				sys_Base_DataDictionary.setCode((String) select.get("code"));
+				sys_Base_DataDictionary.setText((String) select.get("text"));
+				sys_Base_DataDictionary.setOrderNum((int) select.get("orderNum"));
+				sys_Base_DataDictionary.setState((int) select.get("state"));
+				sys_Base_DataDictionary.setVersion((int) select.get("version"));
+				dataDictionaries.add(sys_Base_DataDictionary);
 			}
 			selects.put(code, dataDictionaries);
 		}

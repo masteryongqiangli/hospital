@@ -74,13 +74,16 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 	public Sys_Base_User login(Sys_Base_User sys_Base_User) {
 		List<Sys_Base_User> sys_Base_Users = baseUserDao.findByProperty(
 				Sys_Base_User.class, "userName", sys_Base_User.getUserName());
-		if (sys_Base_Users.size() > 0 && sys_Base_Users.get(0).getState() == 1) {
-			return sys_Base_Users.get(0);
-		} else {
-			return null;
+		if (sys_Base_Users.size() > 0){
+			for(int i=0;i<sys_Base_Users.size();i++){
+				if (sys_Base_Users.get(i).getState()==1) {
+					sys_Base_User = sys_Base_Users.get(i);
+				}
+			}
+		}else{
+			sys_Base_User = null;
 		}
-		// TODO Auto-generated method stub
-
+		return sys_Base_User;
 	}
 
 	@Override
@@ -231,7 +234,6 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 			codes[0] = "bj";
 		}else if(flag1==1) {
 			codes[0] = "town";
-			
 		}else if(flag1==2){
 			codes[0] = "village";
 		}
