@@ -156,4 +156,15 @@ public class bloodEnterController extends BaseController{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	@RequestMapping(params="getBloodNumber")
+	@ResponseBody
+	@Log(operationName="获取血样编号序号",operationType=0)
+	public JSONObject getBloodNumber(HttpServletRequest request){
+		String village = ResourceUtil.getSys_User().getVillage();
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("msg", bloodEnterService.getBloodNumber(village));
+		return jsonObject;
+	}
 }

@@ -75,4 +75,12 @@ public class bloodEnterDaoImpl extends BaseDaoImpl implements bloodEnterDao{
 		sqlBuffer.append(" WHERE b.id = '"+bloodEnterId+"' ");
 		return connection.getJsonObjectBySql(sqlBuffer.toString());
 	}
+
+	@Override
+	public String getBloodNumber(String village) {
+		StringBuffer buffer = new StringBuffer();
+		GetConnection connection = new GetConnection();
+		buffer.append("");
+		return connection.getcol(buffer.toString());
+	}
 }

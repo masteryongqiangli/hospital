@@ -24,5 +24,7 @@ public interface bloodEnterService extends CommonServiceI{
 	public boolean doDelete(String bloodId);
 	
 	public JSONObject getOneBlood(String bloodEnterId);
+
+	public String getBloodNumber(String village);
 	
 }

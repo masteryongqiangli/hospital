@@ -42,4 +42,9 @@ public class bloodEnterServiceImpl extends CommonServiceImpl implements bloodEnt
 	public JSONObject getOneBlood(String bloodEnterId){
 		return bloodEnterDao.getOneBlood(bloodEnterId);
 	}
+
+	@Override
+	public String getBloodNumber(String village) {
+		return bloodEnterDao.getBloodNumber(village);
+	}
 }

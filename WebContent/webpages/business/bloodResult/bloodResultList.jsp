@@ -224,7 +224,6 @@
 			deleteItem('bloodResultController.do?doDelete&resultId='+Id,'bloodResult-list');
 		}
 		function updateItem(Id,index) {
-			//var data = $('#bloodResult-list').datagrid('getData').rows[index];
 			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.85);
 		}
 		function openImportDialog(){
