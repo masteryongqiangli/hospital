@@ -45,10 +45,10 @@ public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 		return sql;
 	}
 	
-	public boolean importBloodResult(Map<String, Object> map){
+	public boolean importBloodResult(Map<String, Object> map,String village){
 		GetConnection connection = new GetConnection();
 		StringBuffer sql = new StringBuffer();
-		String bloodEnterId = connection.getcol("select id from Sys_Base_bloodEnter where blooderName = '"+map.get("name")+"';");
+		String bloodEnterId = connection.getcol("select TOP 1 id from Sys_Base_bloodEnter where blooderDistrict = '"+village+"' AND state IS NULL");
 		sql.append("insert into Sys_Base_bloodResult (id,ALB,ALP,ALT,[AST],[CK],[CK_MB],[CRE],[DBIL],[GGT],[GLU],[HBDH],[HDL_C],[LDH],[LDL_C],[TBIL],[TC],[TG],[TP],[UA],[UREA],[bloodEnterId]) ");
 		sql.append("values ('"+system.core.util.UUIDGenerator.generate().toString()+"',");
 		sql.append("'"+(map.get("ALB")==null?"":map.get("ALB"))+"',");

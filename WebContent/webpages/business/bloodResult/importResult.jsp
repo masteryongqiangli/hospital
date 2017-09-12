@@ -8,9 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
+<form id="bloodResult" method="post" enctype="multipart/form-data"
+		action="bloodResultController.do?bloodResultFile">
 	<table border="0" cellspacing="0" cellpadding="0" class="submit-table">
 		<tr>
-			<th><label>所属区县：</label></th>
+			<th><label>所属卫生站：</label></th>
 			<td><input id="blooderDistrict"
 				class="easyui-combobox easyui-validatebox" value=""
 				name="blooderDistrict"
@@ -24,32 +26,17 @@
 					panelMaxHeight:140" /></td>
 		</tr>
 		<tr>
-			<td>
+			<td colspan="2">
 				<div style="width: 100px; display: inline;">
-					<form id="bloodResultFile" style="display: inline;"
-						action="bloodResultController.do?bloodResultFile" method="post"
-						enctype="multipart/form-data">
 						<input type="file" id="resultFile" name="resultFile"
 							class="resultFile" onchange="UploadFile()" />
-					</form>
-					<a href="#" class="easyui-linkbutton" data-options="width:'70px'">导入数据</a>
 				</div>
 			</td>
 		</tr>
 	</table>
+	</form>
 	<script>
-		var districtData = [ {
-			'dataDicId' : '昌平',
-			'text' : '昌平'
-		} ]
-		$.extend($.fn.validatebox.defaults.rules, {
-			equals : {
-				validator : function(value, param) {
-					return value == $(param[0]).val();
-				},
-				message : '两次输入的密码不一致！'
-			}
-		});
+		var districtData = JSON.parse('${village.selectData}');
 	</script>
 </body>
 </html>

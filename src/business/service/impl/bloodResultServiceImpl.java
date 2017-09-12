@@ -34,7 +34,7 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 		return bloodResultDao.getBloodResultList(map);
 	}
 
-	public boolean readExcel(MultipartFile file) {
+	public boolean readExcel(MultipartFile file,String village) {
 		String fileType = file.getOriginalFilename().substring(
 				file.getOriginalFilename().lastIndexOf(".") + 1,
 				file.getOriginalFilename().length());
@@ -90,12 +90,12 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 			
 			int k=i+1;
 			if (k==sheetList.size()) {
-				if(bloodResultDao.importBloodResult(onePerson)){
+				if(bloodResultDao.importBloodResult(onePerson,village)){
 					f++;
 				}
 			}else{
 				if (!sheetList.get(k).get("姓名").equals(onePerson.get("name"))) {
-					if(bloodResultDao.importBloodResult(onePerson)){
+					if(bloodResultDao.importBloodResult(onePerson,village)){
 						f++;
 					}
 					onePerson.clear();

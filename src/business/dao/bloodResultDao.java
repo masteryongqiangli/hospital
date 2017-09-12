@@ -9,7 +9,7 @@ import system.core.dao.BaseDaoI;
 public interface bloodResultDao extends BaseDaoI{
 	public JSONObject getBloodResultList(Map<String, String> map);
 	
-	public boolean importBloodResult(Map<String, Object> onePerson);
+	public boolean importBloodResult(Map<String, Object> onePerson,String village);
 	
 	public JSONObject getBloodInfo(String bloodId);
 	
