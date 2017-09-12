@@ -86,7 +86,7 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 			}
 			sql.append(") ");
 		}
-		if (flag!="") {
+		if (!flag.equals("")) {
 			sql.append(" and b.code like '%%"+flag+"%%'");
 		}
 		sql.append("order by b.orderNum,a.orderNum");

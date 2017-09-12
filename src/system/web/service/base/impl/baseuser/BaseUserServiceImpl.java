@@ -58,7 +58,9 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 		JSONArray array = JSONArray.fromObject(jsonObject.get("rows"));
 		for(int i=0;i<array.size();i++){
 			JSONObject jsonObject2 = array.getJSONObject(i);
-			if (!jsonObject2.get("town").equals("")) {
+			if (!jsonObject2.get("district").equals("")) {
+				jsonObject2.put("selectData", jsonObject2.get("district"));
+			}else if(!jsonObject2.get("town").equals("")){
 				jsonObject2.put("selectData", jsonObject2.get("town"));
 			}else if(!jsonObject2.get("village").equals("")){
 				jsonObject2.put("selectData", jsonObject2.get("village"));
@@ -225,12 +227,12 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 	public JSONObject getSelects(int flag1,String flag2) {
 		JSONObject jsonObject = new JSONObject();
 		String[] codes = {""};
-		if ("0".equals(flag1)) {
+		if (flag1==0) {
 			codes[0] = "bj";
-		}else if("1".equals(flag1)) {
+		}else if(flag1==1) {
 			codes[0] = "town";
 			
-		}else if("2".equals(flag2)){
+		}else if(flag1==2){
 			codes[0] = "village";
 		}
 		Map<String, List<Sys_Base_DataDictionary>> selects = dataDictionaryDao.getSelects(codes,flag2);
@@ -238,6 +240,14 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 			jsonObject.put(codes[i],
 					JSONHelper.parseListtToJSONArray(selects.get(codes[i])));
 		}
-		return jsonObject;
+		JSONObject jsonObject2 = new JSONObject();
+		if (flag1==0){
+			jsonObject2.put("selectData", jsonObject.get("bj"));
+		}else if(flag1==1){
+			jsonObject2.put("selectData", jsonObject.get("town"));
+		}else if(flag1==2){
+			jsonObject2.put("selectData", jsonObject.get("village"));
+		}
+		return jsonObject2;
 	}
 }

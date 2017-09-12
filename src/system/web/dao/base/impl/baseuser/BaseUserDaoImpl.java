@@ -91,7 +91,7 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 	   }
 	public StringBuffer getSysUserSql(){
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT a.userId, a.userName, a.idCardNumber, a.gener, d.text as village,e.text AS town,CONVERT(varchar(100), a.birthDate, 23) AS birthDate ,");
+		sql.append(" SELECT a.userId, a.userName, a.idCardNumber, a.gener, d.text as village,e.text AS town,f.text AS district,CONVERT(varchar(100), a.birthDate, 23) AS birthDate ,");
 		sql.append( " CASE WHEN a.birthDate IS NULL THEN 0 ELSE year(GETDATE()) - LEFT(a.birthDate, 4) END AS age,");
 		sql.append( " a.realName, a.email, a.phone, ");
 		sql.append( " STUFF(( SELECT ',' + roleId FROM Sys_Base_Role WHERE roleId = c.roleId ), 1, 1, '') AS roleIdList ,");
@@ -101,8 +101,8 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		sql.append( " LEFT JOIN Sys_Base_Role_User b ON a.userId = b.userId ");
 		sql.append( " LEFT JOIN Sys_Base_Role c ON b.roleId = c.roleId");
 		sql.append(" LEFT JOIN dbo.Sys_Base_DataDictionary e ON e.dataDicId = a.town_dataDicId");
-		sql.append(" left join Sys_Base_DataDictionary d on d.dataDicId = a.village_dataDicId where 1=1 and a.state=1");
-		
+		sql.append(" left join Sys_Base_DataDictionary d on d.dataDicId = a.village_dataDicId ");
+		sql.append(" left join Sys_Base_DataDictionary f on f.dataDicId = a.district_dataDicId where 1=1 and a.state=1");
 		return sql;
 	}
 

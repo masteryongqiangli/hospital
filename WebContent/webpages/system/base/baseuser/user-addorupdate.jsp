@@ -69,17 +69,16 @@
 		</table>
 	</form>
 	<script>
-	var data = JSON.parse('${selects.selectData}');
-		$(function(){
-			if('${flag}'==0){
-				$("#districtTr").hide();
-			}
-		})
+		var data = JSON.parse('${selects.selectData}');
 		$(function() {
 			if('${user.userId }'!=''){
 				$('.password').remove();
-				if('${flag}' != "0"){
-					$('#district_id').combobox('select','${user.selectData.text}');
+				if('${flag}' == 0){
+					$('#district_id').combobox('select','${user.district.text}');
+				}else if('${flag}' == 1){
+					$('#district_id').combobox('select','${user.town.text}');
+				}else if('${flag}' == 2){
+					$('#district_id').combobox('select','${user.village.text}');
 				}
 			}
 		});
