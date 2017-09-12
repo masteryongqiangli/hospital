@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<th><label>抽血时间：</label></th>
-				<td><input id="bloodStartTime" class="easyui-datebox"
+				<td><input id="bloodStartTime"  class="easyui-datebox"
 					name="bloodStartTime" value="${bloodEnter.bloodStartTime}"  data-options="required:true"/>
 					</td>
 			</tr>
