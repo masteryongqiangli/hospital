@@ -29,5 +29,5 @@ public interface BaseUserServiceI extends CommonServiceI {
 	 public void saveUserRoles(Sys_Base_User sys_Base_User , String[] in);
 	 public JSONArray getBaseUserList();
 	 public JSONObject getHomeData() throws ParseException;
-	 public JSONObject getSelects(String flag);
+	 public JSONObject getSelects(int flag1,String flag2);
 }

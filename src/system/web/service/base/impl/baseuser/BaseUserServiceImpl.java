@@ -222,18 +222,18 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 	}
 
 	@Override
-	public JSONObject getSelects(String flag) {
+	public JSONObject getSelects(int flag1,String flag2) {
 		JSONObject jsonObject = new JSONObject();
 		String[] codes = {""};
-		String town = "";
-		if ("2".equals(flag)) {
-			codes[0] = "village";
-			town = flag;
-		}else if("1".equals(flag)){
+		if ("0".equals(flag1)) {
+			codes[0] = "bj";
+		}else if("1".equals(flag1)) {
 			codes[0] = "town";
+			
+		}else if("2".equals(flag2)){
+			codes[0] = "village";
 		}
-		Map<String, List<Sys_Base_DataDictionary>> selects = dataDictionaryDao
-				.getSelects(codes,town);
+		Map<String, List<Sys_Base_DataDictionary>> selects = dataDictionaryDao.getSelects(codes,flag2);
 		for (int i = 0; i < codes.length; i++) {
 			jsonObject.put(codes[i],
 					JSONHelper.parseListtToJSONArray(selects.get(codes[i])));

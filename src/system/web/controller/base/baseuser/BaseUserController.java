@@ -232,33 +232,28 @@ public class BaseUserController extends BaseController {
 			sys_Base_User = baseUserService.get(Sys_Base_User.class,
 					sys_Base_User.getUserId());
 		}
-		JSONObject jsonObject2 = new JSONObject();
-		if (sys_Base_User.getUserId()!=null) {
-			jsonObject2 = JSONObject.fromObject(sys_Base_User);
-			if (jsonObject2.get("town")!=null) {
-				jsonObject2.put("selectData", jsonObject2.get("town"));
-			}else if(jsonObject2.get("village")!=null){
-				jsonObject2.put("selectData", jsonObject2.get("village"));
-			}
-			request.setAttribute("user", jsonObject2);
-		}else{
-			request.setAttribute("user", sys_Base_User);
-		}
+		request.setAttribute("user", sys_Base_User);
 		JSONObject selectObject = new JSONObject();
 		JSONObject jsonObject = new JSONObject();
-		/* 管理员增加乡镇卫生院的用户 1代表管理员，2代表镇医院 */
-		if ("manager".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
-			selectObject = baseUserService.getSelects("1");
-			request.setAttribute("flag", 1);
+		/* 管理员增加乡镇卫生院的用户 0代表超级管理员 1代表区管理员，2代表镇医院 */
+		String userRole = ResourceUtil.getSys_User().getRoleCodeList();
+		int flag=0;
+		if ("sa".equals(userRole)) {
+			flag = 0;
+			selectObject = baseUserService.getSelects(flag,"");
+			jsonObject.put("selectData", selectObject.get("district"));
+		} else if ("manager".equals(userRole)) {
+			flag = 1;
+			String district = ResourceUtil.getSys_User().getDistrict();
+			selectObject = baseUserService.getSelects(flag,district);
 			jsonObject.put("selectData", selectObject.get("town"));
-		} else if ("yy".equals(ResourceUtil.getSys_User().getRoleCodeList())) {
+		}else if("yy".endsWith(userRole)){
+			flag = 2;
 			String town = ResourceUtil.getSys_User().getTown();
-			selectObject = baseUserService.getSelects(town.substring(town.indexOf("_")));
+			selectObject = baseUserService.getSelects(flag,town);
 			jsonObject.put("selectData", selectObject.get("village"));
-			request.setAttribute("flag", 2);
-		}else{
-			request.setAttribute("flag", 0);
 		}
+		request.setAttribute("flag", flag);
 		request.setAttribute("selects", jsonObject);
 		return new ModelAndView("system/base/baseuser/user-addorupdate");
 	}

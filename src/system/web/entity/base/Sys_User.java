@@ -15,6 +15,13 @@ public class Sys_User {
 	private String email;
 	private String village;
 	private String town;
+	private String district;
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
 	private String phone;
 	private String roleIdList;
 	private String roleCodeList;

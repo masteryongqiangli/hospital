@@ -69,7 +69,7 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<String, List<Sys_Base_DataDictionary>> getSelects(String[] codes,String town) {
+	public Map<String, List<Sys_Base_DataDictionary>> getSelects(String[] codes,String flag) {
 		Map<String, List<Sys_Base_DataDictionary>> selects = new HashMap<>();
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT  b.*,a.code as parentCode  FROM Sys_Base_DataDictionary a ");
@@ -86,8 +86,8 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 			}
 			sql.append(") ");
 		}
-		if (town!="") {
-			sql.append(" and b.code like '%%"+town+"%%'");
+		if (flag!="") {
+			sql.append(" and b.code like '%%"+flag+"%%'");
 		}
 		sql.append("order by b.orderNum,a.orderNum");
 		SQLQuery query = this.getSession().createSQLQuery(sql.toString());
