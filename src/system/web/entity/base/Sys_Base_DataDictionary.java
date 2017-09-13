@@ -21,6 +21,16 @@ public class Sys_Base_DataDictionary implements Serializable {
 	private String code;
 	private String text;
 	private String parent_DataDictionary;
+	private String subjection;
+	@Column(length=50)
+	public String getSubjection() {
+		return subjection;
+	}
+
+	public void setSubjection(String subjection) {
+		this.subjection = subjection;
+	}
+
 	private int orderNum;
 	private int state;
 	private int version;

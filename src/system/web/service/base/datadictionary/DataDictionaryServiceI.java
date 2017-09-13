@@ -22,5 +22,7 @@ public interface DataDictionaryServiceI extends CommonServiceI {
 	 */
 	  public JSONObject getTreeGridJson(Map<String, String> parms);
 	boolean batchDelete(Sys_Base_DataDictionary sys_Base_DataDictionary);
+	
+	public JSONArray getParentDataList(String parentData);
  
 }

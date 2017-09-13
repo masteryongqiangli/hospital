@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import system.core.annotation.Log;
 import system.core.service.impl.CommonServiceImpl;
 import system.core.util.JSONHelper;
@@ -24,7 +23,7 @@ public class DataDictionaryServiceImpl extends CommonServiceImpl implements Data
 	@Autowired
 	private DataDictionaryDaoI dataDictionaryDaoImpl;
 	public JSONArray getParentDataDicList() {
-		 JSONArray jsonArray=new JSONArray ();
+		JSONArray jsonArray=new JSONArray ();
 		List<Sys_Base_DataDictionary> list = dataDictionaryDaoImpl.getParentDataDicList();
 		for (int i = 0; i < list.size(); i++) {
 			JSONObject jsonObject=new JSONObject();
@@ -32,7 +31,6 @@ public class DataDictionaryServiceImpl extends CommonServiceImpl implements Data
 			jsonObject.put("text", list.get(i).getText());
 			jsonArray.add(jsonObject);
 		}
-		
 		return jsonArray;
 	}
 
@@ -91,5 +89,18 @@ public class DataDictionaryServiceImpl extends CommonServiceImpl implements Data
 	@Override
 	public boolean batchDelete(Sys_Base_DataDictionary sys_Base_DataDictionary) {
 		return dataDictionaryDaoImpl.batchDelete(sys_Base_DataDictionary) > 0 ? true : false;
+	}
+
+	@Override
+	public JSONArray getParentDataList(String parentData) {
+		JSONArray jsonArray=new JSONArray ();
+		List<Sys_Base_DataDictionary> list = dataDictionaryDaoImpl.getParentDataList(parentData);
+		for (int i = 0; i < list.size(); i++) {
+			JSONObject jsonObject=new JSONObject();
+			jsonObject.put("dataDicId", list.get(i).getDataDicId());
+			jsonObject.put("text", list.get(i).getText());
+			jsonArray.add(jsonObject);
+		}
+		return jsonArray;
 	}
 }

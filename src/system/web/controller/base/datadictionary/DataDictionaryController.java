@@ -106,10 +106,12 @@ public class DataDictionaryController extends BaseController{
 		JSONObject jsonObject=new JSONObject();
 		String msg="";
 		String parent_id=request.getParameter("parent_id");
+		String parent_id1=request.getParameter("parent_id1");
 		if (parent_id.equals("")) {
 			sys_Base_DataDictionary.setParent_DataDictionary(null);
 		}else{
 			sys_Base_DataDictionary.setParent_DataDictionary(parent_id);
+			sys_Base_DataDictionary.setSubjection(parent_id1);
 		}
 		
 		if (sys_Base_DataDictionary.getDataDicId()==null||"".equals(sys_Base_DataDictionary.getDataDicId())) {
@@ -178,5 +180,12 @@ public class DataDictionaryController extends BaseController{
 	@ResponseBody
 	public JSONArray getParentDataDicList(HttpServletRequest request){
 		return dataDictionaryService.getParentDataDicList();
+	}
+	
+	@RequestMapping(params="getParentDataList")
+	@ResponseBody
+	public JSONArray getParentDataList(HttpServletRequest request){
+		String parentData = request.getParameter("parentData");
+		return dataDictionaryService.getParentDataList(parentData);
 	}
 }

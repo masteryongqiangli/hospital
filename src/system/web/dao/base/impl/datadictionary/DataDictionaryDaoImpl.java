@@ -109,4 +109,8 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 		}
 		return selects;
 	}
+	@SuppressWarnings("unchecked")
+	public <T> List<Sys_Base_DataDictionary> getParentDataList(String parentData){
+		return super.createCriteria(Sys_Base_DataDictionary.class).add(Restrictions.eq("parent_DataDictionary",parentData)).add(Restrictions.eq("state", 1)).list();
+	}
 }

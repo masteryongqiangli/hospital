@@ -46,7 +46,7 @@
 					editable:false,
 					panelMaxHeight:100"></td>
 				<td><input id="parent_id1" class="easyui-combobox"
-					name="parent_id"
+					name="parent_id1"
 					data-options="
 					data:secondSelect,
 					method:'get',
@@ -65,16 +65,18 @@
 		$(function() {
 			$('#parent_id').combobox('setValue','${datadic.parent_DataDictionary}');
 		});
-		var parent_id1;
-		$("#parent_id").combobox({onSelect:function(){
+		var secondSelect;
+		$("#parent_id").combobox({ onChange: function(n,o){
 			$.ajax({
 				type : "POST",
 				url : "dataDictionaryController.do?getParentDataList",
 				async: false,
 				data : {
-					"org.id" : "${org.id}"
+					"parentData" : n
 				},
 				success : function(result) {
+					$("#parent_id1").combobox("clear");
+					$("#parent_id1").combobox("loadData",result);
 				}
 		    });
 		}})
