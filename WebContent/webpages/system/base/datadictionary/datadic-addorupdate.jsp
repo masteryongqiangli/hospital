@@ -17,19 +17,19 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="submit-table">
 			<tr>
 				<th><label>编码：</label></th>
-				<td><input class="easyui-validatebox" type="text" name="code"
+				<td colspan="2"><input class="easyui-validatebox" type="text" name="code"
 					value="${datadic.code }"
 					data-options="required:true" /></td>
 			</tr>
 			<tr>
 				<th><label>文本：</label></th>
-				<td><input class="easyui-validatebox" type="text" name="text"
+				<td colspan="2"><input class="easyui-validatebox" type="text" name="text"
 					value="${datadic.text }"
 					data-options="required:true,tipPosition:'right'" /></td>
 			</tr>
 			<tr>
 				<th><label>排序：</label></th>
-				<td><input class="easyui-validatebox" type="text" name="orderNum"
+				<td colspan="2"><input class="easyui-validatebox" type="text" name="orderNum"
 					value="${datadic.orderNum }"
 					data-options="required:true,tipPosition:'right'" /></td>
 			</tr>
@@ -39,6 +39,16 @@
 					name="parent_id"
 					data-options="
 					url:'dataDictionaryController.do?getParentDataDicList',
+					method:'get',
+					valueField:'dataDicId',
+					textField:'text',
+					panelHeight:'auto',
+					editable:false,
+					panelMaxHeight:100"></td>
+				<td><input id="parent_id1" class="easyui-combobox"
+					name="parent_id"
+					data-options="
+					data:secondSelect,
 					method:'get',
 					valueField:'dataDicId',
 					textField:'text',
@@ -55,7 +65,19 @@
 		$(function() {
 			$('#parent_id').combobox('setValue','${datadic.parent_DataDictionary}');
 		});
-
+		var parent_id1;
+		$("#parent_id").combobox({onSelect:function(){
+			$.ajax({
+				type : "POST",
+				url : "dataDictionaryController.do?getParentDataList",
+				async: false,
+				data : {
+					"org.id" : "${org.id}"
+				},
+				success : function(result) {
+				}
+		    });
+		}})
 		 
 	</script>
 </body>

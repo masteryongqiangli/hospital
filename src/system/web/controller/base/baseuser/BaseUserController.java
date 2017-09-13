@@ -228,6 +228,7 @@ public class BaseUserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goAddorUpdate")
+	@ResponseBody
 	public ModelAndView goAddorUpdate(HttpServletRequest request,
 			Sys_Base_User sys_Base_User) {
 		if (sys_Base_User.getUserId() != null) {
