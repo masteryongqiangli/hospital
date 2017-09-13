@@ -17,13 +17,13 @@
 		<table border="0" cellspacing="0" cellpadding="0" class="submit-table">
 			<tr>
 				<th><label>编码：</label></th>
-				<td colspan="2"><input class="easyui-validatebox" type="text" name="code"
+				<td><input class="easyui-validatebox" type="text" name="code"
 					value="${datadic.code }"
 					data-options="required:true" /></td>
 			</tr>
 			<tr>
 				<th><label>文本：</label></th>
-				<td colspan="2"><input class="easyui-validatebox" type="text" name="text"
+				<td><input class="easyui-validatebox" type="text" name="text"
 					value="${datadic.text }"
 					data-options="required:true,tipPosition:'right'" /></td>
 			</tr>
@@ -45,6 +45,9 @@
 					panelHeight:'auto',
 					editable:false,
 					panelMaxHeight:100"></td>
+			</tr>
+			<tr>
+				<th><label>隶属：</label></th>
 				<td><input id="parent_id1" class="easyui-combobox"
 					name="parent_id1"
 					data-options="
@@ -64,6 +67,7 @@
 	<script>
 		$(function() {
 			$('#parent_id').combobox('setValue','${datadic.parent_DataDictionary}');
+			$('#parent_id1').combobox('setValue','${datadic.subjection}');
 		});
 		var secondSelect;
 		$("#parent_id").combobox({ onChange: function(n,o){

@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
+import org.jeecgframework.core.util.GetConnection;
 import org.springframework.stereotype.Repository;
 
 import system.core.dao.impl.BaseDaoImpl;
@@ -111,6 +112,11 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 	}
 	@SuppressWarnings("unchecked")
 	public <T> List<Sys_Base_DataDictionary> getParentDataList(String parentData){
-		return super.createCriteria(Sys_Base_DataDictionary.class).add(Restrictions.eq("parent_DataDictionary",parentData)).add(Restrictions.eq("state", 1)).list();
+		GetConnection connection = new GetConnection();
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("SELECT dataDicId FROM dbo.Sys_Base_DataDictionary WHERE dataDicId = (");
+		buffer.append(" SELECT subjection  FROM dbo.Sys_Base_DataDictionary WHERE dataDicId = '"+parentData+"')");
+		return super.createCriteria(Sys_Base_DataDictionary.class).add(Restrictions.eq("parent_DataDictionary",connection.getcol(buffer.toString())))
+				.add(Restrictions.eq("state", 1)).list();
 	}
 }
