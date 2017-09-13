@@ -38,10 +38,10 @@ img{vertical-align: middle;}
 .m-nav li a:hover{border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.1)}
 .m-nav li a i{font-size:24px;line-height:24px;}
 .m-nav li a span{display:block;line-height:14px;margin-top:6px;}
-.m-header .head-user{ position: fixed;top:0;right:0;z-index:1;width:124px;height:80px;background:url("../../images/main/bg/headborder.jpg") repeat-y left;background-color: #249be8;padding: 0 5px 0 15px;cursor:pointer;}
+.m-header .head-user{ position: fixed;top:0;right:0;z-index:1;width:150px;height:80px;background:url("../../images/main/bg/headborder.jpg") repeat-y left;background-color: #249be8;padding: 0 5px 0 15px;cursor:pointer;}
 .m-header .head-user img{width:50px;height:50px;margin-top:13px; border:2px solid #83c2f2;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;}
-.m-header .head-user .user-info{margin-right:10px;width:30px;text-align:center}
-.m-header .head-user .user-info h3{margin-top:21px;line-height: 40px;width: 40px;}
+.m-header .head-user .user-info{margin-right:10px;width:80px;text-align:center}
+.m-header .head-user .user-info h3{margin-top:21px;line-height: 40px;width: 80px;}
 .m-header .head-user dl{position: absolute;top:80px;right:0px;left:0px;display:none; border:1px solid #dadada;border-top:0;z-index:300;background:#fff;padding:10px 20px;}
 .m-header .head-user dl a{text-align:center;color: #323841;display:block;padding:4px 20px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 .m-header .head-user dl a:hover{background:#23a5e8;color:#fff;}

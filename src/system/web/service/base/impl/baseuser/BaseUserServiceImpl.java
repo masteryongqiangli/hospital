@@ -231,7 +231,7 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 		JSONObject jsonObject = new JSONObject();
 		String[] codes = {""};
 		if (flag1==0) {
-			codes[0] = "bj";
+			codes[0] = "bjs";
 		}else if(flag1==1) {
 			codes[0] = "town";
 		}else if(flag1==2){
@@ -244,7 +244,7 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 		}
 		JSONObject jsonObject2 = new JSONObject();
 		if (flag1==0){
-			jsonObject2.put("selectData", jsonObject.get("bj"));
+			jsonObject2.put("selectData", jsonObject.get("bjs"));
 		}else if(flag1==1){
 			jsonObject2.put("selectData", jsonObject.get("town"));
 		}else if(flag1==2){

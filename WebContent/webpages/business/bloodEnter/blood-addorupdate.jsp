@@ -37,7 +37,7 @@
 					data-options="" readonly="readonly" name="blooderAge"
 					value="${bloodEnter.blooderAge}" validType="intType" /></td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<th><label>所属区县：</label></th>
 				<td><input id="blooderDistrict"
 					class="easyui-combobox easyui-validatebox" value=""
@@ -50,7 +50,7 @@
 					panelHeight:'auto',
 					editable:false,
 					panelMaxHeight:140" /></td>
-			</tr>
+			</tr> -->
 			<tr>
 				<th><label>抽血时间：</label></th>
 				<td><input id="bloodStartTime" class="easyui-datebox"
@@ -63,18 +63,20 @@
 					name="bloodAriveTime" value="${bloodEnter.bloodAriveTime}"
 					data-options="required:true" /></td>
 			</tr>
-			<!-- <tr>
-				<th><label>结果时间：</label></th>
-				<td><input id="bloodResultTime" class="easyui-datebox"
-					name="bloodResultTime"  value=""  data-options="required:true"/></td>
-			</tr> -->
 		</table>
 	</form>
 	<script>
 		$(document).ready(
 				function() {
-					$("#blooderDistrict").combobox('select',
-							'${bloodEnter.blooderDistrict}');
+					var today = new Date();
+					var year = today.getFullYear().toString();
+					var month = today.getMonth() > 9 ? (today.getMonth() + 1)
+							.toString() : "0"
+							+ (today.getMonth() + 1).toString();
+					var day = today.getDate() > 9 ? today.getDate().toString()
+							: "0" + today.getDate().toString();
+					var mintues = today.getMinutes()>9?today.getMinutes().toString():"0"+today.getMinutes().toString();
+					/* $("#blooderDistrict").combobox('select','${bloodEnter.blooderDistrict}'); */
 					var orderNumber=0;
 					$.ajax({
 						type : "POST",
@@ -83,23 +85,11 @@
 						data : {
 						},
 						success : function(data) {
-							
-						},
-						error : function() {
-							
+							$("#bloodNumber").val(
+									'${villageNum}' + year + month + day
+											+ today.getHours() + mintues+data.msg);
 						}
 					});
-					var today = new Date();
-					var year = today.getFullYear().toString();
-					var month = today.getMonth() > 9 ? (today.getMonth() + 1)
-							.toString() : "0"
-							+ (today.getMonth() + 1).toString();
-					var day = today.getDate() > 9 ? today.getDate().toString()
-							: "0" + today.getDate().toString();
-					$("#bloodNumber").val(
-							'${villageNum}' + year + month + day
-									+ today.getHours() + today.getMinutes());
-
 				});
 		$("#blooderIdCard").blur(
 				function() {

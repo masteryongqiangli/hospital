@@ -42,6 +42,7 @@
 			rownumbers : true,
 			toolbar : '#toolbar',
 			pagination:true,
+			
 			columns : [ [ {
 				field : 'userName',
 				title : '用户名',

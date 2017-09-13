@@ -24,6 +24,8 @@
 						data-options="iconCls:'icon-search'" onclick="find('bloodEnter-list')">查询</a></li>
 					<li><a id="addTestResult" href="#" onclick="addBlood()" class="easyui-linkbutton"
 						data-options="iconCls:'icon-add'">新增</a></li>
+					<li><a id="goCheck" href="#" onclick="goCheck()" class="easyui-linkbutton"
+						data-options="iconCls:'icon-add'">送检</a></li>
 				</ul>
 			</div>
 		</div>
@@ -43,6 +45,10 @@
 			toolbar : '#toolbar',
 			pagination:true,
 			columns : [ [ {
+				field : 'selectbox',
+				title : '选择',
+				checkbox:true
+			},{
 				field : 'bloodNumber',
 				title : '血样编号',
 				width : 80,
@@ -105,17 +111,11 @@
 				str+='<a href="#" class="grid-btn grid-edit" onclick="updateItem(\''
 					+ row.id+ '\')">修改</a>';
 						}
-			if(row.bloodResultTime!=""){
-				str+='<a href="#" class="grid-btn grid-detail" onclick="lookItem(\''
-						+ row.id
-						+ '\')">查看</a><a href="#" class="grid-btn grid-detail" onclick="exportItem(\''
-						+ row.id
-						+ '\')">打印</a>';
-						}
 			if(true){
 				str+='<a href="#" class="grid-btn grid-delete" onclick="deleteBlood(\''
 					+ row.id + '\')">删除</a>';
 								}
+			if(row.state==null||row.state=="")
 			return str;	
 		}
 		 
@@ -144,6 +144,21 @@
 		}
 		function exportItem(bloodEnterId){
 			window.location.href="bloodEnterController.do?exportWord&bloodEnterId="+bloodEnterId;
+		}
+		function goCheck(){
+			var rows = $("#bloodEnter-list").datagrid('getSelections');
+			if(rows.length==0){
+				$.messager.alert('提示信息','请先选择行');
+			}else{
+				var array = new Array();
+				for(var i=0;i<rows.length;i++){
+					array.push(rows[i].id);
+				}
+				doGoCheck(array);
+			}
+		}
+		function doGoCheck(array){
+			
 		}
 	</script>
 </body>

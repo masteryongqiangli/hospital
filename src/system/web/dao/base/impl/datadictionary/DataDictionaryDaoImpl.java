@@ -74,9 +74,9 @@ public class DataDictionaryDaoImpl extends BaseDaoImpl implements
 		Map<String, List<Sys_Base_DataDictionary>> selects = new HashMap<>();
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT  b.*,a.code as parentCode  FROM Sys_Base_DataDictionary a ");
-		sql.append("LEFT join  Sys_Base_DataDictionary b ON b.parent_DataDictionary=a.dataDicId");
+		sql.append("LEFT join  Sys_Base_DataDictionary b ON b.subjection = a.dataDicId");
 		sql.append(" where a.state=1 AND b.dataDicId IS  not NULL  ");
-		if (codes.length > 0&&codes[0].equals("bj")) {
+		if (codes.length > 0&&codes[0].equals("bjs")) {
 			sql.append("AND  (      ");
 			for (int i = 0; i < codes.length; i++) {
 				if (i == 0) {

@@ -80,7 +80,8 @@ public class bloodEnterDaoImpl extends BaseDaoImpl implements bloodEnterDao{
 	public String getBloodNumber(String village) {
 		StringBuffer buffer = new StringBuffer();
 		GetConnection connection = new GetConnection();
-		buffer.append("");
+		buffer.append("SELECT SUBSTRING(bloodNumber,LEN(bloodNumber)-2,2) FROM dbo.Sys_Base_bloodEnter WHERE blooderDistrict = ''");
+		buffer.append("  ORDER BY SUBSTRING(bloodNumber,LEN(bloodNumber)-2,2)");
 		return connection.getcol(buffer.toString());
 	}
 }

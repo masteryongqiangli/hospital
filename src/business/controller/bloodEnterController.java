@@ -75,7 +75,7 @@ public class bloodEnterController extends BaseController{
 			request.setAttribute("bloodEnter", sys_Base_bloodEnter);
 			request.setAttribute("bloodId", request.getParameter("bloodId"));
 		}
-		request.setAttribute("districtData", bloodEnterService.getVillage());
+		/*request.setAttribute("districtData", bloodEnterService.getVillage());*/
 		Sys_User sys_User = ResourceUtil.getSys_User();
 		request.setAttribute("villageNum", bloodEnterService.getvillageNum(sys_User.getVillage()));
 		return new ModelAndView("business/bloodEnter/blood-addorupdate");
@@ -91,9 +91,10 @@ public class bloodEnterController extends BaseController{
 	@Log(operationName="新增血样",operationType=0)
 	public JSONObject saveBloodinfo(HttpServletRequest request,Sys_Base_bloodEnter sys_Base_bloodEnter){
 		JSONObject jsonObject=new JSONObject();
-		String village = sys_Base_bloodEnter.getBlooderDistrict();
 		String msg="";
 		Sys_User user = ResourceUtil.getSys_User();
+		String village  = user.getVillage();
+		sys_Base_bloodEnter.setBlooderDistrict(village);
 		sys_Base_bloodEnter.setBloodOperator(user.getRealName());
 		try {
 			if(request.getParameter("bloodId")==null||("").equals(request.getParameter("bloodId"))){
@@ -164,7 +165,9 @@ public class bloodEnterController extends BaseController{
 	public JSONObject getBloodNumber(HttpServletRequest request){
 		String village = ResourceUtil.getSys_User().getVillage();
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("msg", bloodEnterService.getBloodNumber(village));
+		String orderNumber = bloodEnterService.getBloodNumber(village);
+		int order = orderNumber.equals("")?1:Integer.parseInt(orderNumber)+1;
+		jsonObject.put("msg", order);
 		return jsonObject;
 	}
 }
