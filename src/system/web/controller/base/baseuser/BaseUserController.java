@@ -38,7 +38,6 @@ public class BaseUserController extends BaseController {
 
 	/**
 	 * 列表页跳转
-	 * 
 	 * @param request
 	 * @return
 	 */
@@ -47,7 +46,17 @@ public class BaseUserController extends BaseController {
 	public ModelAndView list(HttpServletRequest request) {
 		return new ModelAndView("system/base/baseuser/user-list");
 	}
-
+	
+	/**
+	 * 列表页跳转
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(params = "lookList")
+	@Log(operationName = "查看用户列表", operationType = 0)
+	public ModelAndView lookList(HttpServletRequest request) {
+		return new ModelAndView("business/bloodEnter/bloodResultLook");
+	}
 	/**
 	 * 获取datagrid数据
 	 * 

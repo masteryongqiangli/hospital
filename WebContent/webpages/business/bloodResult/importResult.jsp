@@ -18,7 +18,7 @@
 					class="easyui-combobox easyui-validatebox" value=""
 					name="blooderDistrict"
 					data-options="required:true,
-					data:districtData,
+					data:selectData,
 					method:'get',
 					valueField:'dataDicId',
 					textField:'text',
@@ -42,7 +42,10 @@
 			onclick="UploadFile()">确定</a>
 	</div>
 	<script>
-		var districtData = JSON.parse('${village.selectData}');
+		var selectData = JSON.parse('${village.selectData}');
+		var id= window.frameElement.id;
+		var obj=top.$('#'+ id)[0];
+		var formobj = $('form')[0];
 		function UploadFile() {
 			var msg="请先";
 			if($("#blooderDistrict").val()==""){
@@ -52,26 +55,31 @@
 				msg += "选择文件、";
 			}
 			if(msg=="请先"){
-				$('#bloodResult').form({
-					url : 'bloodResultController.do?bloodResultFile',
-					onSubmit : function() {
-							$.messager.progress({
-								text : '数据处理中'
-							});
-					},
-					success : function(data) {
-						$.messager.progress('close');
-						$('#bloodResult-list').datagrid('reload');
-						$("#resultFile").val('');
-						top.$('#dialog'+id).dialog('destroy');
-					},
-					error:function(){
-						$.messager.progress('close');
-						$("#resultFile").val('');
-						top.$('#dialog'+id).dialog('destroy');
+				var selections = $("#blooderDistrict").combobox('getText');
+				$.messager.confirm('提示信息', "请确认要导入"+selections+"的数据吗", function(r){
+					if (r){
+						$('#bloodResult').form({
+							url : 'bloodResultController.do?bloodResultFile',
+							onSubmit : function() {
+									$.messager.progress({
+										text : '数据处理中'
+									});
+							},
+							success : function(data) {
+								$.messager.progress('close');
+								$('#bloodResult-list').datagrid('reload');
+								$("#resultFile").val('');
+								top.$('#dialog'+id).dialog('destroy');
+							},
+							error:function(){
+								$.messager.progress('close');
+								$("#resultFile").val('');
+								top.$('#dialog'+id).dialog('destroy');
+							}
+						});
+						$('#bloodResult').submit();
 					}
 				});
-				$('#bloodResult').submit();
 			}else{
 				$.messager.confirm('提示信息', msg.substring(0,msg.length-1), function(r){
 					if (r){

@@ -61,7 +61,6 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 				e.printStackTrace();
 			}
 		}
-		newFile.delete();
 		Sheet sheet = wb.getSheetAt(0);
 		List<Map<String, String>> sheetList = new ArrayList<Map<String, String>>();// 对应sheet页
 		List<String> titles = new ArrayList<String>();// 放置所有的标题
@@ -112,6 +111,7 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 				}
 			}
 		}
+		newFile.delete();
 		if (f==allPerson.size()) {
 			return true;
 		}else{

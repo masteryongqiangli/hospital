@@ -20,7 +20,9 @@ import system.core.enums.DataStateTypeEnum;
 import system.core.util.QueryParmFormat;
 import system.core.util.ResourceUtil;
 import system.web.entity.base.Sys_Base_DataDictionary;
+import system.web.entity.base.Sys_Base_User;
 import system.web.service.base.baseuser.BaseUserServiceI;
+import system.web.service.base.datadictionary.DataDictionaryServiceI;
 import business.entity.Sys_Base_bloodResult;
 import business.service.bloodResultService;
 
@@ -34,6 +36,8 @@ public class bloodResultController extends BaseController{
 	bloodResultService bloodResultService;
 	@Autowired
 	BaseUserServiceI BaseUserServiceI;
+	@Autowired
+	DataDictionaryServiceI DataDictionaryServiceI;
 	
 	/**
 	 * 跳转查看血样检验结果页面
@@ -89,10 +93,12 @@ public class bloodResultController extends BaseController{
 	@RequestMapping(params="bloodResultFile")
 	@Log(operationName="导入数据",operationType=0)
 	@ResponseBody
-	public JSONObject bloodResultFile(@RequestParam("resultFile") MultipartFile file,Sys_Base_DataDictionary dataDictionary,HttpServletRequest request){
+	public JSONObject bloodResultFile(@RequestParam("resultFile") MultipartFile file,HttpServletRequest request,Sys_Base_DataDictionary dataDictionary){
 		JSONObject jsonObject = new JSONObject();
 		String newPath = request.getSession().getServletContext().getRealPath("sysfile/transfile/");
-		String village = dataDictionary.getText();
+		Sys_Base_DataDictionary dataDictionary2 = DataDictionaryServiceI.get(Sys_Base_DataDictionary.class,
+				request.getParameter("blooderDistrict"));
+		String village = dataDictionary2.getText();
 		bloodResultService.readExcel(file,village,newPath);
 		return jsonObject;
 	}
