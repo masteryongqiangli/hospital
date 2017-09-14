@@ -18,7 +18,7 @@ public interface bloodResultService extends CommonServiceI{
 	 */
 	public JSONObject getBloodResultList(Map<String, String> map);
 	
-	public boolean readExcel(MultipartFile file,String village);
+	public boolean readExcel(MultipartFile file,String village,String newPath);
 	
 	public JSONObject getBloodInfo(String bloodId);
 	

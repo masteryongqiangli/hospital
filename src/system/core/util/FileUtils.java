@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.jni.Thread;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 
@@ -247,5 +248,19 @@ public class FileUtils {
 			return df.format(byts/1024/1024/1024/1024)+"GB";
 		}
 		
+	}
+	/**
+	 * 错误格式Excel转换
+	 * @param file
+	 * @return
+	 */
+	public static MultipartFile transformFile(MultipartFile file,String filePath){
+		try {
+			InputStream inputStream = file.getInputStream();
+			inputstreamtofile(inputStream, filePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 }

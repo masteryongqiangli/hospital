@@ -1,5 +1,7 @@
 package business.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import business.dao.bloodResultDao;
 import business.service.bloodResultService;
 import system.core.service.impl.CommonServiceImpl;
+import system.core.util.FileUtils;
 
 @Service("bloodResultService")
 @Transactional
@@ -34,20 +37,21 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 		return bloodResultDao.getBloodResultList(map);
 	}
 
-	public boolean readExcel(MultipartFile file,String village) {
-		String fileType = file.getOriginalFilename().substring(
-				file.getOriginalFilename().lastIndexOf(".") + 1,
-				file.getOriginalFilename().length());
+	public boolean readExcel(MultipartFile file,String village,String newPath) {
+		/*文件后缀名错误，需转换*/
+		FileUtils.transformFile(file,newPath);
+		File newFile = new File(newPath);
+		String fileType = newFile.getName().substring(newFile.getName().lastIndexOf(".")+1);   
 		Workbook wb = null;
 		if (fileType.equals("xls")) {
 			try {
-				wb = new HSSFWorkbook(file.getInputStream());
+				wb = new HSSFWorkbook(new FileInputStream(newFile));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else if (fileType.equals("xlsx")) {
 			try {
-				wb = new XSSFWorkbook(file.getInputStream());
+				wb = new XSSFWorkbook(new FileInputStream(newFile));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

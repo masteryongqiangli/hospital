@@ -48,36 +48,44 @@ public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 	public boolean importBloodResult(Map<String, Object> map,String village){
 		GetConnection connection = new GetConnection();
 		StringBuffer sql = new StringBuffer();
-		String bloodEnterId = connection.getcol("select TOP 1 id from Sys_Base_bloodEnter where blooderDistrict = '"+village+"' AND state IS NULL");
-		sql.append("insert into Sys_Base_bloodResult (id,ALB,ALP,ALT,[AST],[CK],[CK_MB],[CRE],[DBIL],[GGT],[GLU],[HBDH],[HDL_C],[LDH],[LDL_C],[TBIL],[TC],[TG],[TP],[UA],[UREA],[bloodEnterId]) ");
-		sql.append("values ('"+system.core.util.UUIDGenerator.generate().toString()+"',");
-		sql.append("'"+(map.get("ALB")==null?"":map.get("ALB"))+"',");
-		sql.append("'"+(map.get("ALP")==null?"":map.get("ALP"))+"',");
-		sql.append("'"+(map.get("ALT")==null?"":map.get("ALT"))+"',");
-		sql.append("'"+(map.get("AST")==null?"":map.get("AST"))+"',");
-		sql.append("'"+(map.get("CK")==null?"":map.get("CK"))+"',");
-		sql.append("'"+(map.get("CK-MB")==null?"":map.get("CK-MB"))+"',");
-		sql.append("'"+(map.get("CRE")==null?"":map.get("CRE"))+"',");
-		sql.append("'"+(map.get("DBIL")==null?"":map.get("DBIL"))+"',");
-		sql.append("'"+(map.get("GGT")==null?"":map.get("GGT"))+"',");
-		sql.append("'"+(map.get("GLU")==null?"":map.get("GLU"))+"',");
-		sql.append("'"+(map.get("HBDH")==null?"":map.get("HBDH"))+"',");
-		sql.append("'"+(map.get("HDL-C")==null?"":map.get("HDL-C"))+"',");
-		sql.append("'"+(map.get("LDH")==null?"":map.get("LDH"))+"',");
-		sql.append("'"+(map.get("LDL-C")==null?"":map.get("LDL-C"))+"',");
-		sql.append("'"+(map.get("TBIL")==null?"":map.get("TBIL"))+"',");
-		sql.append("'"+(map.get("TC")==null?"":map.get("TC"))+"',");
-		sql.append("'"+(map.get("TG")==null?"":map.get("TG"))+"',");
-		sql.append("'"+(map.get("TP")==null?"":map.get("TP"))+"',");
-		sql.append("'"+(map.get("UA")==null?"":map.get("UA"))+"',");
-		sql.append("'"+(map.get("UREA")==null?"":map.get("UREA"))+"',");
-		sql.append("'"+bloodEnterId+"');");
-		
-		Date now = new Date(); 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式
-		String resulrTime = dateFormat.format( now ); 
-		sql.append("update Sys_Base_bloodEnter set [bloodResultTime] = '"+resulrTime+"';");
-		return connection.insert(sql.toString());
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("SELECT TOP 1 a.id from Sys_Base_bloodEnter a");
+		buffer.append(" LEFT JOIN dbo.Sys_Base_DataDictionary b ON a.blooderDistrict = b.text");
+		buffer.append(" WHERE blooderDistrict = '"+village+"' AND a.state = 1");
+		buffer.append(" order BY SUBSTRING(a.bloodNumber,LEN(b.code)+13,LEN(a.bloodNumber))");
+		String bloodEnterId = connection.getcol(buffer.toString());
+		if (!bloodEnterId.equals("")) {
+			sql.append("insert into Sys_Base_bloodResult (id,ALB,ALP,ALT,[AST],[CK],[CK_MB],[CRE],[DBIL],[GGT],[GLU],[HBDH],[HDL_C],[LDH],[LDL_C],[TBIL],[TC],[TG],[TP],[UA],[UREA],[bloodEnterId]) ");
+			sql.append("values ('"+system.core.util.UUIDGenerator.generate().toString()+"',");
+			sql.append("'"+(map.get("ALB")==null?"":map.get("ALB"))+"',");
+			sql.append("'"+(map.get("ALP")==null?"":map.get("ALP"))+"',");
+			sql.append("'"+(map.get("ALT")==null?"":map.get("ALT"))+"',");
+			sql.append("'"+(map.get("AST")==null?"":map.get("AST"))+"',");
+			sql.append("'"+(map.get("CK")==null?"":map.get("CK"))+"',");
+			sql.append("'"+(map.get("CK-MB")==null?"":map.get("CK-MB"))+"',");
+			sql.append("'"+(map.get("CRE")==null?"":map.get("CRE"))+"',");
+			sql.append("'"+(map.get("DBIL")==null?"":map.get("DBIL"))+"',");
+			sql.append("'"+(map.get("GGT")==null?"":map.get("GGT"))+"',");
+			sql.append("'"+(map.get("GLU")==null?"":map.get("GLU"))+"',");
+			sql.append("'"+(map.get("HBDH")==null?"":map.get("HBDH"))+"',");
+			sql.append("'"+(map.get("HDL-C")==null?"":map.get("HDL-C"))+"',");
+			sql.append("'"+(map.get("LDH")==null?"":map.get("LDH"))+"',");
+			sql.append("'"+(map.get("LDL-C")==null?"":map.get("LDL-C"))+"',");
+			sql.append("'"+(map.get("TBIL")==null?"":map.get("TBIL"))+"',");
+			sql.append("'"+(map.get("TC")==null?"":map.get("TC"))+"',");
+			sql.append("'"+(map.get("TG")==null?"":map.get("TG"))+"',");
+			sql.append("'"+(map.get("TP")==null?"":map.get("TP"))+"',");
+			sql.append("'"+(map.get("UA")==null?"":map.get("UA"))+"',");
+			sql.append("'"+(map.get("UREA")==null?"":map.get("UREA"))+"',");
+			sql.append("'"+bloodEnterId+"');");
+			Date now = new Date(); 
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式
+			String resulrTime = dateFormat.format( now ); 
+			sql.append("update Sys_Base_bloodEnter set [bloodResultTime] = '"+resulrTime+"',state = 2 where id = '"+bloodEnterId+"';");
+			return connection.insert(sql.toString());
+		}else{
+			return false;
+		}
 	}
 	
 	public JSONObject getBloodInfo(String bloodId){

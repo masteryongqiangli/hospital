@@ -200,26 +200,6 @@
 								}
 			return str;	
 		}
-		function UploadFile() {
-			$('#bloodResultFile').form({
-				url : 'bloodResultController.do?bloodResultFile',
-				onSubmit : function() {
-						$.messager.progress({
-							text : '数据处理中'
-						});
-				},
-				success : function(data) {
-					$.messager.progress('close');
-					$('#bloodResult-list').datagrid('reload');
-					$("#resultFile").val('');
-				},
-				error:function(){
-					$.messager.progress('close');
-					$("#resultFile").val('');
-				}
-			});
-			$('#bloodResultFile').submit();
-		}
 		function deleteBlood(Id){
 			deleteItem('bloodResultController.do?doDelete&resultId='+Id,'bloodResult-list');
 		}
@@ -227,7 +207,7 @@
 			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.85);
 		}
 		function openImportDialog(){
-			openDialog('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.85);
+			openDialogNoBtn('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.5);
 		}
 	</script>
 </body>

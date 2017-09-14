@@ -89,10 +89,11 @@ public class bloodResultController extends BaseController{
 	@RequestMapping(params="bloodResultFile")
 	@Log(operationName="导入数据",operationType=0)
 	@ResponseBody
-	public JSONObject bloodResultFile(@RequestParam("resultFile") MultipartFile file,Sys_Base_DataDictionary dataDictionary){
+	public JSONObject bloodResultFile(@RequestParam("resultFile") MultipartFile file,Sys_Base_DataDictionary dataDictionary,HttpServletRequest request){
 		JSONObject jsonObject = new JSONObject();
+		String newPath = request.getSession().getServletContext().getRealPath("transfile/");
 		String village = dataDictionary.getText();
-		bloodResultService.readExcel(file,village);
+		bloodResultService.readExcel(file,village,newPath);
 		return jsonObject;
 	}
 	/**
@@ -116,15 +117,15 @@ public class bloodResultController extends BaseController{
 	@RequestMapping(params = "doDelete")
 	@ResponseBody
 	@Log(operationName="删除用户",operationType=0)
-	 public JSONObject doDelete(HttpServletRequest request){
-		 JSONObject jsonObject=new  JSONObject();
+	public JSONObject doDelete(HttpServletRequest request){
+		JSONObject jsonObject=new  JSONObject();
 		if (bloodResultService.doDelete(request.getParameter("resultId"))) {
 			jsonObject.put("msg",  DataStateTypeEnum.DELETE_SUCCESS.getMessage());
 		} else{
 			jsonObject.put("msg",  DataStateTypeEnum.DELETE_ERROR.getMessage());
 		}
-		 return jsonObject;
-	 }
+		return jsonObject;
+	}
 	/**
 	 * 
 	 * @param request
