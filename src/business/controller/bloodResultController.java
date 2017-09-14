@@ -91,7 +91,7 @@ public class bloodResultController extends BaseController{
 	@ResponseBody
 	public JSONObject bloodResultFile(@RequestParam("resultFile") MultipartFile file,Sys_Base_DataDictionary dataDictionary,HttpServletRequest request){
 		JSONObject jsonObject = new JSONObject();
-		String newPath = request.getSession().getServletContext().getRealPath("transfile/");
+		String newPath = request.getSession().getServletContext().getRealPath("sysfile/transfile/");
 		String village = dataDictionary.getText();
 		bloodResultService.readExcel(file,village,newPath);
 		return jsonObject;

@@ -254,10 +254,10 @@ public class FileUtils {
 	 * @param file
 	 * @return
 	 */
-	public static MultipartFile transformFile(MultipartFile file,String filePath){
+	public static MultipartFile transformFile(MultipartFile file,String filePath,String fileName){
 		try {
 			InputStream inputStream = file.getInputStream();
-			inputstreamtofile(inputStream, filePath);
+			inputstreamtofile(inputStream, filePath+"\\"+fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

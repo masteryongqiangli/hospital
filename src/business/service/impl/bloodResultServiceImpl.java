@@ -39,8 +39,13 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 
 	public boolean readExcel(MultipartFile file,String village,String newPath) {
 		/*文件后缀名错误，需转换*/
-		FileUtils.transformFile(file,newPath);
-		File newFile = new File(newPath);
+		String fileType1 = file.getOriginalFilename().substring(
+  				file.getOriginalFilename().lastIndexOf(".") + 1,
+  				file.getOriginalFilename().length());
+		if (fileType1.equals("xls")) {
+			FileUtils.transformFile(file,newPath,file.getOriginalFilename().replace("xls", "xlsx"));
+		}
+		File newFile = new File(newPath+"\\"+file.getOriginalFilename().replace("xls", "xlsx"));
 		String fileType = newFile.getName().substring(newFile.getName().lastIndexOf(".")+1);   
 		Workbook wb = null;
 		if (fileType.equals("xls")) {
@@ -56,6 +61,7 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 				e.printStackTrace();
 			}
 		}
+		newFile.delete();
 		Sheet sheet = wb.getSheetAt(0);
 		List<Map<String, String>> sheetList = new ArrayList<Map<String, String>>();// 对应sheet页
 		List<String> titles = new ArrayList<String>();// 放置所有的标题
