@@ -25,7 +25,7 @@
 					<li><a id="addTestResult" href="#" onclick="addBlood()" class="easyui-linkbutton"
 						data-options="iconCls:'icon-add'">新增</a></li>
 					<li><a id="goCheck" href="#" onclick="goCheck()" class="easyui-linkbutton"
-						data-options="iconCls:'icon-add'">送检</a></li>
+						data-options="iconCls:'icon-redo'">送检</a></li>
 				</ul>
 			</div>
 		</div>
@@ -115,7 +115,10 @@
 				str+='<a href="#" class="grid-btn grid-delete" onclick="deleteBlood(\''
 					+ row.id + '\')">删除</a>';
 								}
-			if(row.state==null||row.state=="")
+			if(row.state==0){
+				str+='<a href="#" class="grid-btn grid-more" onclick="goCheckBlood(\''
+					+ row.id + '\')">送检</a>';
+			}
 			return str;	
 		}
 		 
@@ -148,17 +151,39 @@
 		function goCheck(){
 			var rows = $("#bloodEnter-list").datagrid('getSelections');
 			if(rows.length==0){
-				$.messager.alert('提示信息','请先选择行');
+				$.messager.alert('提示信息','请先选择检验人');
 			}else{
 				var array = new Array();
 				for(var i=0;i<rows.length;i++){
-					array.push(rows[i].id);
+					if(rows[i].state==0){
+						array.push(rows[i].id);
+					}
 				}
 				doGoCheck(array);
 			}
 		}
+		function goCheckBlood(id){
+			var array = new Array();
+			array.push(id);
+			doGoCheck(array);
+		}
 		function doGoCheck(array){
-			
+			$.ajax({
+		        type: "post",
+		        cache:false, 
+		        async:false, 
+		        url: 'bloodEnterController.do?doGoCheck&array='+array,
+		        data: {},
+		        success: function (data) {
+		        	$.messager.show({
+		        		title:'提示信息',
+		        		msg:data.msg,
+		        		timeout:3000,
+		        		showType:'slide'
+		        	});
+		        	$("#bloodEnter-list").datagrid("reload");
+		        }
+		    });
 		}
 	</script>
 </body>

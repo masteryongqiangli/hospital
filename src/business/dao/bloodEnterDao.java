@@ -18,4 +18,6 @@ public interface bloodEnterDao extends BaseDaoI{
 	public JSONObject getOneBlood(String bloodEnterId);
 
 	public String getBloodNumber(String village);
+
+	public boolean doGoCheck(String[] parameter);
 }

@@ -47,4 +47,9 @@ public class bloodEnterServiceImpl extends CommonServiceImpl implements bloodEnt
 	public String getBloodNumber(String village) {
 		return bloodEnterDao.getBloodNumber(village);
 	}
+
+	@Override
+	public boolean doGoCheck(String[] parameter) {
+		return bloodEnterDao.doGoCheck(parameter);
+	}
 }

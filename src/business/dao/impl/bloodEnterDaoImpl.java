@@ -40,7 +40,7 @@ public class bloodEnterDaoImpl extends BaseDaoImpl implements bloodEnterDao{
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT  id ,bloodNumber ,blooderName , blooderAge ,blooderDistrict ,blooderContry ,");
 		sql.append(" bloodStartTime ,bloodAriveTime ,bloodResultTime ,bloodOperator ,bloodTransformer ,state,blooderIdCard");
-		sql.append(" FROM    dbo.Sys_Base_bloodEnter where 1=1 and state IS NULL");
+		sql.append(" FROM    dbo.Sys_Base_bloodEnter where 1=1");
 		return sql;
 	}
 	
@@ -80,8 +80,21 @@ public class bloodEnterDaoImpl extends BaseDaoImpl implements bloodEnterDao{
 	public String getBloodNumber(String village) {
 		StringBuffer buffer = new StringBuffer();
 		GetConnection connection = new GetConnection();
-		buffer.append("SELECT SUBSTRING(bloodNumber,LEN(bloodNumber)-2,2) FROM dbo.Sys_Base_bloodEnter WHERE blooderDistrict = ''");
-		buffer.append("  ORDER BY SUBSTRING(bloodNumber,LEN(bloodNumber)-2,2)");
+		buffer.append("SELECT TOP 1 SUBSTRING(a.bloodNumber,13 + LEN(b.code), LEN(a.bloodNumber))");
+		buffer.append(" FROM    dbo.Sys_Base_bloodEnter a");
+		buffer.append(" LEFT JOIN dbo.Sys_Base_DataDictionary b ON a.blooderDistrict = b.text");
+		buffer.append(" WHERE   blooderDistrict = '"+village+"'");
+		buffer.append(" ORDER BY SUBSTRING(a.bloodNumber,13 + LEN(b.code), LEN(a.bloodNumber)) DESC ");
 		return connection.getcol(buffer.toString());
+	}
+
+	@Override
+	public boolean doGoCheck(String[] parameter) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < parameter.length; i++) {
+			buffer.append("update Sys_Base_bloodEnter set state = 1 where id = '"+parameter[i]+"';");
+		}
+		GetConnection connection = new GetConnection();
+		return connection.insert(buffer.toString());
 	}
 }

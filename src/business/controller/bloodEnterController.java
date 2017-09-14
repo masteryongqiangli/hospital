@@ -170,4 +170,16 @@ public class bloodEnterController extends BaseController{
 		jsonObject.put("msg", order);
 		return jsonObject;
 	}
+	@RequestMapping(params="doGoCheck")
+	@ResponseBody
+	@Log(operationName="送检",operationType=0)
+	public JSONObject doGoCheck(HttpServletRequest request){
+		JSONObject jsonObject = new JSONObject();
+		if (bloodEnterService.doGoCheck(request.getParameter("array").split(","))) {
+			jsonObject.put("msg", "送检成功");
+		}else{
+			jsonObject.put("msg", "送检失败");
+		}
+		return jsonObject;
+	}
 }
