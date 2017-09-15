@@ -29,7 +29,9 @@
 					<li><a id="find" href="#" class="easyui-linkbutton"
 						data-options="iconCls:'icon-search'"
 						onclick="find('bloodResult-list')">查询</a></li>
-					<li><a href="#" class="easyui-linkbutton" data-options="width:'70px'" onclick="openImportDialog()">导入数据</a></li>
+					<li><a id="find" href="#" class="easyui-linkbutton"
+						data-options="iconCls:'icon-print'"
+						onclick="printAllItem()">批量打印</a></li>
 				</ul>
 			</div>
 		</div>
@@ -47,9 +49,13 @@
 			toolbar : '#toolbar',
 			pagination : true,
 			columns : [ [ {
+				field : 'selectbox',
+				title : '选择',
+				checkbox:true
+			},{
 				field : 'bloodNumber',
 				title : '血样编号',
-				width : 60,
+				width : 150,
 				align : 'center',
 				halign : 'center'
 			}, {
@@ -190,13 +196,9 @@
 		function optformatter(value, row, index) {
 			var str='';
 			if(true){
-				str+='<a href="#" class="grid-btn grid-edit" onclick="updateItem(\''
-					+ row.id+ '\',\''+index+'\')">修改</a>';
+				str+='<a href="#" class="grid-btn grid-edit" onclick="printItem(\''
+					+ row.id+ '\')">打印</a>';
 						}
-			if(true){
-				str+='<a href="#" class="grid-btn grid-delete" onclick="deleteBlood(\''
-					+ row.id + '\')">删除</a>';
-								}
 			return str;	
 		}
 		function deleteBlood(Id){

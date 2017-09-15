@@ -33,8 +33,8 @@ public class bloodResultServiceImpl extends CommonServiceImpl implements
 	@Autowired
 	bloodResultDao bloodResultDao;
 
-	public JSONObject getBloodResultList(Map<String, String> map) {
-		return bloodResultDao.getBloodResultList(map);
+	public JSONObject getBloodResultList(Map<String, String> map, String userRole, String userDistrict) {
+		return bloodResultDao.getBloodResultList(map,userRole,userDistrict);
 	}
 
 	public boolean readExcel(MultipartFile file,String village,String newPath) {

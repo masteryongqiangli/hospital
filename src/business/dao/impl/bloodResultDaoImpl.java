@@ -22,7 +22,7 @@ import system.web.entity.base.Sys_User;
 @Repository
 public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 	@Override
-	public JSONObject getBloodResultList(Map<String, String> parammMap){
+	public JSONObject getBloodResultList(Map<String, String> parammMap, String userRole, String userDistrict){
 		StringBuffer sql = getSysUserSql();
 		if (StringUtil.isNotEmpty(parammMap.get("bloodNumber"))) {
 			sql.append(" and a.bloodNumber like '%"+parammMap.get("bloodNumber")+"%'");
@@ -30,9 +30,13 @@ public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 		if (StringUtil.isNotEmpty(parammMap.get("blooderName"))) {
 			sql.append(" and b.blooderName like '%"+parammMap.get("blooderName")+"%'");
 		}
-		/*SQLQuery query = this.getSession().createSQLQuery(sql.toString());
-		query.addEntity(Sys_Base_bloodResult.class);
-		return CriteriaPageUtil.getPageJson(query, parammMap);*/
+		if (userRole.equals("wsz")) {
+			sql.append(" AND b.blooderDistrict = '"+userDistrict+"'");
+		}
+		if (userRole.equals("yy")) {
+			sql.append(" AND b.blooderDistrict IN (SELECT c.text FROM dbo.Sys_Base_DataDictionary c");
+			sql.append(" LEFT JOIN dbo.Sys_Base_DataDictionary d ON c.subjection = d.dataDicId WHERE d.text = '"+userDistrict+"')");
+		}
 		GetConnection connection = new GetConnection();
 		return connection.getJsonObjectPageBySql(sql.toString(), parammMap.get("page").toString(), parammMap.get("rows").toString());
 	}

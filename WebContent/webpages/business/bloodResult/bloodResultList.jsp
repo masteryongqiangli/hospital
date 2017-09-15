@@ -50,7 +50,7 @@
 			columns : [ [ {
 				field : 'bloodNumber',
 				title : '血样编号',
-				width : 60,
+				width : 150,
 				align : 'center',
 				halign : 'center'
 			}, {

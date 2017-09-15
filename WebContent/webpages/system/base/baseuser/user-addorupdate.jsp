@@ -74,11 +74,11 @@
 			if('${user.userId }'!=''){
 				$('.password').remove();
 				if('${flag}' == 0){
-					$('#district_id').combobox('select','${user.district.text}');
+					$('#district_id').combobox('select','${user.district.dataDicId}');
 				}else if('${flag}' == 1){
-					$('#district_id').combobox('select','${user.town.text}');
+					$('#district_id').combobox('select','${user.town.dataDicId}');
 				}else if('${flag}' == 2){
-					$('#district_id').combobox('select','${user.village.text}');
+					$('#district_id').combobox('select','${user.village.dataDicId}');
 				}
 			}
 		});

@@ -1,5 +1,8 @@
 package business.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
@@ -21,6 +24,7 @@ import system.core.util.QueryParmFormat;
 import system.core.util.ResourceUtil;
 import system.web.entity.base.Sys_Base_DataDictionary;
 import system.web.entity.base.Sys_Base_User;
+import system.web.entity.base.Sys_User;
 import system.web.service.base.baseuser.BaseUserServiceI;
 import system.web.service.base.datadictionary.DataDictionaryServiceI;
 import business.entity.Sys_Base_bloodResult;
@@ -58,7 +62,16 @@ public class bloodResultController extends BaseController{
 	@ResponseBody
 	@Log(operationName="查询血样",operationType=0)
 	public JSONObject getBloodResultList(HttpServletRequest request){
-		return bloodResultService.getBloodResultList(QueryParmFormat.Format(request.getParameterMap()));
+		Sys_User sys_User = ResourceUtil.getSys_User();
+		String userDistrict="";
+		if (sys_User.getRoleCodeList().equals("sa")) {
+			userDistrict = "bjs";
+		}else if (sys_User.getRoleCodeList().equals("yy")) {
+			userDistrict = sys_User.getTown();
+		}else if (sys_User.getRoleCodeList().equals("wsz")) {
+			userDistrict = sys_User.getVillage();
+		}
+		return bloodResultService.getBloodResultList(QueryParmFormat.Format(request.getParameterMap()),sys_User.getRoleCodeList(),userDistrict);
 	}
 	
 	/**

@@ -14,9 +14,11 @@ public interface bloodResultService extends CommonServiceI{
 	/**
 	 * 获取血样检验结果列表
 	 * @param map
+	 * @param userDistrict 
+	 * @param userDistrict2 
 	 * @return
 	 */
-	public JSONObject getBloodResultList(Map<String, String> map);
+	public JSONObject getBloodResultList(Map<String, String> map, String userRole, String userDistrict);
 	
 	public boolean readExcel(MultipartFile file,String village,String newPath);
 	

@@ -7,7 +7,7 @@ import net.sf.json.JSONObject;
 import system.core.dao.BaseDaoI;
 
 public interface bloodResultDao extends BaseDaoI{
-	public JSONObject getBloodResultList(Map<String, String> map);
+	public JSONObject getBloodResultList(Map<String, String> map, String userRole, String userDistrict);
 	
 	public boolean importBloodResult(Map<String, Object> onePerson,String village);
 	
