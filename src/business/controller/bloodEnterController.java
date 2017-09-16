@@ -157,7 +157,11 @@ public class bloodEnterController extends BaseController{
 		String[] k = {"bloodNumber","blooderName","blooderIdCard","bloodStartTime","bloodAriveTime","bloodResultTime","ALB","ALP","ALT","AST","CK","CK_MB"
 				,"CRE","DBIL","GGT","GLU","HBDH","HDL_C","LDH","LDL_C","TBIL","TC","TG","TP","UA","UREA"};
 		for(int i=0;i<k.length;i++){
-			dataMap.put(k[i], jsonObject2.get(k[i]));
+			if (i>=6) {
+				dataMap.put(k[i].toLowerCase(), jsonObject2.get(k[i]));
+			}else{
+				dataMap.put(k[i], jsonObject2.get(k[i]));
+			}
 		}
 		CreateWordUtil createWordUtil = new CreateWordUtil();
 		try {

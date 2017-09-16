@@ -197,7 +197,7 @@
 			var str='';
 			if(true){
 				str+='<a href="#" class="grid-btn grid-edit" onclick="printItem(\''
-					+ row.id+ '\')">打印</a>';
+					+ row.bloodEnterId+ '\')">打印</a>';
 						}
 			return str;	
 		}
@@ -209,6 +209,9 @@
 		}
 		function openImportDialog(){
 			openDialogNoBtn('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.5);
+		}
+		function printItem(bloodEnterId){
+			window.location.href="bloodEnterController.do?exportWord&bloodEnterId="+bloodEnterId;
 		}
 	</script>
 </body>
