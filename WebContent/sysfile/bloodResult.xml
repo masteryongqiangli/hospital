@@ -758,15 +758,7 @@
                   <w:b/>
                   <w:sz w:val="24"/>
                 </w:rPr>
-                <w:t>北京市房山区</w:t>
-              </w:r>
-              <w:r wsp:rsidRPr="00567F4B">
-                <w:rPr>
-                  <wx:font wx:val="宋体"/>
-                  <w:b/>
-                  <w:sz w:val="24"/>
-                </w:rPr>
-                <w:t>河北中心卫生院检验报告单</w:t>
+                <w:t>北京市房山区${bloodCheckHospital}卫生院检验报告单</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1160,7 +1152,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>check</w:t>
+                <w:t></w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1692,7 +1684,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>printTime</w:t>s
+                <w:t>${printTime}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1758,7 +1750,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>blooderAge</w:t>
+                <w:t>${blooderAge}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1847,7 +1839,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ldl_c</w:t>
+                <w:t>${ldl_c}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1872,7 +1864,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>urea</w:t>
+                <w:t>${urea}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1897,7 +1889,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ua</w:t>
+                <w:t>${ua}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1922,7 +1914,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>cre</w:t>
+                <w:t>${cre}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1947,7 +1939,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>glu</w:t>
+                <w:t>${glu}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1972,7 +1964,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ck</w:t>
+                <w:t>${ck}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -1997,7 +1989,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ck_mb</w:t>
+                <w:t>${ck_mb}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -2022,7 +2014,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ldh</w:t>
+                <w:t>${ldh}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -2047,7 +2039,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>hbdh</w:t>
+                <w:t>${hbdh}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -2072,7 +2064,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>hbsag</w:t>
+                <w:t>${hbsag}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -3140,7 +3132,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>bloodCheckTime</w:t>
+                <w:t>${bloodCheckTime}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -3206,7 +3198,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>blooderSex</w:t>
+                <w:t>${blooderSex}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4206,7 +4198,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>blooderName</w:t>
+                <w:t>${blooderName}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4295,7 +4287,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>alt</w:t>
+                <w:t>${alt}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4320,7 +4312,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ast</w:t>
+                <w:t>${ast}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4345,7 +4337,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>tbil</w:t>
+                <w:t>${tbil}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4370,7 +4362,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>dbil</w:t>
+                <w:t>${dbil}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4395,7 +4387,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>tp</w:t>
+                <w:t>${tp}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4420,7 +4412,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>alb</w:t>
+                <w:t>${alb}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4445,7 +4437,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>alp</w:t>
+                <w:t>${alp}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4470,7 +4462,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>ggt</w:t>
+                <w:t>${ggt}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4495,7 +4487,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>tc</w:t>
+                <w:t>${tc}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4520,7 +4512,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>tg</w:t>
+                <w:t>${tg}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4545,7 +4537,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>hdl_c</w:t>
+                <w:t>${hdl_c}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4568,7 +4560,7 @@
                 <w:jc w:val="left"/>
               </w:pPr>
               <w:r wsp:rsidRPr="00567F4B">
-                <w:t>checkOperator</w:t>
+                <w:t>${checkOperator}</w:t>
               </w:r>
             </w:p>
           </w:tc>
@@ -4594,7 +4586,7 @@
                 <w:rPr>
                   <w:rFonts w:hint="fareast"/>
                 </w:rPr>
-                <w:t>bloodAriveTime</w:t>
+                <w:t>${bloodAriveTime}</w:t>
               </w:r>
             </w:p>
           </w:tc>
