@@ -406,6 +406,9 @@ public class CreateWordUtil {
         Template template = con.getTemplate("bloodResult.xml");
         OutputStream outputStream = new FileOutputStream(f);
 		Writer w = new OutputStreamWriter(outputStream, "utf-8");
+		for (String nameString : dataMap.keySet()) {
+			
+		}
 		String[] key = (String[]) dataMap.keySet().toArray();
 		for (int i = 0; i < key.length; i++) {
 			Map<String, String> map = (Map<String, String>) dataMap.get(key[i]);
