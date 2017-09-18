@@ -8,12 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
- .resultFile {
+.resultFile {
 	opacity: 0.0;
 	width: 50px;
 	position: absolute;
 	z-index: 5000;
-} 
+}
 </style>
 <title></title>
 </head>
@@ -30,13 +30,17 @@
 						data-options="iconCls:'icon-search'"
 						onclick="find('bloodResult-list')">查询</a></li>
 					<li><a id="find" href="#" class="easyui-linkbutton"
-						data-options="iconCls:'icon-print'"
-						onclick="printAllItem()">批量打印</a></li>
+						data-options="iconCls:'icon-print'" onclick="printAllItem()">批量打印</a></li>
 				</ul>
 			</div>
 		</div>
 		<div class="box">
 			<table id="bloodResult-list">
+			</table>
+		</div>
+		<div id="printdiv" style="display: none;">
+			<table id="tableid" class="main" cellspacing="0" cellpadding="0"
+				border="1" bordercolor="#000000" align="center" width="800px;">
 			</table>
 		</div>
 	</div>
@@ -51,8 +55,8 @@
 			columns : [ [ {
 				field : 'selectbox',
 				title : '选择',
-				checkbox:true
-			},{
+				checkbox : true
+			}, {
 				field : 'bloodNumber',
 				title : '血样编号',
 				width : 150,
@@ -190,28 +194,44 @@
 				width : 80,
 				align : 'center',
 				halign : 'center',
-				formatter:optformatter
-			}  ] ]
+				formatter : optformatter
+			} ] ]
 		});
 		function optformatter(value, row, index) {
-			var str='';
-			if(true){
-				str+='<a href="#" class="grid-btn grid-edit" onclick="printItem(\''
-					+ row.bloodEnterId+ '\')">打印</a>';
-						}
-			return str;	
+			var str = '';
+			if (true) {
+				str += '<a href="#" class="grid-btn grid-edit" onclick="printItem(\''
+						+ row.bloodEnterId + '\')">打印</a>';
+			}
+			return str;
 		}
-		function deleteBlood(Id){
-			deleteItem('bloodResultController.do?doDelete&resultId='+Id,'bloodResult-list');
+		function deleteBlood(Id) {
+			deleteItem('bloodResultController.do?doDelete&resultId=' + Id,
+					'bloodResult-list');
 		}
-		function updateItem(Id,index) {
-			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.85);
+		function updateItem(Id, index) {
+			openDialog('修改', 'bloodResultController.do?goAddorUpdate&resultId='
+					+ Id, 600, top.$(window).height() * 0.85);
 		}
-		function openImportDialog(){
-			openDialogNoBtn('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.5);
+		function openImportDialog() {
+			openDialogNoBtn('录入结果', 'bloodResultController.do?goImportResult',
+					600, top.$(window).height() * 0.5);
 		}
-		function printItem(bloodEnterId){
-			window.location.href="bloodEnterController.do?exportWord&bloodEnterId="+bloodEnterId;
+		function printItem(bloodEnterId) {
+			window.location.href = "bloodEnterController.do?exportWord&bloodEnterId="
+					+ bloodEnterId;
+		}
+		function printAllItem(){
+			var rows = $("#bloodResult-list").datagrid('getSelections');
+			if(rows.length==0){
+				$.messager.alert('提示信息','请先选择需要打印的报告');
+			}else{
+				var array = new Array();
+				for(var i=0;i<rows.length;i++){
+					array.push(rows[i].bloodEnterId);
+				}
+				window.location.href = "bloodEnterController.do?batchExportWord&bloodEnterId="+array;
+			}
 		}
 	</script>
 </body>

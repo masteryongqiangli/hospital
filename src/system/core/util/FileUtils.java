@@ -1,5 +1,7 @@
 package system.core.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +12,11 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.jni.Thread;
@@ -262,5 +269,98 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 		return file;
+	}
+	public static void downloadFile(String fileName,String filePath,HttpServletResponse response) throws IOException{
+		InputStream inputStream = new FileInputStream(filePath);
+		OutputStream out = null;
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/msword");
+		response.addHeader("Content-Disposition", "attachment;filename="
+				+ new String(fileName.getBytes("gb2312"), "ISO8859-1")
+				+ ".doc");
+		out = response.getOutputStream();
+		byte[] buffer = new byte[512]; 
+		int bytesToRead = -1;
+		while ((bytesToRead = inputStream.read(buffer)) != -1) {
+			out.write(buffer, 0, bytesToRead);
+		}
+		if (out!=null) {
+			out.close();
+		}
+		if (inputStream!=null) {
+			inputStream.close();
+		}
+		File file = new File(filePath);
+		file.delete();
+	}
+	/**
+	 * 批量文件创建压缩包
+	 * @param zipPath
+	 * @param batchDirPath
+	 * @param zipName
+	 * @throws IOException
+	 */
+	public String makeZipFile(String zipPath,String[] batchDirPath, String zipName) throws IOException {
+		String zipFilePath = zipPath+zipName+".zip";
+		File zipFile = new File(zipFilePath);
+		OutputStream outputStream = null;
+		FileInputStream inputStream = null;
+		BufferedInputStream bufferedInputStream = null;
+		ZipOutputStream zipOutputStream = null;
+		outputStream = new FileOutputStream(zipFile);
+		zipOutputStream = new ZipOutputStream(new BufferedOutputStream(outputStream));
+		byte[] bufs = new byte[1024 * 10];
+		for (int i = 0; i < batchDirPath.length; i++) {
+			ZipEntry zipEntry = new ZipEntry((new File(batchDirPath[i]).getName()));
+			zipOutputStream.putNextEntry(zipEntry);
+			inputStream = new FileInputStream(new File(batchDirPath[i]));
+			bufferedInputStream = new BufferedInputStream(inputStream, 1024 * 10);
+			int read = 0;  
+            while ((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1) {  
+                zipOutputStream.write(bufs, 0, read);  
+            }
+		}
+		if (bufferedInputStream!=null) {
+			bufferedInputStream.close();
+		}
+		if (zipOutputStream!=null) {
+			zipOutputStream.close();
+		}
+		return zipFilePath;
+	}
+	/**
+	 * 下载服务器端生成的zip压缩文件
+	 * @param zipFilePath
+	 * @param batchDirPath
+	 * @param response
+	 */
+	public void downloadZipFile(String zipFilePath, String zipFileName,String[] batchDirPath,
+			HttpServletResponse response) {
+        try {  
+            File file = new File(zipFilePath);  
+            response.setCharacterEncoding("UTF-8");  
+            response.setHeader("Content-Disposition",  
+                    "attachment; filename=" + new String(zipFileName.getBytes("ISO8859-1"), "UTF-8"));  
+            response.setContentLength((int) file.length());  
+            response.setContentType("application/zip");
+            FileInputStream fis = new FileInputStream(file);  
+            BufferedInputStream buff = new BufferedInputStream(fis);  
+            byte[] b = new byte[1024];
+            long k = 0;
+            OutputStream myout = response.getOutputStream();  
+            while (k < file.length()) {  
+                int j = buff.read(b, 0, 1024);  
+                k += j;  
+                myout.write(b, 0, j);  
+            }  
+            myout.flush();  
+            buff.close();  
+            file.delete();
+            for (int i = 0; i < batchDirPath.length; i++) {
+				new File(batchDirPath[i]).delete();
+			}
+        } catch (Exception e) {  
+            System.out.println(e);  
+        }  
 	}
 }

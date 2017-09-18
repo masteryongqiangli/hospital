@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.Range;
 
+import system.core.util.FileUtils;
+import system.core.util.PrinterUtil;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -69,57 +71,30 @@ public class CreateWordUtil {
 	 * @param dataMap
 	 *            数据绑定
 	 */
-	public static void CreateFile(HttpServletRequest request,
-			HttpServletResponse response, String templateName, String wordName,
+	@SuppressWarnings("static-access")
+	public static void CreateFileNoDoDownload(String rootPath,
+			String templateName, String wordName,
 			Map<String, Object> dataMap) throws Exception {
 		Configuration configuration = new Configuration();
 		configuration.setDefaultEncoding("utf-8");
-		String name = "bloodResult.xml";
+		String name = rootPath+"/bloodResult.xml";
 		File f = new File(name);
 		Configuration con=new Configuration();
-		con.setDirectoryForTemplateLoading(new File(request.getSession().getServletContext().getRealPath("sysfile/")));//指定加载模板的位置
-        con.setObjectWrapper(new DefaultObjectWrapper());//指定生产模板的方式
-        con.setDefaultEncoding("utf-8");//设置模板读取的编码方式，用于处理乱码
-        Template template = con.getTemplate("bloodResult.xml");//模板文件，可以是xml,ftl,html
-		// 设置FreeMarker的模版文件位置
-		/*configuration.setServletContextForTemplateLoading(request.getSession()
-				.getServletContext(), "sysfile\\");
-		Template t = null;
-		// 要装载的模板
-		t = configuration.getTemplate(templateName);*/
-		// 获取应用的根路径保存到本地
-		/*String servletContextRealPath = request.getServletContext().getRealPath("");
-		File outFile=new File(servletContextRealPath+"/export/TemporaryFile/" + name);
-		Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile),"utf-8"));
-		t.process(dataMap, w);
-		if (w != null) {
-			w.close();
-		}*/
-		//输出到页面
-		Writer w = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
+		con.setDirectoryForTemplateLoading(new File(rootPath));//指定加载模板的位置
+        con.setObjectWrapper(new DefaultObjectWrapper());
+        con.setDefaultEncoding("utf-8");
+        Template template = con.getTemplate("bloodResult.xml");
+        OutputStream outputStream = new FileOutputStream(f);
+		Writer w = new OutputStreamWriter(outputStream, "utf-8");
 		template.process(dataMap, w);
 		InputStream fin = null;
-		ServletOutputStream out = null;
 		f.setReadOnly();
 		f.setWritable(false);
 		try {
-			// 调用工具类WordGenerator的createDoc方法生成Word文档
 			fin = new FileInputStream(f);
-
-			response.setCharacterEncoding("utf-8");
-			response.setContentType("application/msword");
-			// 设置浏览器以下载的方式处理该文件默认名为resume.doc
-			response.addHeader("Content-Disposition", "attachment;filename="
-					+ new String(wordName.getBytes("gb2312"), "ISO8859-1")
-					+ ".doc");
-
-			out = response.getOutputStream();
-			byte[] buffer = new byte[512]; // 缓冲区
-			int bytesToRead = -1;
-			// 通过循环将读入的Word文件的内容输出到浏览器中
-			while ((bytesToRead = fin.read(buffer)) != -1) {
-				out.write(buffer, 0, bytesToRead);
-			}
+			String tempFilePath =rootPath+"/transfile/"+wordName+".doc";
+			FileUtils fileUtils = new FileUtils();
+			fileUtils.inputstreamtofile(fin, tempFilePath);
 		} finally {
 			if (w != null) {
 				w.close();
@@ -127,11 +102,11 @@ public class CreateWordUtil {
 			if (fin != null) {
 				fin.close();
 			}
-			if (out != null) {
-				out.close();
+			if (outputStream!=null) {
+				outputStream.close();
 			}
-			if (f != null) {
-				f.delete(); // 删除临时文件
+			if (con!=null) {
+				con.clearTemplateCache();
 			}
 		}
 	}

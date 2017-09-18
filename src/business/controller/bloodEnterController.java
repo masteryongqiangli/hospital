@@ -1,5 +1,6 @@
 package business.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import sun.security.x509.CertAndKeyGen;
 import system.core.annotation.Log;
 import system.core.controller.BaseController;
 import system.core.enums.DataStateTypeEnum;
+import system.core.util.FileUtils;
 import system.core.util.QueryParmFormat;
 import system.core.util.ResourceUtil;
 import system.web.entity.base.Sys_Base_User;
@@ -141,7 +143,7 @@ public class bloodEnterController extends BaseController{
 	}
 	
 	/**
-	 * 
+	 * 导出单个文件
 	 * @param request
 	 * @param response
 	 */
@@ -149,7 +151,48 @@ public class bloodEnterController extends BaseController{
 	@RequestMapping(params="exportWord")
 	@Log(operationName="导出word",operationType=0)
 	public void exportWord(HttpServletRequest request,HttpServletResponse response){
-		JSONObject jsonObject = bloodEnterService.getOneBlood(request.getParameter("bloodEnterId"));
+		String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
+		JSONObject returnString = makeFile(request.getParameter("bloodEnterId"),rootPath);
+		String wordName = returnString.getString("wordName");
+		String tempFilePath = returnString.getString("tempFilePath");
+		FileUtils fileUtils = new FileUtils();
+		try {
+			fileUtils.downloadFile(wordName, tempFilePath, response);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 批量导出文件
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	@SuppressWarnings({ "null" })
+	@RequestMapping(params="batchExportWord")
+	@Log(operationName="批量导出word",operationType=0)
+	public void batchExportWord(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
+		String[] batchBloodId = request.getParameter("bloodEnterId").split(",");
+		String[] batchDirPath = null;
+		for (int i = 0; i < batchBloodId.length; i++) {
+			JSONObject jsonObject = makeFile(batchBloodId[i], rootPath);
+			batchDirPath[i] = jsonObject.getString("tempFilePath");
+		}
+		FileUtils fileUtils = new FileUtils();
+		String zipPath = rootPath+"/transfile/";
+		String zipFileName = "批量化验报告";
+		String zipFilePath = fileUtils.makeZipFile(zipPath,batchDirPath,zipFileName);
+		fileUtils.downloadZipFile(zipFilePath,zipFileName, batchDirPath, response);
+	}
+	/**
+	 * 单纯生成文件
+	 * @param request
+	 * @return
+	 */
+	@SuppressWarnings("static-access")
+	public JSONObject makeFile(String id,String rootPath){
+		JSONObject jsonObject = bloodEnterService.getOneBlood(id);
 		String templateName = "bloodResult.xml";
 		JSONObject jsonObject2 = JSONObject.fromObject(JSONArray.fromObject(jsonObject.get("data")).get(0));
 		String wordName = jsonObject2.get("blooderName")+"的血液检验报告";
@@ -165,13 +208,17 @@ public class bloodEnterController extends BaseController{
 			}
 		}
 		CreateWordUtil createWordUtil = new CreateWordUtil();
+		String tempFilePath=rootPath+"/transfile/"+wordName+".doc";
 		try {
-			createWordUtil.CreateFile(request, response, templateName, wordName, dataMap);
+			createWordUtil.CreateFileNoDoDownload(rootPath, templateName, wordName, dataMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		JSONObject jsonObject3 = new JSONObject();
+		jsonObject3.put("wordName", wordName);
+		jsonObject3.put("tempFilePath", tempFilePath);
+		return jsonObject3;
 	}
-	
 	
 	@RequestMapping(params="getBloodNumber")
 	@ResponseBody
