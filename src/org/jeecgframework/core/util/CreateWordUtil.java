@@ -406,35 +406,29 @@ public class CreateWordUtil {
         Template template = con.getTemplate("bloodResult.xml");
         OutputStream outputStream = new FileOutputStream(f);
 		Writer w = new OutputStreamWriter(outputStream, "utf-8");
-		for (String nameString : dataMap.keySet()) {
-			
-		}
-		String[] key = (String[]) dataMap.keySet().toArray();
-		for (int i = 0; i < key.length; i++) {
-			Map<String, String> map = (Map<String, String>) dataMap.get(key[i]);
+		String[] array2 = dataMap.keySet().toArray(new String[dataMap.keySet().size()]);
+		InputStream fin = null;
+		for (int i = 0; i < array2.length; i++) {
+			Map<String, String> map = (Map<String, String>) dataMap.get(array2[i]);
 			template.process(map, w);
-			InputStream fin = null;
 			f.setReadOnly();
 			f.setWritable(false);
-			try {
-				fin = new FileInputStream(f);
-				String tempFilePath =rootPath+"/transfile/"+key[i]+".doc";
-				FileUtils fileUtils = new FileUtils();
-				fileUtils.inputstreamtofile(fin, tempFilePath);
-			} finally {
-				if (w != null) {
-					w.close();
-				}
-				if (fin != null) {
-					fin.close();
-				}
-				if (outputStream!=null) {
-					outputStream.close();
-				}
-				if (con!=null) {
-					con.clearTemplateCache();
-				}
-			}
+			fin = new FileInputStream(f);
+			String tempFilePath =rootPath+"/transfile/"+array2[i]+"的血液化验报告.doc";
+			FileUtils fileUtils = new FileUtils();
+			fileUtils.inputstreamtofile(fin, tempFilePath);
+		}
+		if (w != null) {
+			w.close();
+		}
+		if (fin!=null) {
+			fin.close();
+		}
+		if (outputStream!=null) {
+			outputStream.close();
+		}
+		if (con!=null) {
+			con.clearTemplateCache();
 		}
 	}
 }

@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/webpages/basedetail.jsp"%>
 <%@include file="/webpages/easyuipage.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,8 +42,6 @@
 	</div>
 	<script>
 		var selectData = JSON.parse('${village.selectData}');
-		var id= window.frameElement.id;
-		var obj=top.$('#'+ id)[0];
 		var formobj = $('form')[0];
 		function UploadFile() {
 			var msg="请先";
@@ -69,12 +66,12 @@
 								$.messager.progress('close');
 								$('#bloodResult-list').datagrid('reload');
 								$("#resultFile").val('');
-								top.$('#dialog'+id).dialog('destroy');
+								alert(JSON.stringify(top.$("#"+formobj.id)))
 							},
-							error:function(){
+							error:function(data){
 								$.messager.progress('close');
 								$("#resultFile").val('');
-								top.$('#dialog'+id).dialog('destroy');
+								alert(JSON.stringify(top.$("#"+formobj.id)))
 							}
 						});
 						$('#bloodResult').submit();

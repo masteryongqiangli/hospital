@@ -192,10 +192,23 @@ public class bloodEnterController extends BaseController{
 		}
 		CreateWordUtil createWordUtil = new CreateWordUtil();
 		String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
+		File file = new File(rootPath+"/transfile/");
+		if (!file.exists()) {
+			file.mkdir();
+		}
 		try {
 			createWordUtil.batchCreateFile(rootPath, dataMap);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		FileUtils fileUtils = new FileUtils();
+		String zipFilePath = rootPath+"/transfile/";
+		String zipFileName = "批量血液化验报告.zip";
+		fileUtils.makeZipFile(zipFilePath, zipFileName);
+		fileUtils.downloadZipFile(zipFilePath, zipFileName, response);
+		File files[] = file.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			files[i].delete();
 		}
 	}
 	/**

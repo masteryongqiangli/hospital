@@ -1,5 +1,6 @@
 package business.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,6 +110,10 @@ public class bloodResultController extends BaseController{
 	public JSONObject bloodResultFile(@RequestParam("resultFile") MultipartFile file,HttpServletRequest request,Sys_Base_DataDictionary dataDictionary){
 		JSONObject jsonObject = new JSONObject();
 		String newPath = request.getSession().getServletContext().getRealPath("sysfile/transfile/");
+		File file2 = new File(newPath);
+		if (!file2.exists()) {
+			file2.mkdir();
+		}
 		Sys_Base_DataDictionary dataDictionary2 = DataDictionaryServiceI.get(Sys_Base_DataDictionary.class,
 				request.getParameter("blooderDistrict"));
 		String village = dataDictionary2.getText();

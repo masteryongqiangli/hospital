@@ -302,9 +302,9 @@ public class FileUtils {
 	 * @throws IOException
 	 */
 	public String makeZipFile(String zipPath,String zipName) throws IOException {
-		String zipFilePath = zipPath+zipName+".zip";
-		File zipFile = new File(zipFilePath);
+		String zipFilePath = zipPath+zipName;
 		File files[] = new File(zipPath).listFiles();
+		File zipFile = new File(zipFilePath);
 		OutputStream outputStream = null;
 		FileInputStream inputStream = null;
 		BufferedInputStream bufferedInputStream = null;
@@ -315,7 +315,7 @@ public class FileUtils {
 		for (int i = 0; i < files.length; i++) {
 			ZipEntry zipEntry = new ZipEntry(files[i].getName());
 			zipOutputStream.putNextEntry(zipEntry);
-			inputStream = new FileInputStream(files[i].getName());
+			inputStream = new FileInputStream(files[i]);
 			bufferedInputStream = new BufferedInputStream(inputStream, 1024 * 10);
 			int read = 0;  
             while ((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1) {  
@@ -336,13 +336,12 @@ public class FileUtils {
 	 * @param batchDirPath
 	 * @param response
 	 */
-	public void downloadZipFile(String zipFilePath, String zipFileName,String[] batchDirPath,
-			HttpServletResponse response) {
+	public void downloadZipFile(String zipFilePath, String zipFileName,HttpServletResponse response) {
         try {  
-            File file = new File(zipFilePath);  
+            File file = new File(zipFilePath+zipFileName);  
             response.setCharacterEncoding("UTF-8");  
             response.setHeader("Content-Disposition",  
-                    "attachment; filename=" + new String(zipFileName.getBytes("ISO8859-1"), "UTF-8"));  
+                    "attachment; filename=" + new String(zipFileName.getBytes("UTF-8"), "ISO-8859-1"));  
             response.setContentLength((int) file.length());  
             response.setContentType("application/zip");
             FileInputStream fis = new FileInputStream(file);  
@@ -357,10 +356,6 @@ public class FileUtils {
             }  
             myout.flush();  
             buff.close();  
-            file.delete();
-            for (int i = 0; i < batchDirPath.length; i++) {
-				new File(batchDirPath[i]).delete();
-			}
         } catch (Exception e) {  
             System.out.println(e);  
         }  
