@@ -154,13 +154,14 @@ public class bloodEnterController extends BaseController{
 		JSONObject jsonObject2 = JSONObject.fromObject(JSONArray.fromObject(jsonObject.get("data")).get(0));
 		String wordName = jsonObject2.get("blooderName")+"的血液检验报告";
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		String[] k = {"bloodNumber","blooderName","blooderIdCard","bloodStartTime","bloodAriveTime","bloodResultTime","ALB","ALP","ALT","AST","CK","CK_MB"
-				,"CRE","DBIL","GGT","GLU","HBDH","HDL_C","LDH","LDL_C","TBIL","TC","TG","TP","UA","UREA"};
+		String[] k = {"bloodNumber","blooderName","blooderIdCard","bloodStartTime","bloodAriveTime","bloodCheckTime","blooderAge","blooderSex"
+				,"bloodCheckHospital","printTime","ALB","ALP","ALT","AST","CK","CK_MB"
+				,"CRE","DBIL","GGT","GLU","HBDH","HDL_C","LDH","LDL_C","TBIL","TC","TG","TP","UA","UREA","HbsAg"};
 		for(int i=0;i<k.length;i++){
-			if (i>=6) {
-				dataMap.put(k[i].toLowerCase(), jsonObject2.get(k[i]));
+			if (i>=10) {
+				dataMap.put(k[i].toLowerCase(), jsonObject2.get(k[i])==null?"":jsonObject2.get(k[i]));
 			}else{
-				dataMap.put(k[i], jsonObject2.get(k[i]));
+				dataMap.put(k[i], jsonObject2.get(k[i])==null?"":jsonObject2.get(k[i]));
 			}
 		}
 		CreateWordUtil createWordUtil = new CreateWordUtil();

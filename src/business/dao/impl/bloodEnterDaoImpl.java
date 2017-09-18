@@ -70,8 +70,13 @@ public class bloodEnterDaoImpl extends BaseDaoImpl implements bloodEnterDao{
 	public JSONObject getOneBlood(String bloodEnterId){
 		StringBuffer sqlBuffer =  new StringBuffer();
 		GetConnection connection = new GetConnection();
-		sqlBuffer.append("SELECT a.*,b.bloodNumber,b.blooderName,b.blooderIdCard,b.bloodOperator,b.bloodAriveTime,b.bloodStartTime,b.blooderIdCard,b.bloodResultTime ");
+		sqlBuffer.append("SELECT a.*,b.bloodNumber,b.blooderName,b.blooderIdCard,b.bloodOperator,b.bloodAriveTime,b.bloodStartTime,b.blooderIdCard,b.bloodResultTime AS bloodCheckTime,");
+		sqlBuffer.append(" CONVERT(varchar(100), GETDATE(), 20) AS printTime,");
+		sqlBuffer.append(" b.blooderAge,CASE WHEN SUBSTRING(b.blooderIdCard,17,1)%2 = 1 THEN '男' ELSE '女'END AS blooderSex,");
+		sqlBuffer.append(" d.text+'乡'+b.blooderDistrict AS bloodCheckHospital");
 		sqlBuffer.append(" FROM dbo.Sys_Base_bloodResult a LEFT JOIN dbo.Sys_Base_bloodEnter b  ON a.bloodEnterId = b.id");
+		sqlBuffer.append(" LEFT JOIN dbo.Sys_Base_DataDictionary c ON b.blooderDistrict = c.text");
+		sqlBuffer.append(" LEFT JOIN dbo.Sys_Base_DataDictionary d ON c.subjection = d.dataDicId");
 		sqlBuffer.append(" WHERE b.id = '"+bloodEnterId+"' ");
 		return connection.getJsonObjectBySql(sqlBuffer.toString());
 	}

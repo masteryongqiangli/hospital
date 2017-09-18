@@ -59,7 +59,7 @@ public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 		buffer.append(" order BY SUBSTRING(a.bloodNumber,LEN(b.code)+13,LEN(a.bloodNumber))");
 		String bloodEnterId = connection.getcol(buffer.toString());
 		if (!bloodEnterId.equals("")) {
-			sql.append("insert into Sys_Base_bloodResult (id,ALB,ALP,ALT,[AST],[CK],[CK_MB],[CRE],[DBIL],[GGT],[GLU],[HBDH],[HDL_C],[LDH],[LDL_C],[TBIL],[TC],[TG],[TP],[UA],[UREA],[bloodEnterId]) ");
+			sql.append("insert into Sys_Base_bloodResult (id,ALB,ALP,ALT,[AST],[CK],[CK_MB],[CRE],[DBIL],[GGT],[GLU],[HBDH],[HDL_C],[LDH],[LDL_C],[TBIL],[TC],[TG],[TP],[UA],[UREA],HbsAg,[bloodEnterId]) ");
 			sql.append("values ('"+system.core.util.UUIDGenerator.generate().toString()+"',");
 			sql.append("'"+(map.get("ALB")==null?"":map.get("ALB"))+"',");
 			sql.append("'"+(map.get("ALP")==null?"":map.get("ALP"))+"',");
@@ -81,6 +81,7 @@ public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 			sql.append("'"+(map.get("TP")==null?"":map.get("TP"))+"',");
 			sql.append("'"+(map.get("UA")==null?"":map.get("UA"))+"',");
 			sql.append("'"+(map.get("UREA")==null?"":map.get("UREA"))+"',");
+			sql.append("'"+(map.get("HbsAg")==null?"":map.get("HbsAg"))+"',");
 			sql.append("'"+bloodEnterId+"');");
 			Date now = new Date(); 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式

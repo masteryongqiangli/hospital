@@ -43,6 +43,14 @@ public class Sys_Base_bloodResult {
 	private String CRE;
 	private String DBIL;
 	private String GGT;
+	private String HbsAg;
+	@Column(length=50)
+	public String getHbsAg() {
+		return HbsAg;
+	}
+	public void setHbsAg(String hbsAg) {
+		HbsAg = hbsAg;
+	}
 	@Column(length=50)
 	public String getALB() {
 		return ALB;
