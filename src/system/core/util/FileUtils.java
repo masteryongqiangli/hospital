@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -300,9 +301,10 @@ public class FileUtils {
 	 * @param zipName
 	 * @throws IOException
 	 */
-	public String makeZipFile(String zipPath,String[] batchDirPath, String zipName) throws IOException {
+	public String makeZipFile(String zipPath,String zipName) throws IOException {
 		String zipFilePath = zipPath+zipName+".zip";
 		File zipFile = new File(zipFilePath);
+		File files[] = new File(zipPath).listFiles();
 		OutputStream outputStream = null;
 		FileInputStream inputStream = null;
 		BufferedInputStream bufferedInputStream = null;
@@ -310,10 +312,10 @@ public class FileUtils {
 		outputStream = new FileOutputStream(zipFile);
 		zipOutputStream = new ZipOutputStream(new BufferedOutputStream(outputStream));
 		byte[] bufs = new byte[1024 * 10];
-		for (int i = 0; i < batchDirPath.length; i++) {
-			ZipEntry zipEntry = new ZipEntry((new File(batchDirPath[i]).getName()));
+		for (int i = 0; i < files.length; i++) {
+			ZipEntry zipEntry = new ZipEntry(files[i].getName());
 			zipOutputStream.putNextEntry(zipEntry);
-			inputStream = new FileInputStream(new File(batchDirPath[i]));
+			inputStream = new FileInputStream(files[i].getName());
 			bufferedInputStream = new BufferedInputStream(inputStream, 1024 * 10);
 			int read = 0;  
             while ((read = bufferedInputStream.read(bufs, 0, 1024 * 10)) != -1) {  

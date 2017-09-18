@@ -1,5 +1,6 @@
 package business.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -168,22 +169,34 @@ public class bloodEnterController extends BaseController{
 	 * @param response
 	 * @throws IOException 
 	 */
-	@SuppressWarnings({ "null" })
+	@SuppressWarnings({"static-access" })
 	@RequestMapping(params="batchExportWord")
 	@Log(operationName="批量导出word",operationType=0)
 	public void batchExportWord(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
+		/*String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
 		String[] batchBloodId = request.getParameter("bloodEnterId").split(",");
 		String[] batchDirPath = null;
 		for (int i = 0; i < batchBloodId.length; i++) {
-			JSONObject jsonObject = makeFile(batchBloodId[i], rootPath);
-			batchDirPath[i] = jsonObject.getString("tempFilePath");
+			makeFile(batchBloodId[i], rootPath);
 		}
 		FileUtils fileUtils = new FileUtils();
 		String zipPath = rootPath+"/transfile/";
 		String zipFileName = "批量化验报告";
-		String zipFilePath = fileUtils.makeZipFile(zipPath,batchDirPath,zipFileName);
-		fileUtils.downloadZipFile(zipFilePath,zipFileName, batchDirPath, response);
+		String zipFilePath = fileUtils.makeZipFile(zipPath,zipFileName);
+		fileUtils.downloadZipFile(zipFilePath,zipFileName, batchDirPath, response);*/
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		String[] batchBloodId = request.getParameter("bloodEnterId").split(",");
+		for (int i = 0; i < batchBloodId.length; i++) {
+			Map<String, Object> map = getOneData(batchBloodId[i]);
+			dataMap.put(map.get("blooderName").toString(), map);
+		}
+		CreateWordUtil createWordUtil = new CreateWordUtil();
+		String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
+		try {
+			createWordUtil.batchCreateFile(rootPath, dataMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 单纯生成文件
@@ -192,8 +205,11 @@ public class bloodEnterController extends BaseController{
 	 */
 	@SuppressWarnings("static-access")
 	public JSONObject makeFile(String id,String rootPath){
+		File file = new File(rootPath+"/transfile/");
+		if (!file.exists()) {
+			file.mkdir();
+		}
 		JSONObject jsonObject = bloodEnterService.getOneBlood(id);
-		String templateName = "bloodResult.xml";
 		JSONObject jsonObject2 = JSONObject.fromObject(JSONArray.fromObject(jsonObject.get("data")).get(0));
 		String wordName = jsonObject2.get("blooderName")+"的血液检验报告";
 		Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -210,7 +226,7 @@ public class bloodEnterController extends BaseController{
 		CreateWordUtil createWordUtil = new CreateWordUtil();
 		String tempFilePath=rootPath+"/transfile/"+wordName+".doc";
 		try {
-			createWordUtil.CreateFileNoDoDownload(rootPath, templateName, wordName, dataMap);
+			createWordUtil.CreateFileNoDoDownload(rootPath,wordName, dataMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -242,5 +258,28 @@ public class bloodEnterController extends BaseController{
 			jsonObject.put("msg", "送检失败");
 		}
 		return jsonObject;
+	}
+	
+	
+	/**
+	 * 单纯生成文件
+	 * @param request
+	 * @return
+	 */
+	public Map<String, Object> getOneData(String id){
+		JSONObject jsonObject = bloodEnterService.getOneBlood(id);
+		JSONObject jsonObject2 = JSONObject.fromObject(JSONArray.fromObject(jsonObject.get("data")).get(0));
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		String[] k = {"bloodNumber","blooderName","blooderIdCard","bloodStartTime","bloodAriveTime","bloodCheckTime","blooderAge","blooderSex"
+				,"bloodCheckHospital","printTime","ALB","ALP","ALT","AST","CK","CK_MB"
+				,"CRE","DBIL","GGT","GLU","HBDH","HDL_C","LDH","LDL_C","TBIL","TC","TG","TP","UA","UREA","HbsAg"};
+		for(int i=0;i<k.length;i++){
+			if (i>=10) {
+				dataMap.put(k[i].toLowerCase(), jsonObject2.get(k[i])==null?"":jsonObject2.get(k[i]));
+			}else{
+				dataMap.put(k[i], jsonObject2.get(k[i])==null?"":jsonObject2.get(k[i]));
+			}
+		}
+		return dataMap;
 	}
 }

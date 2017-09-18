@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -72,8 +73,7 @@ public class CreateWordUtil {
 	 *            数据绑定
 	 */
 	@SuppressWarnings("static-access")
-	public static void CreateFileNoDoDownload(String rootPath,
-			String templateName, String wordName,
+	public static void CreateFileNoDoDownload(String rootPath, String wordName,
 			Map<String, Object> dataMap) throws Exception {
 		Configuration configuration = new Configuration();
 		configuration.setDefaultEncoding("utf-8");
@@ -376,5 +376,62 @@ public class CreateWordUtil {
         if(outputStream!=null){
         	outputStream.close();
         }
+	}
+	
+	/**
+	 * TODO(生成word模板并下载)
+	 * 
+	 * @param freemarker
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @param templateName
+	 *            模板名称
+	 * @param wordName
+	 *            生成word文档名称
+	 * @param dataMap
+	 *            数据绑定
+	 */
+	@SuppressWarnings({ "static-access", "unchecked" })
+	public static void batchCreateFile(String rootPath,Map<String, Object> dataMap) throws Exception {
+		Configuration configuration = new Configuration();
+		configuration.setDefaultEncoding("utf-8");
+		String name = rootPath+"/bloodResult.xml";
+		File f = new File(name);
+		Configuration con=new Configuration();
+		con.setDirectoryForTemplateLoading(new File(rootPath));//指定加载模板的位置
+        con.setObjectWrapper(new DefaultObjectWrapper());
+        con.setDefaultEncoding("utf-8");
+        Template template = con.getTemplate("bloodResult.xml");
+        OutputStream outputStream = new FileOutputStream(f);
+		Writer w = new OutputStreamWriter(outputStream, "utf-8");
+		String[] key = (String[]) dataMap.keySet().toArray();
+		for (int i = 0; i < key.length; i++) {
+			Map<String, String> map = (Map<String, String>) dataMap.get(key[i]);
+			template.process(map, w);
+			InputStream fin = null;
+			f.setReadOnly();
+			f.setWritable(false);
+			try {
+				fin = new FileInputStream(f);
+				String tempFilePath =rootPath+"/transfile/"+key[i]+".doc";
+				FileUtils fileUtils = new FileUtils();
+				fileUtils.inputstreamtofile(fin, tempFilePath);
+			} finally {
+				if (w != null) {
+					w.close();
+				}
+				if (fin != null) {
+					fin.close();
+				}
+				if (outputStream!=null) {
+					outputStream.close();
+				}
+				if (con!=null) {
+					con.clearTemplateCache();
+				}
+			}
+		}
 	}
 }
