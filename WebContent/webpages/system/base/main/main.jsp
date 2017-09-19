@@ -19,9 +19,9 @@
 	<div id="header" class="m-header">
 		<div>
 			<img
-				style="float: left; margin-top: 18px; border: 2px solid #83c2f2; border-radius: 50%;"
-				src="Res/images/main/test/head.jpg" />
-			<h1 style="font-size: 30px; line-height: 80px;">
+				style="float: left; margin-top: 18px; border: 0 solid #83c2f2; border-radius: 0;width:50px;    margin-left: 20px;"
+				src="Res/images/main/test/blood.jpg" />
+			<h1 style="font-size: 32px; line-height: 90px;    margin-left: 16px;">
 				检验共享系统
 				<!-- <a><img src="Res/images/main/bg/toplogo.png"></a>  -->
 			</h1>
@@ -33,15 +33,15 @@
 			<li><a href="javascript:void(0)"><i class="iconfont">&#xe608;</i><span>帮助中心</span></a></li>-->
 			<li><a href="javascript:void(0)" onclick="userinfo()"><i
 					class="iconfont">&#xe609;</i><span>个人中心</span></a></li>
-			<!-- 	<li><a href="javascript:void(0)"><i class="iconfont">&#xe601;</i><span>切换皮肤</span></a></li>
-			<li><a href="javascript:void(0)"><i class="iconfont">&#xe60f;</i><span>注销</span></a></li>  -->
+			<!--<li><a href="javascript:void(0)" onclick="changeColor()"><i class="iconfont">&#xe601;</i><span>切换皮肤</span></a></li>
+			 	<li><a href="javascript:void(0)"><i class="iconfont">&#xe60f;</i><span>注销</span></a></li>  -->
 		</ul>
 		<div id="my" class="head-user">
 			<div class="g-left user-info">
 				<h3 class="g-textohide">${baseUser.realName}</h3>
 				<%-- 	<p class="g-textohide">${baseUser.roleNameList}</p> --%>
 			</div>
-			<img src="Res/images/main/test/head.jpg" class="g-left" />
+			<img src="Res/images/main/test/header.png" class="g-left" />
 			<dl>
 				<dd>
 					<a href="javascript:void(0)" onclick="logout()">退出系统</a>
@@ -77,7 +77,7 @@
 	</div>
 	<!-- 消息弹出 -->
 	<div id="userinfo" class="easyui-dialog" title="个人中心"
-		style="width: 800px; height: 600px;"
+		style="width: 600px; height: 400px;"
 		data-options="cache:false,closed:true,modal:true,href:'baseUserController.do?goUserinfo',buttons:[
 		{ text:'保存', handler:function(){saveUserInfo()} }
 		,{ text:'关闭',handler:function(){$('#userinfo').dialog('close');} }]">
@@ -85,6 +85,9 @@
 	</div>
 
 	<script>
+		function changeColor(){
+			$('.m-header').css('background','url(\"../../images/main/bg/topbg-orange.jpg\") repeat-x');
+		}
 		//控制高度
 		function resetHeight() {
 			$('#middle').height(document.documentElement.clientHeight - 156);
@@ -255,7 +258,6 @@
 		function makemenu(data) {
 			var html = '';
 			for (var i = 0; i < data.length; i++) {
-				debugger
 				if (data[i].children.length == 0) {
 					html += '<dt><a href="javascript:void(0)" onclick="addTab(\''
 							+ data[i].menuId

@@ -67,115 +67,121 @@
 				halign : 'center'
 			}, {
 				field : 'ALP',
-				title : '白蛋白',
+				title : '碱性磷酸酶',
 				width : 60,
 				align : 'center',
 				halign : 'center'
 			}, {
 				field : 'ALT',
-				title : '球蛋白',
+				title : '丙氨酸氨基转移酶',
 				width : 60,
 				align : 'center',
 				halign : 'center'
 			}, {
 				field : 'AST',
-				title : '白球比',
+				title : '天冬氨酸氨基转移酶',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
 				field : 'CK',
-				title : '总胆红素',
+				title : '肌酸激酶',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
 				field : 'CK_MB',
-				title : '直接胆红素',
+				title : '肌酸激酶MB同工酶',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
 				field : 'CRE',
-				title : '间接胆红素',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'DBIL',
-				title : '转氨酶',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'GGT',
-				title : '总胆固醇',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'GLU',
-				title : '甘油三酯',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'HBDH',
-				title : '高密度脂蛋白',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'HDL_C',
-				title : '低密度脂蛋白',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'LDH',
-				title : '载脂蛋白',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'LDL_C',
-				title : '空腹血糖',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-			}, {
-				field : 'TBIL',
 				title : '肌酐',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
-				field : 'TC',
-				title : '尿素氮',
+				field : 'DBIL',
+				title : '直接胆红素',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
-				field : 'TG',
-				title : '尿酸',
+				field : 'GGT',
+				title : 'γ-谷氨酰转移酶',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
-				field : 'TP',
+				field : 'GLU',
+				title : '葡萄糖',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'HBDH',
+				title : 'α-羟基丁酸',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'HDL_C',
+				title : '高密度脂蛋白胆固醇',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'LDH',
 				title : '乳酸脱氢酶',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
+				field : 'LDL_C',
+				title : '低密度脂蛋白胆固醇',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'TBIL',
+				title : '总胆红素',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'TC',
+				title : '总胆固醇',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'TG',
+				title : '甘油三酯',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'TP',
+				title : '总蛋白',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
 				field : 'UA',
-				title : '肌酸肌酶',
+				title : '尿酸',
 				width : 60,
 				align : 'center',
 				halign : 'center',
 			}, {
 				field : 'UREA',
-				title : '肌酸肌酶1',
+				title : '尿素',
+				width : 60,
+				align : 'center',
+				halign : 'center',
+			}, {
+				field : 'hbsAg',
+				title : '乙肝表面抗原',
 				width : 60,
 				align : 'center',
 				halign : 'center',
@@ -204,7 +210,7 @@
 			deleteItem('bloodResultController.do?doDelete&resultId='+Id,'bloodResult-list');
 		}
 		function updateItem(Id,index) {
-			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.85);
+			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.9);
 		}
 		function openImportDialog(){
 			openDialogFile('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.5);

@@ -43,7 +43,7 @@ public class bloodResultDaoImpl extends BaseDaoImpl implements bloodResultDao{
 	
 	public StringBuffer getSysUserSql(){
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT a.id,a.bloodEnterId,b.bloodNumber,a.ALB,a.ALP,a.ALT,a.AST,a.CK,a.CK_MB,a.CRE,a.DBIL,a.GGT,a.GLU,a.HBDH,a.HDL_C,a.LDH,a.LDL_C,a.LDL_C,a.TBIL,a.TC,a.TG,a.TP,a.UA,a.UREA,b.blooderName FROM dbo.Sys_Base_bloodResult a");
+		sql.append(" SELECT a.id,a.bloodEnterId,b.bloodNumber,a.ALB,a.ALP,a.ALT,a.AST,a.CK,a.CK_MB,a.CRE,a.DBIL,a.GGT,a.GLU,a.HBDH,a.HDL_C,a.LDH,a.LDL_C,a.LDL_C,a.TBIL,a.TC,a.TG,a.TP,a.UA,a.UREA,a.hbsAg,b.blooderName FROM dbo.Sys_Base_bloodResult a");
 		sql.append( " LEFT JOIN dbo.Sys_Base_bloodEnter b ON a.bloodEnterId = b.id");
 		sql.append(" where a.state is NULL ");
 		return sql;

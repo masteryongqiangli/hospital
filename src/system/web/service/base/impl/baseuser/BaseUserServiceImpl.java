@@ -52,9 +52,9 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 	@Autowired
 	private RoleDaoI roleDao;
 
-	public JSONObject getDataGridJson(Map<String, String> parms) {
+	public JSONObject getDataGridJson(Map<String, String> parms,String userRole) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject = baseUserDao.getSysUsers(parms);
+		jsonObject = baseUserDao.getSysUsers(parms,userRole);
 		JSONArray array = JSONArray.fromObject(jsonObject.get("rows"));
 		for(int i=0;i<array.size();i++){
 			JSONObject jsonObject2 = array.getJSONObject(i);

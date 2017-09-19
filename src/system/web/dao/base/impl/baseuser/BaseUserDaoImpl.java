@@ -45,7 +45,7 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		return CriteriaPageUtil.getPageJson(criteria, parms);
 	}
 	
-	public JSONObject getSysUsers(Map<String, String> parms){
+	public JSONObject getSysUsers(Map<String, String> parms,String userRole){
 		StringBuffer sql = getSysUserSql();
 		if (StringUtil.isNotEmpty(parms.get("userName"))) {
 			sql.append(" and a.userName like '%"+parms.get("userName")+"%'");
@@ -53,11 +53,14 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		if (StringUtil.isNotEmpty(parms.get("realName"))) {
 			sql.append(" and a.realName like '%"+parms.get("realName")+"%'");
 		}
-		 
+		if (userRole.equals("manager")) {
+			sql.append(" and STUFF(( SELECT  ',' + roleCode FROM    Sys_Base_Role WHERE   roleId = c.roleId ), 1, 1, '') IN ('yy','wsz')");
+		}
+		if (userRole.equals("yy")) {
+			sql.append(" and STUFF(( SELECT  ',' + roleCode FROM    Sys_Base_Role WHERE   roleId = c.roleId ), 1, 1, '') IN ('wsz')");
+		}
 		SQLQuery query = this.getSession().createSQLQuery(sql.toString());
-		
 		query.addEntity(Sys_User.class);
-		
 		return CriteriaPageUtil.getPageJson(query, parms);
 	}
  
@@ -65,7 +68,6 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		StringBuffer sql = getSysUserSql();
 		sql.append(" and a.userId ='"+userId+"'");
 		SQLQuery query = this.getSession().createSQLQuery(sql.toString());
-		
 		query.addEntity(Sys_User.class);
 		return query.list();
 	}

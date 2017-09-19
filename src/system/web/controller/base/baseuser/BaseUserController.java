@@ -57,8 +57,8 @@ public class BaseUserController extends BaseController {
 	@RequestMapping(params = "datagrid")
 	@ResponseBody
 	public JSONObject datagrid(HttpServletRequest request) {
-		return baseUserService.getDataGridJson(QueryParmFormat.Format(request
-				.getParameterMap()));
+		String userRole = ResourceUtil.getSys_User().getRoleCodeList();
+		return baseUserService.getDataGridJson(QueryParmFormat.Format(request.getParameterMap()),userRole);
 	}
 
 	/**

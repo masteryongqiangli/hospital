@@ -17,7 +17,7 @@ public interface BaseUserDaoI extends BaseDaoI {
 	 */
 	 public Sys_Base_User login( Sys_Base_User sys_Base_User);
 	 public  JSONObject getUsers(Map<String, String> parms);
-	 public JSONObject getSysUsers(Map<String, String> parms);
+	 public JSONObject getSysUsers(Map<String, String> parms,String userRole);
 	 public List getSys_UserByUserId(String userId);
 	 public List getSys_UserByUserName(String userName);
 	 public List<Sys_Base_Role_User> getuserRoles(Sys_Base_User sys_Base_User) ;
