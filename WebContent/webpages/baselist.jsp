@@ -254,5 +254,36 @@
 		});
 
 	}
+	function openDialogFile(title,url,width,height){
+		var id= window.frameElement.id;
+		var obj=top.$('#'+ id)[0];
+		var str = '<div id="dialog'+id+'">Dialog Content.</div> '
+		top.$('body').prepend(str);
+		top.$('#dialog'+id).dialog(
+				{
+					title : title,
+					width : width,  
+					height : height,
+					closed : false,
+					cache : false,
+					content : '<iframe id="iframechild'+id+'" frameborder="0" height="99%" width="100%" src="'+url+'">  </iframe>',
+					modal : true,
+					buttons : [
+							{
+								text : '上传',
+								handler : function() {
+									top.$('#iframechild'+id)[0].contentWindow.saveorupdate(obj,'dialog'+id) ;
+								}
+							}, {
+								text : '关闭',
+								handler : function() {
+									top.$('#dialog'+id).dialog('destroy');
+								}
+							} ],
+					onClose : function() {
+						top.$('#dialog'+id).dialog('destroy');
+					}
+				});
+	}
 	</script>
  

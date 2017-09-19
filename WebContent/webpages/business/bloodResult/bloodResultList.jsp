@@ -207,7 +207,7 @@
 			openDialog('修改','bloodResultController.do?goAddorUpdate&resultId='+ Id ,600,top.$(window).height() * 0.85);
 		}
 		function openImportDialog(){
-			openDialogNoBtn('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.5);
+			openDialogFile('录入结果','bloodResultController.do?goImportResult' ,600,top.$(window).height() * 0.5);
 		}
 	</script>
 </body>

@@ -36,10 +36,6 @@
 		</table>
 	</form>
 	</div>
-	<div style="margin: 130px 0 0 45%;">
-		<a href="#" class="easyui-linkbutton" data-options="width:'70px'"
-			onclick="UploadFile()">确定</a>
-	</div>
 	<script>
 		var selectData = JSON.parse('${village.selectData}');
 		var formobj = $('form')[0];

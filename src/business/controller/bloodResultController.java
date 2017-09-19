@@ -117,7 +117,11 @@ public class bloodResultController extends BaseController{
 		Sys_Base_DataDictionary dataDictionary2 = DataDictionaryServiceI.get(Sys_Base_DataDictionary.class,
 				request.getParameter("blooderDistrict"));
 		String village = dataDictionary2.getText();
-		bloodResultService.readExcel(file,village,newPath);
+		if (bloodResultService.readExcel(file,village,newPath)) {
+			jsonObject.put("msg", "导入成功");
+		}else{
+			jsonObject.put("msg", "导入失败");
+		}
 		return jsonObject;
 	}
 	/**
