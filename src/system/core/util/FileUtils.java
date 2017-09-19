@@ -326,6 +326,7 @@ public class FileUtils {
 			bufferedInputStream.close();
 		}
 		if (zipOutputStream!=null) {
+			zipOutputStream.closeEntry();
 			zipOutputStream.close();
 		}
 		return zipFilePath;
@@ -355,7 +356,15 @@ public class FileUtils {
                 myout.write(b, 0, j);  
             }  
             myout.flush();  
-            buff.close();  
+            buff.close(); 
+            if (fis!=null) {
+				fis.close();
+			}
+            File files[] = new File(zipFilePath).listFiles();
+            System.gc();
+            for (int i = 0; i < files.length; i++) {
+				files[i].delete();
+			}
         } catch (Exception e) {  
             System.out.println(e);  
         }  

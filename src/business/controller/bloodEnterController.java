@@ -173,17 +173,6 @@ public class bloodEnterController extends BaseController{
 	@RequestMapping(params="batchExportWord")
 	@Log(operationName="批量导出word",operationType=0)
 	public void batchExportWord(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		/*String rootPath = request.getSession().getServletContext().getRealPath("/sysfile/");
-		String[] batchBloodId = request.getParameter("bloodEnterId").split(",");
-		String[] batchDirPath = null;
-		for (int i = 0; i < batchBloodId.length; i++) {
-			makeFile(batchBloodId[i], rootPath);
-		}
-		FileUtils fileUtils = new FileUtils();
-		String zipPath = rootPath+"/transfile/";
-		String zipFileName = "批量化验报告";
-		String zipFilePath = fileUtils.makeZipFile(zipPath,zipFileName);
-		fileUtils.downloadZipFile(zipFilePath,zipFileName, batchDirPath, response);*/
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		String[] batchBloodId = request.getParameter("bloodEnterId").split(",");
 		for (int i = 0; i < batchBloodId.length; i++) {
@@ -206,10 +195,6 @@ public class bloodEnterController extends BaseController{
 		String zipFileName = "批量血液化验报告.zip";
 		fileUtils.makeZipFile(zipFilePath, zipFileName);
 		fileUtils.downloadZipFile(zipFilePath, zipFileName, response);
-		File files[] = file.listFiles();
-		for (int i = 0; i < files.length; i++) {
-			files[i].delete();
-		}
 	}
 	/**
 	 * 单纯生成文件

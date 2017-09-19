@@ -22,6 +22,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.WordUtils;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.Range;
 
@@ -393,42 +394,27 @@ public class CreateWordUtil {
 	 * @param dataMap
 	 *            数据绑定
 	 */
-	@SuppressWarnings({ "static-access", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public static void batchCreateFile(String rootPath,Map<String, Object> dataMap) throws Exception {
 		Configuration configuration = new Configuration();
 		configuration.setDefaultEncoding("utf-8");
-		String name = rootPath+"/bloodResult.xml";
-		File f = new File(name);
-		Configuration con=new Configuration();
-		con.setDirectoryForTemplateLoading(new File(rootPath));//指定加载模板的位置
-        con.setObjectWrapper(new DefaultObjectWrapper());
-        con.setDefaultEncoding("utf-8");
-        Template template = con.getTemplate("bloodResult.xml");
-        OutputStream outputStream = new FileOutputStream(f);
-		Writer w = new OutputStreamWriter(outputStream, "utf-8");
+		configuration.setDirectoryForTemplateLoading(new File(rootPath));
+        Template template = configuration.getTemplate("bloodResult.xml");
 		String[] array2 = dataMap.keySet().toArray(new String[dataMap.keySet().size()]);
-		InputStream fin = null;
+		Writer fwWriter = null;
 		for (int i = 0; i < array2.length; i++) {
-			Map<String, String> map = (Map<String, String>) dataMap.get(array2[i]);
-			template.process(map, w);
-			f.setReadOnly();
-			f.setWritable(false);
-			fin = new FileInputStream(f);
 			String tempFilePath =rootPath+"/transfile/"+array2[i]+"的血液化验报告.doc";
-			FileUtils fileUtils = new FileUtils();
-			fileUtils.inputstreamtofile(fin, tempFilePath);
+			File f = new File(tempFilePath);
+			if (!f.getParentFile().exists()) {
+				f.getParentFile().mkdirs();
+			}
+			fwWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f), "utf-8"));
+			Map<String, String> map = (Map<String, String>) dataMap.get(array2[i]);
+			template.process(map,fwWriter);
+			fwWriter.flush();
 		}
-		if (w != null) {
-			w.close();
-		}
-		if (fin!=null) {
-			fin.close();
-		}
-		if (outputStream!=null) {
-			outputStream.close();
-		}
-		if (con!=null) {
-			con.clearTemplateCache();
+		if (fwWriter != null) {
+			fwWriter.close();
 		}
 	}
 }
