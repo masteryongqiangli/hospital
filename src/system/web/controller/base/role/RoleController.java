@@ -167,14 +167,12 @@ public class RoleController extends BaseController{
 		JSONObject jsonObject=new JSONObject();
 		String msg="";
 		try {
-			String array= request.getParameter("array");
-			 roleService.saveRoleMenus(sys_Base_Role, array);
+			JSONArray array= JSONArray.fromObject(request.getParameter("array"));
+			roleService.saveRoleMenus(sys_Base_Role, array);
 			msg=DataStateTypeEnum.SAVE_SUCCESS.getMessage();
 		} catch (Exception e) {
 			msg=DataStateTypeEnum.SAVE_ERROR.getMessage();
-			// TODO: handle exception
 		}
-		
 		jsonObject.put("msg", msg);
 		return jsonObject;
 	}

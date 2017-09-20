@@ -141,7 +141,7 @@
 					array.push(obj);
 				}
 			}
-			$.post('roleController.do?saveRoleMenus&array='+JSON.stringify(array), {
+			$.post('roleController.do?saveRoleMenus&array='+encodeURI(JSON.stringify(array)), {
 					roleId : '${role.roleId}'
 				}, function(data) {
 					top.$('#' + objobj.id)[0].contentWindow.reload(data,

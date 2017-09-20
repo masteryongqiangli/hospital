@@ -72,13 +72,12 @@ public class RoleServiceImpl extends CommonServiceImpl implements RoleServiceI {
 	}
 
 	@Override
-	public void saveRoleMenus(Sys_Base_Role sys_Base_Role, String inRole) {
+	public void saveRoleMenus(Sys_Base_Role sys_Base_Role, JSONArray jsonArray) {
 		roleDaoImpl.deleteRoleMenusbyRole(sys_Base_Role);
 		Map<String, String> map = new HashMap<>();
 		List<Sys_Base_Menu> listtotal = menuDaoImpl.getAllMenuList(map);
 		List<Sys_Base_Menu> listinrole = new ArrayList<>();
 		List<Sys_Base_Role_Menu> sys_Base_Role_Menus=new ArrayList<>();
-		JSONArray jsonArray=JSONArray.fromObject(inRole);
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject obj=JSONObject.fromObject(jsonArray.get(i));
 			for(Sys_Base_Menu sys_Base_Menu:listtotal){

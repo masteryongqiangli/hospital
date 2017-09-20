@@ -15,7 +15,7 @@ public interface RoleServiceI extends CommonServiceI {
 	public JSONObject getRoleMenus(Sys_Base_Role sys_Base_Role);
 	
 	
-	public void saveRoleMenus(Sys_Base_Role sys_Base_Role,String  inRole);
+	public void saveRoleMenus(Sys_Base_Role sys_Base_Role,JSONArray  inRole);
 	public JSONObject getListAuth(String url);
 	public JSONArray getRoleList();
 }
