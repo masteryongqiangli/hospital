@@ -84,6 +84,7 @@
 								type="text" value="" />
 							<lable id="NOT_USER">用户不存在</lable>
 							<lable id="USER_NULL">用户不能为空</lable>
+							<lable id="LOGIN_OUTTIME">系统停止运行</lable>
 						</div>
 						<div class="input-wrapper ">
 							<input id="password" name="password" type="password"

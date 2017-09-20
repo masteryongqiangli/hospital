@@ -1,7 +1,7 @@
 package system.core.enums;
 
 public enum LoginStateTypeEnum {
-	NOT_USER("0", "用户不存在"), PASSWORD_ERROR("1", "密码错误"),LOGIN_SUCCESS("200", "登录成功");
+	NOT_USER("0", "用户不存在"), PASSWORD_ERROR("1", "密码错误"),LOGIN_SUCCESS("200", "登录成功"),LOGIN_OUTTIME("2", "系统停止运行");
 
 	private String code;
 	private String message;
