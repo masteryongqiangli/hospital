@@ -36,4 +36,6 @@ public interface BaseUserServiceI extends CommonServiceI {
 	public JSONObject getHomeData() throws ParseException;
 
 	public JSONObject getSelects(int flag1, String flag2);
+
+	public boolean submitDate(String changeDate,String xmlPath);
 }

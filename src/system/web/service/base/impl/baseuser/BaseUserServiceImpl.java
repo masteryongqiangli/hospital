@@ -1,5 +1,6 @@
 package system.web.service.base.impl.baseuser;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -10,10 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -22,6 +27,7 @@ import system.core.dao.impl.BaseDaoImpl;
 import system.core.service.impl.CommonServiceImpl;
 import system.core.util.DateUtils;
 import system.core.util.JSONHelper;
+import system.core.util.ReadXmlUtil;
 import system.core.util.ResourceUtil;
 import system.web.dao.base.baseuser.BaseUserDaoI;
 import system.web.dao.base.datadictionary.DataDictionaryDaoI;
@@ -251,5 +257,28 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 			jsonObject2.put("selectData", jsonObject.get("village"));
 		}
 		return jsonObject2;
+	}
+
+	@Override
+	public boolean submitDate(String changeDate,String xmlPath){
+		ReadXmlUtil readXmlUtil = new ReadXmlUtil();
+		boolean b=true;
+		try {
+			Document document = readXmlUtil.readXmlUtil(xmlPath);
+			String date[] = changeDate.split("-");
+			document.getElementsByTagName("year").item(0).getFirstChild().setNodeValue(date[0]);
+			document.getElementsByTagName("month").item(0).getFirstChild().setNodeValue(date[1]);
+			document.getElementsByTagName("day").item(0).getFirstChild().setNodeValue(date[2]);
+			if ((document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+
+					"-"+document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+
+					"-"+document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()).equals(changeDate)) {
+				b=true;
+			}else{
+				b=false;
+			}
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}
+		return b;
 	}
 }

@@ -1,9 +1,11 @@
 package system.web.controller.base.login;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
 
 import net.sf.json.JSONObject;
 
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import system.core.annotation.LogEnter;
 import system.core.annotation.LogLeave;
@@ -22,6 +26,7 @@ import system.core.aspect.SystemLogAspect;
 import system.core.controller.BaseController;
 import system.core.enums.LoginStateTypeEnum;
 import system.core.util.Md5Util;
+import system.core.util.ReadXmlUtil;
 import system.core.util.ResourceUtil;
 import system.core.util.SystemStopUtil;
 import system.web.entity.base.Sys_Base_User;
@@ -124,7 +129,12 @@ public class LoginController extends BaseController {
 	}
 
 	@RequestMapping(params = "systemTime")
-	public ModelAndView systemTime(HttpServletRequest request) {
+	public ModelAndView systemTime(HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
+		ReadXmlUtil readXmlUtil = new ReadXmlUtil();
+		Document document = readXmlUtil.readXmlUtil(request.getSession().getServletContext().getRealPath("sysfile/sysRuntime.xml"));
+		request.setAttribute("stopDate", document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+"-"+
+				document.getElementsByTagName("month").item(0).getFirstChild().getNodeValue()+"-"+
+				document.getElementsByTagName("day").item(0).getFirstChild().getNodeValue());
 		return new ModelAndView("system/base/systemTime/systemTime");
 	}
 }

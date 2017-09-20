@@ -344,4 +344,17 @@ public class BaseUserController extends BaseController {
 		jsonObject.put("state", state);
 		return jsonObject;
 	}
+	
+	@RequestMapping(params="submitDate")
+	@ResponseBody
+	public JSONObject submitDate(HttpServletRequest request){
+		JSONObject jsonObject = new JSONObject();
+		String changeDate = request.getParameter("changeDate");
+		if (baseUserService.submitDate(changeDate,request.getSession().getServletContext().getRealPath("sysfile/sysRuntime.xml"))) {
+			jsonObject.put("msg", "修改成功");
+		}else{
+			jsonObject.put("msg", "修改失败");
+		}
+		return jsonObject;
+	}
 }

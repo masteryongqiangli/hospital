@@ -16,99 +16,34 @@
 		<div class="toolbar" id="toolbar">
 			<div>
 				<ul>
-					<li><i></i><font>角色</font></li>
-					<li><input id="roleCode" class="easyui-textbox" type="text"  
-						data-options="prompt:'角色编码',width:70"/></li>
-					<li><input id="roleName" class="easyui-textbox" type="text"  
-						data-options="prompt:'角色名称',width:70"/></li>
-					<li><a id="find"  href="#" class="easyui-linkbutton"
-						data-options="iconCls:'icon-search'" onclick="find('role-list')">查询</a></li>
-				</ul>
-			</div>
-			<div>
-				<ul>
-					<li><a id="add" href="#" onclick="add()" class="easyui-linkbutton"
-						data-options="iconCls:'icon-add'">新增</a></li>
-					 
+					<li><i></i><font>生命周期管理</font></li>
 				</ul>
 			</div>
 		</div>
-		<div class="box">
-			<table id="role-list">
-			</table>
+		<div class="box" style="height:95%">
+			<div style="margin: 25px 0px 0px 25px;">
+				<label>选择系统停止时间:</label>
+				<input id="dateInput" class="easyui-datebox"></input>
+				<a id="find"  href="#" class="easyui-linkbutton"
+						data-options="iconCls:'icon-add'" onclick="submitDate()">提交修改</a>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
-		$('#role-list').datagrid({
-			url : 'roleController.do?datagrid',
-			fit : true,
-			fitColumns : true,
-			striped : true,
-			rownumbers : true,
-			toolbar : '#toolbar',
-			pagination:true,
-			columns : [ [ {
-				field : 'roleCode',
-				title : '角色编码',
-				width : 60,
-				align : 'center',
-				halign : 'center'
-			}, {
-				field : 'roleName',
-				title : '角色名称',
-				width : 60,
-				align : 'center',
-				halign : 'center'
-			}, {
-				field : 'opt',
-				title : '操作',
-				width : 60,
-				align : 'center',
-				halign : 'center',
-				formatter : optformatter
-			}, ] ]
-
-		});
-		function optformatter(value, row, index) {
-			var str=''
-				if('${auth.updateAuth}'=='true'){
-					str+='<a href="#" class="grid-btn grid-edit" onclick="updateItem(\''
-						+ row.roleId
-						+ '\')">修改</a><a href="#" class="grid-btn grid-more" onclick="menulist(\''
-						+ row.roleId + '\',\''+row.roleName+'\')">菜单</a>';
-							}
-				if('${auth.lookAuth}'=='true'){
-					str+='<a href="#" class="grid-btn grid-detail" onclick="lookItem(\''
-							+ row.roleId
-							+ '\')">查看</a>';
-							}
-				if('${auth.delAuth}'=='true'){
-					str+='<a href="#" class="grid-btn grid-delete" onclick="deleteRole(\''
-						+ row.roleId + '\')">删除</a>';
-									}
-				return str;	
-					
-					/* <a href="#" class="grid-btn grid-detail" onclick="userlist(\''
-						+ row.roleId + '\',\''+row.roleName+'\')">用户</a> */
-		}
-		 
-		function deleteRole(roleId){
-			deleteItem('roleController.do?doDelete&roleId='+roleId,'role-list');
-		}
-		function updateItem(roleId) {
-			openDialog('修改','roleController.do?goAddorUpdate&roleId='+ roleId ,500,top.$(window).height() * 0.6);
-		}
-		function lookItem(roleId) {
-			openDialogDetail('查看','roleController.do?goLook&roleId='+ roleId ,500,top.$(window).height() * 0.6);
-		}
-		function add() {
-			openDialog('新增','roleController.do?goAddorUpdate',500,top.$(window).height() * 0.6);
-		}
-		function userlist(roleId,roleName) {
-			openDialog(roleName+'[用户]','roleController.do?goRoleUsers&roleId='+ roleId ,500,top.$(window).height() * 0.6);
-		}
-		function menulist(roleId,roleName) {
-			openDialog(roleName+'[菜单]','roleController.do?goRoleMenus&roleId='+ roleId ,$(window).width()*0.7,top.$(window).height() * 0.8);
+	$(function(){
+		$('#dateInput').datebox('setValue', '${stopDate}');
+	})
+		function submitDate(){
+			$.ajax({
+		        type: "post",
+		        cache:false, 
+		        async:false, 
+		        url: 'baseUserController.do?submitDate',
+		        data: {"changeDate":$("#dateInput").val()},
+		        success: function (data) {
+		        	$.messager.show('提示信息',data.msg);
+		        }
+		    });
 		}
 	</script>
 </body>
