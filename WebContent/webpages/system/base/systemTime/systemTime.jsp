@@ -41,7 +41,13 @@
 		        url: 'baseUserController.do?submitDate',
 		        data: {"changeDate":$("#dateInput").val()},
 		        success: function (data) {
-		        	$.messager.show('提示信息',data.msg);
+		        	$.messager.show({
+		        		title:'提示信息',
+		        		msg:data.msg,
+		        		timeout:5000,
+		        		showType:'slide'
+		        	});
+		        	
 		        }
 		    });
 		}

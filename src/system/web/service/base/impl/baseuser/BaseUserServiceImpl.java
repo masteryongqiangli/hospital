@@ -12,12 +12,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.apache.tomcat.jni.File;
 import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import net.sf.json.JSONArray;
@@ -264,19 +273,28 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 		ReadXmlUtil readXmlUtil = new ReadXmlUtil();
 		boolean b=true;
 		try {
-			Document document = readXmlUtil.readXmlUtil(xmlPath);
 			String date[] = changeDate.split("-");
-			document.getElementsByTagName("year").item(0).getFirstChild().setNodeValue(date[0]);
-			document.getElementsByTagName("month").item(0).getFirstChild().setNodeValue(date[1]);
-			document.getElementsByTagName("day").item(0).getFirstChild().setNodeValue(date[2]);
-			if ((document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+
-					"-"+document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+
-					"-"+document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()).equals(changeDate)) {
+			Document document = readXmlUtil.readXmlUtil(xmlPath);
+			Element element = document.getDocumentElement();
+			element.getElementsByTagName("year").item(0).setTextContent(date[0]);
+			element.getElementsByTagName("month").item(0).setTextContent(date[1]);
+			element.getElementsByTagName("day").item(0).setTextContent(date[2]);
+			TransformerFactory factory = TransformerFactory.newInstance();
+			Transformer transformer = factory.newTransformer();
+			transformer.transform(new DOMSource(element), new StreamResult(new java.io.File(xmlPath)));
+			Document document2 = readXmlUtil.readXmlUtil(xmlPath);
+			if ((document2.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+
+					"-"+document2.getElementsByTagName("month").item(0).getFirstChild().getNodeValue()+
+					"-"+document2.getElementsByTagName("day").item(0).getFirstChild().getNodeValue()).equals(changeDate)) {
 				b=true;
 			}else{
 				b=false;
 			}
 		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
 		return b;
