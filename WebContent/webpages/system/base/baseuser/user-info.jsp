@@ -28,74 +28,28 @@
 				<td><input class="easyui-validatebox" type="password"
 					name="rePassword" value="" validType="equals['#password']" /></td>
 			</tr>
-			<tr>
-				<th><label>姓名：</label></th>
-				<td><input class="easyui-validatebox" type="text"
-					name="realName" value="${user.realName }"
-					data-options="required:true,tipPosition:'right'" /></td>
-			</tr>
-			<tr>
-				<th><label>身份证号：</label></th>
-				<td><input class="easyui-validatebox" type="text"
-					id="idCardNumber" name="idCardNumber" value="${user.idCardNumber }"
-					invalidMessage="身份证号格式错误" onblur="idcardready()" 
-					validType="remote['baseUserController.do?userInfoValid&type=1','idCardNumber']"
-					data-options="tipPosition:'right',onBeforeValidate:beforeValididCard" /></td>
-			</tr>
-			<tr>
-				<th><label>出生日期：</label></th>
-				<td><div id="birthDate">${user.birthDate }</div></td>
-			</tr>
-			<tr>
-				<th><label>性别：</label></th>
-				<td><div id="gener">${user.gener }</div></td>
-			</tr>
-			<tr>
-				<th><label>年龄：</label></th>
-				<td><div id="age">${user.age }</div></td>
-			</tr>
-			<tr>
-				<th><label>email：</label></th>
-				<td><input class="easyui-validatebox" type="text" name="email"
-					value="${user.email }"
-					data-options="" /></td>
-			</tr>
-			<tr>
-				<th><label>手机：</label></th>
-				<td><input class="easyui-validatebox" type="text" name="phone"
-					value="${user.phone }"
-					data-options="" /></td>
-			</tr>
-
-
 		</table>
 	</form>
 	<script>
 		function saveUserInfo() {
 			$('#userinfoform').form({
-				 
-				 
-				url : 'baseUserController.do?saveUserinfo',
+				url : 'baseUserController.do?changePswd&id=${user.userId}',
 				onSubmit : function() {
 					if($('#userinfoform').form('validate'))
 						$.messager.progress({text:'数据处理中'}); 
 					else return  false;
-					
-
-					// do some check    
-					// return false to prevent submit;    
 				},
 				success : function(data) {
 					$.messager.progress('close');
-					data = JSON.parse(data);
-					alert(data.msg)
-					 
+					$.messager.show({
+						title:'提示信息',
+						msg:JSON.parse(data).msg,
+						showType:'slide',
+						timeout:5000
+					})
 				}
 			});
-			// submit the form    
 			$('#userinfoform').submit();
-			 
-			 
 		}
 		function idcardready() {
 			$.post('baseUserController.do?getIdCardInfo', {

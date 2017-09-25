@@ -38,4 +38,6 @@ public interface BaseUserServiceI extends CommonServiceI {
 	public JSONObject getSelects(int flag1, String flag2);
 
 	public boolean submitDate(String changeDate,String xmlPath);
+
+	public boolean changePswd(String userID, String password);
 }

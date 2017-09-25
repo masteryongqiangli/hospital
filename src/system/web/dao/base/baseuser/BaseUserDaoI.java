@@ -23,4 +23,5 @@ public interface BaseUserDaoI extends BaseDaoI {
 	 public List<Sys_Base_Role_User> getuserRoles(Sys_Base_User sys_Base_User) ;
 	 public void deleteRoleUsersbyUser(Sys_Base_User sys_Base_User);
 	 public List<Map<String, Object>> getHomeData();
+	public boolean changePswd(String userID, String encoderByMd5);
 }

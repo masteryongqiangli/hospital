@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
+import org.jeecgframework.core.util.GetConnection;
 import org.springframework.stereotype.Repository;
 
 import net.sf.json.JSONObject;
@@ -124,5 +125,11 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		 List<Map<String, Object>>datas= query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 		 session.close();
 		return datas;
+	}
+
+	@Override
+	public boolean changePswd(String userID, String encoderByMd5) {
+		GetConnection connection = new GetConnection();
+		return connection.insert("update Sys_Base_User set password = '"+encoderByMd5+"' where userId = '"+userID+"'");
 	}
 }

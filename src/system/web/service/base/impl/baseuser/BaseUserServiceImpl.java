@@ -36,6 +36,7 @@ import system.core.dao.impl.BaseDaoImpl;
 import system.core.service.impl.CommonServiceImpl;
 import system.core.util.DateUtils;
 import system.core.util.JSONHelper;
+import system.core.util.Md5Util;
 import system.core.util.ReadXmlUtil;
 import system.core.util.ResourceUtil;
 import system.web.dao.base.baseuser.BaseUserDaoI;
@@ -293,5 +294,12 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 			e.printStackTrace();
 		}
 		return b;
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public boolean changePswd(String userID, String password) {
+		Md5Util md5Util = new Md5Util();
+		return baseUserDao.changePswd(userID,md5Util.EncoderByMd5(password));
 	}
 }

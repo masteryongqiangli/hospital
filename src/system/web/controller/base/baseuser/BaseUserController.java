@@ -357,4 +357,18 @@ public class BaseUserController extends BaseController {
 		}
 		return jsonObject;
 	}
+	
+	@RequestMapping(params="changePswd")
+	@ResponseBody
+	public JSONObject changePswd(HttpServletRequest request){
+		JSONObject jsonObject = new JSONObject();
+		String password = request.getParameter("rePassword");
+		String userID = request.getParameter("id");
+		if (baseUserService.changePswd(userID,password) ){
+			jsonObject.put("msg", "修改成功");
+		}else{
+			jsonObject.put("msg", "修改失败");
+		}
+		return jsonObject;
+	}
 }
