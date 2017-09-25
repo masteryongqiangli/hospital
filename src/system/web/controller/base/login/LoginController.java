@@ -132,9 +132,7 @@ public class LoginController extends BaseController {
 	public ModelAndView systemTime(HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
 		ReadXmlUtil readXmlUtil = new ReadXmlUtil();
 		Document document = readXmlUtil.readXmlUtil(request.getSession().getServletContext().getRealPath("sysfile/sysRuntime.xml"));
-		request.setAttribute("stopDate", document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+"-"+
-				document.getElementsByTagName("month").item(0).getFirstChild().getNodeValue()+"-"+
-				document.getElementsByTagName("day").item(0).getFirstChild().getNodeValue());
+		request.setAttribute("stopDate",document.getElementsByTagName("month").item(0).getFirstChild().getNodeValue());
 		return new ModelAndView("system/base/systemTime/systemTime");
 	}
 }

@@ -273,19 +273,14 @@ public class BaseUserServiceImpl extends CommonServiceImpl implements
 		ReadXmlUtil readXmlUtil = new ReadXmlUtil();
 		boolean b=true;
 		try {
-			String date[] = changeDate.split("-");
 			Document document = readXmlUtil.readXmlUtil(xmlPath);
 			Element element = document.getDocumentElement();
-			element.getElementsByTagName("year").item(0).setTextContent(date[0]);
-			element.getElementsByTagName("month").item(0).setTextContent(date[1]);
-			element.getElementsByTagName("day").item(0).setTextContent(date[2]);
+			element.getElementsByTagName("month").item(0).setTextContent(changeDate);
 			TransformerFactory factory = TransformerFactory.newInstance();
 			Transformer transformer = factory.newTransformer();
 			transformer.transform(new DOMSource(element), new StreamResult(new java.io.File(xmlPath)));
 			Document document2 = readXmlUtil.readXmlUtil(xmlPath);
-			if ((document2.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+
-					"-"+document2.getElementsByTagName("month").item(0).getFirstChild().getNodeValue()+
-					"-"+document2.getElementsByTagName("day").item(0).getFirstChild().getNodeValue()).equals(changeDate)) {
+			if (document2.getElementsByTagName("month").item(0).getFirstChild().getNodeValue().equals(changeDate)) {
 				b=true;
 			}else{
 				b=false;

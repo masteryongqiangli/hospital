@@ -23,7 +23,11 @@
 		<div class="box" style="height:95%">
 			<div style="margin: 25px 0px 0px 25px;">
 				<label>选择系统停止时间:</label>
-				<input id="dateInput" class="easyui-datebox"></input>
+				<select id="dateInput" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'" style="width:100px;">   
+				    <option value="a">6个月</option>   
+				    <option value="b">9个月</option>   
+				    <option value="c">9999个月</option>   
+				</select>  
 				<a id="find"  href="#" class="easyui-linkbutton"
 						data-options="iconCls:'icon-add'" onclick="submitDate()">提交修改</a>
 			</div>
@@ -31,7 +35,7 @@
 	</div>
 	<script type="text/javascript">
 	$(function(){
-		$('#dateInput').datebox('setValue', '${stopDate}');
+		$('#dateInput').combobox('select','${stopDate}');
 	})
 		function submitDate(){
 			$.ajax({

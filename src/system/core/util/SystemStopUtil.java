@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,18 +22,26 @@ public class SystemStopUtil {
 		try {
 			DocumentBuilder builder = builderFactory.newDocumentBuilder();
 			Document document = builder.parse(file);
-			String xmlTime = document.getElementsByTagName("year").item(0).getFirstChild().getNodeValue()+"-"+
-					document.getElementsByTagName("month").item(0).getFirstChild().getNodeValue()+"-"+
-					document.getElementsByTagName("day").item(0).getFirstChild().getNodeValue();
+			String xmlTime = document.getElementsByTagName("month").item(0).getFirstChild().getNodeValue();
+			int timeLength=0;
+			if (xmlTime.equals("a")) {
+				timeLength=6;
+			}else if (xmlTime.equals("b")) {
+				timeLength=9;
+			}else if (xmlTime.equals("c")) {
+				timeLength=9999;
+			}
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar calendar = Calendar.getInstance();
-			java.util.Date nowDate = dateFormat.parse(dateFormat.format(new java.util.Date()));
+			java.util.Date startDate = dateFormat.parse(dateFormat.format("2017-09-01"));
+			calendar.setTime(startDate);
+			calendar.add(Calendar.MONTH, timeLength);
+			long startTime = calendar.getTimeInMillis();
+			java.util.Date nowDate = dateFormat.parse(dateFormat.format(new Date()));
 			calendar.setTime(nowDate);
 			long nowTime = calendar.getTimeInMillis();
-			java.util.Date stopDate = dateFormat.parse(xmlTime);
-			calendar.setTime(stopDate);
-			long stopTime = calendar.getTimeInMillis();
-			if (Integer.parseInt(String.valueOf((nowTime-stopTime)/(1000*3600*24)))>=0) {
+			
+			if (Integer.parseInt(String.valueOf((nowTime-startTime)/(1000*3600*24)))>=0) {
 				loginState=false;
 			}
 		} catch (ParseException e) {

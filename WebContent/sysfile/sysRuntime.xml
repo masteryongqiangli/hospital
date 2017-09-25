@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SystemTime>
-	<SystemRole id="1">
-		<year>2017</year>
-		<month>07</month>
-		<day>31</day>
-	</SystemRole>
+	<month>a</month>
 </SystemTime>
