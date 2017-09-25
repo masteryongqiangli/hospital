@@ -54,12 +54,13 @@ public class BaseUserDaoImpl extends BaseDaoImpl implements BaseUserDaoI{
 		if (StringUtil.isNotEmpty(parms.get("realName"))) {
 			sql.append(" and a.realName like '%"+parms.get("realName")+"%'");
 		}
-		if (userRole.equals("manager")) {
+		/*if (userRole.equals("manager")) {
 			sql.append(" and STUFF(( SELECT  ',' + roleCode FROM    Sys_Base_Role WHERE   roleId = c.roleId ), 1, 1, '') IN ('yy','wsz')");
 		}
 		if (userRole.equals("yy")) {
 			sql.append(" and STUFF(( SELECT  ',' + roleCode FROM    Sys_Base_Role WHERE   roleId = c.roleId ), 1, 1, '') IN ('wsz')");
-		}
+		}*/
+		sql.append(" order by a.userName");
 		SQLQuery query = this.getSession().createSQLQuery(sql.toString());
 		query.addEntity(Sys_User.class);
 		return CriteriaPageUtil.getPageJson(query, parms);
