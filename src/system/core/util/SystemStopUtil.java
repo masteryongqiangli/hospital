@@ -14,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 public class SystemStopUtil {
 	public boolean systemStop(String xmlPath){
 		File file = new File(xmlPath);
@@ -33,7 +35,7 @@ public class SystemStopUtil {
 			}
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar calendar = Calendar.getInstance();
-			java.util.Date startDate = dateFormat.parse(dateFormat.format("2017-09-01"));
+			java.util.Date startDate = dateFormat.parse("2017-09-01");
 			calendar.setTime(startDate);
 			calendar.add(Calendar.MONTH, timeLength);
 			long startTime = calendar.getTimeInMillis();
